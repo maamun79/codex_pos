@@ -1,0 +1,12 @@
+[18-Jul-2019 07:23:33 UTC] PHP Warning:  Unknown: failed to open stream: No such file or directory in Unknown on line 0
+[18-Jul-2019 07:23:33 UTC] PHP Warning:  Unknown: failed to open stream: No such file or directory in Unknown on line 0
+[18-Jul-2019 07:23:33 UTC] PHP Fatal error:  Unknown: Failed opening required 'functions.php' (include_path='../') in Unknown on line 0
+[18-Jul-2019 07:23:53 UTC] PHP Warning:  Unknown: failed to open stream: No such file or directory in Unknown on line 0
+[18-Jul-2019 07:23:53 UTC] PHP Warning:  Unknown: failed to open stream: No such file or directory in Unknown on line 0
+[18-Jul-2019 07:23:53 UTC] PHP Fatal error:  Unknown: Failed opening required 'functions.php' (include_path='../') in Unknown on line 0
+[18-Jul-2019 07:23:56 UTC] PHP Warning:  Unknown: failed to open stream: No such file or directory in Unknown on line 0
+[18-Jul-2019 07:23:56 UTC] PHP Warning:  Unknown: failed to open stream: No such file or directory in Unknown on line 0
+[18-Jul-2019 07:23:56 UTC] PHP Fatal error:  Unknown: Failed opening required 'functions.php' (include_path='../') in Unknown on line 0
+[18-Jul-2019 07:24:01 UTC] PHP Warning:  Unknown: failed to open stream: No such file or directory in Unknown on line 0
+[18-Jul-2019 07:24:01 UTC] PHP Warning:  Unknown: failed to open stream: No such file or directory in Unknown on line 0
+[18-Jul-2019 07:24:01 UTC] PHP Fatal error:  Unknown: Failed opening required 'functions.php' (include_path='../') in Unknown on line 0

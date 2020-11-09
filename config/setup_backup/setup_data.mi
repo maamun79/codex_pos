@@ -1,0 +1,128 @@
+DROP TABLE IF EXISTS investments;<MI_BREAK>CREATE TABLE `investments` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) NOT NULL,
+  `amount` int(11) NOT NULL,
+  `user_id` int(5) NOT NULL,
+  `expense_date` datetime NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;<MI_BREAK>INSERT INTO investments VALUES("3","test ","5001","1","2020-09-08 18:14:42","2020-10-08 01:46:52");<MI_BREAK>INSERT INTO investments VALUES("4","Invst test","100","1","2020-10-08 01:26:39","2020-10-10 02:31:37");<MI_BREAK>INSERT INTO investments VALUES("5","Shop Rent","5000","1","2020-10-01 02:25:16","2020-10-10 02:25:16");<MI_BREAK>DROP TABLE IF EXISTS mi_orders;<MI_BREAK>CREATE TABLE `mi_orders` (
+  `order_id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_products_details` text NOT NULL,
+  `trx_id` text NOT NULL,
+  `order_total_amount` float NOT NULL,
+  `no_tax_amount` float NOT NULL,
+  `tax_percentage` int(11) NOT NULL,
+  `order_created` datetime NOT NULL DEFAULT current_timestamp(),
+  `refund_date` datetime NOT NULL,
+  `single_refund_date` datetime NOT NULL,
+  `order_extra_note` text NOT NULL,
+  `order_extra_amount` text NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `customer_name` text DEFAULT NULL,
+  `customer_phone` int(15) DEFAULT NULL,
+  `customer_address` text DEFAULT NULL,
+  PRIMARY KEY (`order_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=latin1;<MI_BREAK>INSERT INTO mi_orders VALUES("82","{\"pro_id\":\"231\",\"pro_qty\":\"1\"}, {\"pro_id\":\"230\",\"pro_qty\":\"1\"}, {\"pro_id\":\"229\",\"pro_qty\":\"2\"}, {\"pro_id\":\"228\",\"pro_qty\":\"1\"}","3c5691bd438","820","820","0","2020-10-09 16:00:19","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("83","{\"pro_id\":\"225\",\"pro_qty\":\"1\"}, {\"pro_id\":\"226\",\"pro_qty\":\"2\"}, {\"pro_id\":\"222\",\"pro_qty\":\"3\"}","a576e584374","2970","2970","0","2020-10-09 16:00:29","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("84","{\"pro_id\":\"230\",\"pro_qty\":\"1\"}, {\"pro_id\":\"227\",\"pro_qty\":\"3\"}, {\"pro_id\":\"226\",\"pro_qty\":\"2\"}, {\"pro_id\":\"225\",\"pro_qty\":\"2\"}","d886c464805","3690","3690","0","2020-10-09 16:00:37","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("85","{\"pro_id\":\"231\",\"pro_qty\":\"1\"}, {\"pro_id\":\"230\",\"pro_qty\":\"1\"}, {\"pro_id\":\"227\",\"pro_qty\":\"1\"}, {\"pro_id\":\"226\",\"pro_qty\":\"1\"}, {\"pro_id\":\"225\",\"pro_qty\":\"1\"}","03967775611","1920","1920","0","2020-10-09 16:04:04","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("86","{\"pro_id\":\"228\",\"pro_qty\":\"2\"}, {\"pro_id\":\"224\",\"pro_qty\":\"2\"}, {\"pro_id\":\"225\",\"pro_qty\":\"2\"}, {\"pro_id\":\"230\",\"pro_qty\":\"2\"}","b9feb94e247","1480","1480","0","2020-10-09 16:04:11","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("87","{\"pro_id\":\"222\",\"pro_qty\":\"2\"}, {\"pro_id\":\"223\",\"pro_qty\":\"6\"}","2983541949","3060","3060","0","2020-10-09 16:04:17","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("88","{\"pro_id\":\"228\",\"pro_qty\":\"3\"}, {\"pro_id\":\"225\",\"pro_qty\":\"3\"}, {\"pro_id\":\"224\",\"pro_qty\":\"2\"}, {\"pro_id\":\"229\",\"pro_qty\":\"1\"}","a9b96973215","1590","1590","0","2020-10-09 16:05:37","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("89","{\"pro_id\":\"231\",\"pro_qty\":\"4\"}, {\"pro_id\":\"227\",\"pro_qty\":\"3\"}, {\"pro_id\":\"226\",\"pro_qty\":\"2\"}, {\"pro_id\":\"222\",\"pro_qty\":\"2\"}","a68a2af0606","4610","4610","0","2020-10-09 16:05:47","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("90","{\"pro_id\":\"222\",\"pro_qty\":\"3\"}, {\"pro_id\":\"223\",\"pro_qty\":\"3\"}, {\"pro_id\":\"227\",\"pro_qty\":\"3\"}, {\"pro_id\":\"226\",\"pro_qty\":\"2\"}, {\"pro_id\":\"225\",\"pro_qty\":\"1\"}","fe0fe91e725","5580","5580","0","2020-10-09 16:06:15","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("91","{\"pro_id\":\"231\",\"pro_qty\":\"2\"}, {\"pro_id\":\"230\",\"pro_qty\":\"4\"}, {\"pro_id\":\"229\",\"pro_qty\":\"3\"}, {\"pro_id\":\"228\",\"pro_qty\":\"2\"}, {\"pro_id\":\"223\",\"pro_qty\":\"1\"}, {\"pro_id\":\"224\",\"pro_qty\":\"1\"}","4b02f9d8236","2410","2410","0","2020-10-09 16:06:23","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("92","{\"pro_id\":\"224\",\"pro_qty\":\"3\"}, {\"pro_id\":\"226\",\"pro_qty\":\"1\"}, {\"pro_id\":\"228\",\"pro_qty\":\"1\"}","71a0844f213","1090","1090","0","2020-10-09 16:06:30","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("93","{\"pro_id\":\"228\",\"pro_qty\":\"1\"}, {\"pro_id\":\"229\",\"pro_qty\":\"2\"}, {\"pro_id\":\"230\",\"pro_qty\":\"1\"}, {\"pro_id\":\"231\",\"pro_qty\":\"2\"}, {\"pro_id\":\"224\",\"pro_qty\":\"2\"}","22a922a5908","1280","1280","0","2020-10-09 16:06:39","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("94","{\"pro_id\":\"229\",\"pro_qty\":\"2\"}","c3080299854","300","300","0","2020-10-09 16:06:45","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("95","{\"pro_id\":\"225\",\"pro_qty\":\"2\"}, {\"pro_id\":\"224\",\"pro_qty\":\"2\"}, {\"pro_id\":\"223\",\"pro_qty\":\"1\"}","481c49ee706","1240","1240","0","2020-10-09 16:26:07","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("96","{\"pro_id\":\"222\",\"pro_qty\":\"2\"}, {\"pro_id\":\"224\",\"pro_qty\":\"1\"}","46ed759d372","1020","1020","0","2020-10-09 16:26:12","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("97","{\"pro_id\":\"222\",\"pro_qty\":\"1\"}, {\"pro_id\":\"223\",\"pro_qty\":\"1\"}, {\"pro_id\":\"224\",\"pro_qty\":\"1\"}","f88ec0ac698","930","930","0","2020-10-09 16:26:17","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("98","{\"pro_id\":\"222\",\"pro_qty\":\"2\"}","64fecf58105","900","900","0","2020-10-09 16:26:46","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("99","{\"pro_id\":\"223\",\"pro_qty\":\"3\"}, {\"pro_id\":\"224\",\"pro_qty\":\"1\"}, {\"pro_id\":\"225\",\"pro_qty\":\"3\"}","647ad35d282","2160","2160","0","2020-10-09 16:31:11","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("100","{\"pro_id\":\"230\",\"pro_qty\":\"2\"}, {\"pro_id\":\"228\",\"pro_qty\":\"2\"}, {\"pro_id\":\"226\",\"pro_qty\":\"1\"}, {\"pro_id\":\"229\",\"pro_qty\":\"1\"}, {\"pro_id\":\"231\",\"pro_qty\":\"1\"}","e0417410596","1620","1620","0","2020-10-09 17:40:09","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("101","{\"pro_id\":\"230\",\"pro_qty\":\"1\"}, {\"pro_id\":\"228\",\"pro_qty\":\"1\"}","91c948be262","300","300","0","2020-10-09 17:54:22","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("102","{\"pro_id\":\"230\",\"pro_qty\":\"1\"}, {\"pro_id\":\"228\",\"pro_qty\":\"1\"}","699a94c2759","300","300","0","2020-10-09 17:54:29","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("103","{\"pro_id\":\"228\",\"pro_qty\":\"1\"}, {\"pro_id\":\"226\",\"pro_qty\":\"1\"}","c9af2408356","730","730","0","2020-10-09 17:55:26","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("104","{\"pro_id\":\"230\",\"pro_qty\":\"1\"}, {\"pro_id\":\"228\",\"pro_qty\":\"1\"}","fe3faab9761","300","300","0","2020-10-09 17:56:18","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("105","{\"pro_id\":\"230\",\"pro_qty\":\"1\"}, {\"pro_id\":\"228\",\"pro_qty\":\"1\"}","3a62f12f893","300","300","0","2020-10-09 17:57:44","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("106","{\"pro_id\":\"224\",\"pro_qty\":\"1\"}, {\"pro_id\":\"222\",\"pro_qty\":\"1\"}","99418df7371","570","570","0","2020-10-09 18:00:57","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("107","{\"pro_id\":\"226\",\"pro_qty\":\"1\"}, {\"pro_id\":\"224\",\"pro_qty\":\"1\"}","05081ba6399","770","770","0","2020-10-09 18:07:48","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("108","{\"pro_id\":\"225\",\"pro_qty\":\"1\"}, {\"pro_id\":\"223\",\"pro_qty\":\"1\"}","8cb6736d761","680","680","0","2020-10-09 18:08:07","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("109","{\"pro_id\":\"228\",\"pro_qty\":\"1\"}, {\"pro_id\":\"226\",\"pro_qty\":\"1\"}","d72b3482803","730","730","0","2020-10-09 18:38:26","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("110","{\"pro_id\":\"227\",\"pro_qty\":\"1\"}, {\"pro_id\":\"226\",\"pro_qty\":\"1\"}, {\"pro_id\":\"224\",\"pro_qty\":\"1\"}, {\"pro_id\":\"231\",\"pro_qty\":0}, {\"pro_id\":\"229\",\"pro_qty\":0}","8d4b58a8174","1408","1243","10","2020-10-10 00:17:22","0000-00-00 00:00:00","2020-10-10 02:03:05","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("111","{\"pro_id\":\"228\",\"pro_qty\":\"2\"}","72936978644","176","160","10","2020-10-09 14:46:53","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("112","{\"pro_id\":\"230\",\"pro_qty\":\"4\"}","bb8bf0c3893","968","880","10","2020-10-09 14:50:09","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("113","{\"pro_id\":\"226\",\"pro_qty\":\"5\"}","6ac30586101","3575","3250","10","2020-10-09 14:51:38","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("114","{\"pro_id\":\"224\",\"pro_qty\":\"7\"}","fc85284f908","924","840","10","2020-10-09 14:53:50","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("115","{\"pro_id\":\"222\",\"pro_qty\":\"1\"}, {\"pro_id\":\"223\",\"pro_qty\":\"1\"}","3787153d905","891","810","10","2020-10-09 15:00:43","2020-10-10 02:01:55","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>INSERT INTO mi_orders VALUES("116","{\"pro_id\":\"231\",\"pro_qty\":\"2\"}, {\"pro_id\":\"227\",\"pro_qty\":\"2\"}, {\"pro_id\":\"223\",\"pro_qty\":\"2\"}, {\"pro_id\":\"222\",\"pro_qty\":\"1\"}, {\"pro_id\":\"225\",\"pro_qty\":\"1\"}","c845c517206","3245","2950","10","2020-10-09 16:34:10","0000-00-00 00:00:00","0000-00-00 00:00:00","","","1","","0","");<MI_BREAK>DROP TABLE IF EXISTS mi_product_brand;<MI_BREAK>CREATE TABLE `mi_product_brand` (
+  `br_id` int(11) NOT NULL AUTO_INCREMENT,
+  `br_title` text NOT NULL,
+  `br_slug` text NOT NULL,
+  `br_icon` text NOT NULL,
+  `br_icon_type` int(11) NOT NULL COMMENT '1 = Image, 2 = icon',
+  `br_added` datetime NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`br_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;<MI_BREAK>INSERT INTO mi_product_brand VALUES("46","B-1","b-1","fab fa-adn","2","2020-09-10 15:21:14");<MI_BREAK>DROP TABLE IF EXISTS mi_product_cart;<MI_BREAK>CREATE TABLE `mi_product_cart` (
+  `cart_id` int(11) NOT NULL AUTO_INCREMENT,
+  `pro_id` int(11) NOT NULL,
+  `pro_qty` int(11) NOT NULL,
+  `cart_added` datetime NOT NULL DEFAULT current_timestamp(),
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`cart_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=217 DEFAULT CHARSET=latin1;<MI_BREAK>INSERT INTO mi_product_cart VALUES("210","229","1","2020-10-10 02:31:33","1");<MI_BREAK>INSERT INTO mi_product_cart VALUES("211","225","1","2020-10-10 02:31:35","1");<MI_BREAK>INSERT INTO mi_product_cart VALUES("214","223","1","2020-10-10 02:45:40","1");<MI_BREAK>INSERT INTO mi_product_cart VALUES("215","222","1","2020-10-10 02:45:40","1");<MI_BREAK>INSERT INTO mi_product_cart VALUES("216","224","1","2020-10-10 02:45:41","1");<MI_BREAK>DROP TABLE IF EXISTS mi_product_category;<MI_BREAK>CREATE TABLE `mi_product_category` (
+  `cat_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cat_title` text NOT NULL,
+  `cat_slug` text NOT NULL,
+  `cat_icn` text DEFAULT NULL,
+  `cat_icon_type` int(11) DEFAULT NULL COMMENT '1 = Image, 2 = icon',
+  `cat_added` datetime NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`cat_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;<MI_BREAK>INSERT INTO mi_product_category VALUES("14","Fast Food","fastfood","fas fa-atlas","2","2020-09-10 15:20:15");<MI_BREAK>INSERT INTO mi_product_category VALUES("15","Drinks","drinks","fab fa-affiliatetheme","2","2020-09-10 15:20:31");<MI_BREAK>DROP TABLE IF EXISTS mi_product_suppliers;<MI_BREAK>CREATE TABLE `mi_product_suppliers` (
+  `sup_id` int(11) NOT NULL AUTO_INCREMENT,
+  `sup_name` varchar(100) NOT NULL,
+  `sup_company` varchar(150) NOT NULL,
+  `sup_email` text NOT NULL,
+  `sup_phone` varchar(15) NOT NULL,
+  `sup_address` text NOT NULL,
+  `sup_img` text NOT NULL,
+  `sup_added` datetime NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`sup_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;<MI_BREAK>INSERT INTO mi_product_suppliers VALUES("5","Calvin Schwartz","Bradley and House Inc","holafejegi@mailinator.com","+1 (759) 149-77","Voluptate expedita p","c17c2b4c438f3c678b8d2a0fa37c5e18s-1.jpg","2020-08-12 17:32:30");<MI_BREAK>DROP TABLE IF EXISTS mi_products;<MI_BREAK>CREATE TABLE `mi_products` (
+  `pro_id` int(11) NOT NULL AUTO_INCREMENT,
+  `pro_title` text NOT NULL,
+  `pro_price` float NOT NULL,
+  `pro_img` text NOT NULL,
+  `pro_stock` int(11) NOT NULL,
+  `pro_stock_type` int(11) NOT NULL DEFAULT 1 COMMENT '1 = single; 2 = multiple',
+  `pro_brand` int(11) NOT NULL,
+  `pro_cat` int(11) NOT NULL,
+  `pro_status` int(11) NOT NULL DEFAULT 1 COMMENT '1 = Activated, 0 = Deactivated',
+  `pro_added` datetime NOT NULL DEFAULT current_timestamp(),
+  `pro_supplier` int(11) NOT NULL,
+  `pro_in_total_stock` int(11) NOT NULL,
+  `last_stock_load_qty` int(11) NOT NULL,
+  `last_stock_updated` datetime NOT NULL,
+  `pro_serial` text NOT NULL,
+  `buy_price` int(11) NOT NULL,
+  `pro_model_number` text NOT NULL,
+  PRIMARY KEY (`pro_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=232 DEFAULT CHARSET=latin1;<MI_BREAK>INSERT INTO mi_products VALUES("222","Albaik","450","f0ffe31187c0fd3149e14f33a9aeac54albaik.png","8","1","46","14","1","2020-09-10 15:22:02","0","140","10","2020-10-09 17:13:16","[]","350","AK-205");<MI_BREAK>INSERT INTO mi_products VALUES("223","Burger","360","f3e5bbb3a4518ff9208f1d5195fe63aeburger.png","7","1","46","15","1","2020-09-10 15:22:38","0","165","10","2020-10-10 12:44:42","[]","40","BK-002");<MI_BREAK>INSERT INTO mi_products VALUES("224","French Fry","120","d0e14c11c1da30484efcb1c58fcaa4e5french_fry.png","10","1","46","15","1","2020-09-10 15:23:12","0","50","10","2020-10-10 12:44:08","","70","FK-603");<MI_BREAK>INSERT INTO mi_products VALUES("225","Nugget","320","37c8b2e98edaaa0de9f87d1889bb9a1bnugget.png","8","1","46","14","1","2020-09-10 15:23:50","0","136","10","2020-10-09 17:13:45","[]","210","NK-807");<MI_BREAK>INSERT INTO mi_products VALUES("226","Pizza","650","e4b2afb3c691cc6cc8ad7a70a7e5457apizza.png","10","1","46","14","1","2020-09-10 15:24:21","0","42","10","2020-10-10 12:44:23","","500","PK-608");<MI_BREAK>INSERT INTO mi_products VALUES("227","Pupps Nuggs Chili Cheese","510","8d7e47209d28c5ee13a7c149434a1df6PuppsNuggs_Chili_Cheese_Pup.png","7","1","46","14","1","2020-09-10 15:25:27","0","28","10","2020-10-09 17:15:45","","320","PK=903");<MI_BREAK>INSERT INTO mi_products VALUES("228","Samosa","80","5f9cdda2c0489400571080300ed6c3c2samosa.jpg","10","1","46","15","1","2020-09-10 15:25:57","0","45","10","2020-10-10 12:45:14","","40","SK-101");<MI_BREAK>INSERT INTO mi_products VALUES("229","Sandwich","150","f67117ba2ac43947039c0ac9dac80535sandwich.png","1","1","46","14","1","2020-09-10 15:26:31","0","41","10","2020-10-09 21:21:16","","70","SK-505");<MI_BREAK>INSERT INTO mi_products VALUES("230","Spanish Omelette","220","f91e9af6ba71f27507d13f55e93f3183spanish-omelette.png","10","1","46","14","1","2020-09-10 15:27:14","0","50","10","2020-10-10 12:45:33","","150","SO-777");<MI_BREAK>INSERT INTO mi_products VALUES("231","Spanish Omelette 2","220","f91e9af6ba71f27507d13f55e93f3183spanish-omelette.png","7","1","46","14","1","2020-09-10 15:27:14","0","40","10","2020-10-09 17:38:57","","150","SO-777");<MI_BREAK>DROP TABLE IF EXISTS mi_purchase_vat;<MI_BREAK>CREATE TABLE `mi_purchase_vat` (
+  `vid` int(11) NOT NULL AUTO_INCREMENT,
+  `vtax` int(11) DEFAULT NULL,
+  `vtaxdetails` text NOT NULL,
+  `vtaxadded` datetime NOT NULL DEFAULT current_timestamp(),
+  `vtaxstatus` int(11) DEFAULT 1,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`vid`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;<MI_BREAK>INSERT INTO mi_purchase_vat VALUES("1","10","VAT","2019-08-22 01:14:47","1","1");<MI_BREAK>DROP TABLE IF EXISTS mi_stocks;<MI_BREAK>CREATE TABLE `mi_stocks` (
+  `stock_id` int(11) NOT NULL AUTO_INCREMENT,
+  `supplier_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `stock_qty` int(11) NOT NULL,
+  `invoice_id` varchar(50) NOT NULL,
+  `invoice_picture` text NOT NULL,
+  `expanse` int(11) NOT NULL,
+  `unit_price` int(11) NOT NULL,
+  `ex_due` int(11) NOT NULL,
+  `ex_note` text NOT NULL,
+  `upload_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `refund_date` datetime NOT NULL,
+  `pro_serials` text NOT NULL,
+  PRIMARY KEY (`stock_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=latin1;<MI_BREAK>INSERT INTO mi_stocks VALUES("59","5","222","10","","","3000","300","0","","2020-10-09 15:53:08","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("60","5","223","10","","","2800","280","0","","2020-10-09 15:53:29","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("62","5","225","10","","","2500","250","0","","2020-10-09 15:53:59","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("63","5","226","10","","","5000","500","0","","2020-10-09 15:54:29","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("64","5","227","10","","","3200","320","0","","2020-10-09 15:54:46","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("65","5","230","10","","","1500","150","0","","2020-10-09 15:55:04","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("66","5","224","10","","","800","80","0","","2020-10-09 15:56:20","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("67","5","228","10","","","500","50","0","","2020-10-09 15:56:39","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("69","5","229","10","","","800","80","0","","2020-10-09 15:57:27","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("70","5","231","10","","","1000","100","0","","2020-10-09 15:57:47","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("71","5","222","5","","","1750","350","0","","2020-10-09 16:25:01","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("72","5","223","5","","","1250","250","0","","2020-10-09 16:25:18","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("73","5","224","5","","","250","50","0","","2020-10-09 16:25:34","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("74","5","225","5","","","1000","200","0","","2020-10-09 16:25:51","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("78","5","222","10","","","3500","350","0","","2020-10-09 17:13:16","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("79","5","223","10","","","2200","220","0","","2020-10-09 17:13:30","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("80","5","225","10","","","2100","210","0","","2020-10-09 17:13:45","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("82","5","224","10","","","700","70","0","","2020-10-09 17:15:07","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("83","5","226","10","","","5000","500","0","","2020-10-09 17:15:27","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("84","5","227","10","","","3200","320","0","","2020-10-09 17:15:45","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("85","5","228","10","","","400","40","0","","2020-10-09 17:38:12","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("86","5","229","10","","","800","80","0","","2020-10-09 17:38:27","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("87","5","230","10","","","1600","160","0","","2020-10-09 17:38:43","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("88","5","231","10","","","1500","150","0","","2020-10-09 17:38:57","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("89","5","229","10","","","1","70","0","","2020-10-09 21:21:16","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("90","5","224","10","","","700","70","0","","2020-10-10 02:44:08","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("91","5","226","10","","","5000","500","0","","2020-10-10 02:44:23","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("93","5","228","10","","","400","40","0","","2020-10-10 02:45:14","0000-00-00 00:00:00","");<MI_BREAK>INSERT INTO mi_stocks VALUES("94","5","230","10","","","1500","150","0","","2020-10-10 02:45:33","0000-00-00 00:00:00","");<MI_BREAK>DROP TABLE IF EXISTS mi_users;<MI_BREAK>CREATE TABLE `mi_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(100) NOT NULL,
+  `pass` text NOT NULL,
+  `user_name` varchar(100) NOT NULL,
+  `user_designation` varchar(100) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT '1 = Activated; 2 = Deactivated;',
+  `registered_from` datetime NOT NULL DEFAULT current_timestamp(),
+  `user_type` int(11) NOT NULL DEFAULT 3 COMMENT '1=admin;2=shopmanager; 3=salesman',
+  `created_by` int(11) NOT NULL,
+  `email` text DEFAULT NULL,
+  `phone` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;<MI_BREAK>INSERT INTO mi_users VALUES("1","misujon","202cb962ac59075b964b07152d234b70","Monirul Islam Sujon","Admin","1","2019-07-18 12:31:43","1","0","misujon58262@gmail.com","01676707067");<MI_BREAK>INSERT INTO mi_users VALUES("10","shafira","202cb962ac59075b964b07152d234b70","Shafira Rowland","Shop Manager","1","2020-08-12 22:08:14","2","1","vekofi@mailinator.com","+1 (553) 877-44");<MI_BREAK>INSERT INTO mi_users VALUES("11","mamun","202cb962ac59075b964b07152d234b70","Emery Mullen","Sales Man","1","2020-08-12 22:09:40","3","1","gecykiv@mailinator.com","+1 (403) 759-43");<MI_BREAK>DROP TABLE IF EXISTS regular_expenses;<MI_BREAK>CREATE TABLE `regular_expenses` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) NOT NULL,
+  `amount` int(11) NOT NULL,
+  `user_id` int(5) NOT NULL,
+  `expense_date` datetime NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;<MI_BREAK>INSERT INTO regular_expenses VALUES("8","Test ","125","1","2020-10-08 22:09:43","2020-10-08 20:03:52");<MI_BREAK>INSERT INTO regular_expenses VALUES("9","Test 2","500","1","2020-10-03 01:25:41","2020-10-08 01:25:41");<MI_BREAK>INSERT INTO regular_expenses VALUES("10","Test 3","250","1","2020-10-08 20:05:31","2020-10-08 20:05:31");<MI_BREAK>INSERT INTO regular_expenses VALUES("11","Sauce ","250","1","2020-10-10 02:23:44","2020-10-10 02:23:44");<MI_BREAK>INSERT INTO regular_expenses VALUES("12","Raw meterials","2000","1","2020-10-08 02:24:12","2020-10-10 02:24:12");<MI_BREAK>DROP TABLE IF EXISTS settings_meta;<MI_BREAK>CREATE TABLE `settings_meta` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `meta_name` varchar(50) NOT NULL,
+  `meta_value` varchar(200) NOT NULL,
+  `type` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;<MI_BREAK>INSERT INTO settings_meta VALUES("1","shop_logo","uploads/settings-img/a696878cf0ad827aaf42ce633c401b4cunibet_1571901187.png","image");<MI_BREAK>INSERT INTO settings_meta VALUES("2","shop_address","Taher Tower Shopping Center, Suite-306 (2nd Floor)","shop_details");<MI_BREAK>INSERT INTO settings_meta VALUES("3","shop_email","contact@softminion.com","shop_details");<MI_BREAK>INSERT INTO settings_meta VALUES("4","shop_phone","01976-301-580","shop_details");<MI_BREAK>INSERT INTO settings_meta VALUES("5","shop_note","Thank you for your business!  Payment is expected within 31 days; ","shop_details");<MI_BREAK>INSERT INTO settings_meta VALUES("6","footer_text","Soft Minion","footer");<MI_BREAK>INSERT INTO settings_meta VALUES("7","shop_currency","TK","currency");<MI_BREAK>INSERT INTO settings_meta VALUES("8","footer_link","https://www.softminion.com/","footer");<MI_BREAK>
