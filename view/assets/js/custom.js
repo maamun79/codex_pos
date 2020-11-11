@@ -259,15 +259,14 @@ $(document).ready(function () {
     });
 
 
-    $('.selectAll').click(function () {
+    $('body').on('click', '.selectAll', function () {
         if(this.checked) {
 
-            $('.selectorcheck:checkbox').each(function() {
+            $('body .selectorcheck:checkbox').each(function() {
                 this.checked = true;
             });
-        }
-        else {
-            $('.selectorcheck:checkbox').each(function() {
+        }else {
+            $('body .selectorcheck:checkbox').each(function() {
                 this.checked = false;
             });
         }
@@ -652,15 +651,6 @@ $(document).ready(function () {
         });
     });
 
-    // $('#newAnimateModal').on('click', function (e) {
-    //     e.preventDefault();
-    //     $('#animatedModal').show();
-    // });
-    //
-    // $('.close-animatedModal').on('click', function (e) {
-    //     e.preventDefault();
-    //     $('#animatedModal').hide();
-    // });
 
     $('body').on('click', '.mi_complete_purchase', function (e) {
         // console.log(customer_name);
@@ -1859,7 +1849,7 @@ $(document).ready(function () {
     $('body').on('blur', '#note', function (e) {
         e.preventDefault();
         var note = $(this).val();
-        console.log(note);
+        // console.log(note);
         // var note = $('#mi_purchase_extra_note').val();
 
         $.ajax({

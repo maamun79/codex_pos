@@ -117,19 +117,19 @@ if (isset($_GET['customer_edit'])){
                         </th>
                         <?php }?>
 
-                        <th>Name</th>
-                        <th>Phone</th>
-                        <th>Address</th>
-                        <th>Type</th>
-                        <th>Status</th>
-                        <th>Action</th>
+                        <th class="table_font_small text-left">Name</th>
+                        <th class="table_font_small text-center">Phone</th>
+                        <th class="table_font_small">Address</th>
+                        <th class="table_font_small">Type</th>
+                        <th class="table_font_small">Status</th>
+                        <th class="table_font_small">Action</th>
                     </tr>
                   </thead>
                   <tbody class="text-center">
 
                   <tr>
                       <td></td>
-                      <td><strong>Unknown</strong></td>
+                      <td class="text-left"><strong>Unknown</strong></td>
                       <td>N/A</td>
                       <td>N/A</td>
                       <td>N/A</td>

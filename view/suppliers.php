@@ -39,14 +39,14 @@ if (base64_decode($_SESSION['session_type']) !== "mi_1" &&
                                 </label>
                             </div>
                         </th>
-                        <th>Image</th>
-                        <th>Supplier Name</th>
-                        <th>Company</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Address</th>
-                        <th>Added</th>
-                        <th>Actions</th>
+                        <th class="table_font_small">Image</th>
+                        <th class="table_font_small">Supplier Name</th>
+                        <th class="table_font_small">Company</th>
+                        <th class="table_font_small">Email</th>
+                        <th class="table_font_small">Phone</th>
+                        <th class="table_font_small">Address</th>
+                        <th class="table_font_small">Added</th>
+                        <th class="table_font_small">Actions</th>
                     </tr>
                   </thead>
                   <tbody class="text-center">

@@ -92,11 +92,11 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                         </label>
                                     </div>
                                 </th>
-                                <th>Expense Title</th>
-                                <th>Expense Amount</th>
-                                <th>Expense Date</th>
-                                <th>Added By</th>
-                                <th>Action</th>
+                                <th class="table_font_small">Expense Title</th>
+                                <th class="table_font_small">Expense Amount</th>
+                                <th class="table_font_small">Expense Date</th>
+                                <th class="table_font_small">Added By</th>
+                                <th class="table_font_small">Action</th>
                             </tr>
                             </thead>
                             <tbody class="text-center">

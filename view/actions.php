@@ -257,7 +257,7 @@ if (isset($_POST['get_cart']) && !empty($_POST['get_cart'])){
 
     if (count($data) > 0){
 
-        echo '<table class="table table-shopping table-striped" style="font-size: smaller">
+        echo '<table class="table table-shopping table-striped table-cart" style="font-size: smaller">
                             <thead>
                                 <tr>
                                     <th class="text-left" colspan="2">Item</th>
@@ -294,30 +294,30 @@ if (isset($_POST['get_cart']) && !empty($_POST['get_cart'])){
 
             echo '<tr>
                      <td class="text-left mi_cusomized_selector" colspan="2">
-                         <button class="btn btn-danger btn-sm cart_remove_item p-1" type="button" value="'.$d['cart_id'].'"><i class="nc-icon nc-simple-remove"></i></button> &nbsp; 
-                         '.mi_db_read_by_id('mi_products', array("pro_id"=>$d['pro_id']))[0]['pro_title'].'
+                         <button class="btn btn-danger btn-sm cart_remove_item p-1 rounded-0" type="button" value="'.$d['cart_id'].'"><i class="nc-icon nc-simple-remove"></i></button> &nbsp; 
+                         '.((strlen($getPr['pro_title'])>20)?substr($getPr['pro_title'], '0', '20').'...':$getPr['pro_title']).'
                      </td>
                      <td>
                         <div style="width: 80px; margin: 0 auto;">
                             <span class="input-group-btn pull-left">
-                                        <button type="button" style="padding: 5px" class="quantity-left-minus btn btn-sm btn-danger btn-number" input_id="'.$d["pro_id"].'"  data-type="minus" data-field="">
+                                        <button type="button" style="padding: 5px" class="quantity-left-minus btn btn-sm btn-danger btn-number rounded-0" input_id="'.$d["pro_id"].'"  data-type="minus" data-field="">
                                           <span class="nc-icon nc-simple-delete"></span>
                                         </button>
                                     </span>
                        
-                        <input type="number" id="quantity'.$d["pro_id"].'" name="quantity" class="form-control input-number pull-left quantity" pro-id="'.$d['pro_id'].'" value="'.$d["pro_qty"].'" min="1">
+                        <input type="number" id="quantity'.$d["pro_id"].'" name="quantity" class="form-control input-number pull-left quantity rounded-0" pro-id="'.$d['pro_id'].'" value="'.$d["pro_qty"].'" min="1">
                                     <span class="input-group-btn">
-                                        <button type="button" style="padding: 5px" class="quantity-right-plus btn btn-success btn-sm btn-number pull-left" input_id="'.$d["pro_id"].'" data-type="plus" data-field="">
+                                        <button type="button" style="padding: 5px" class="quantity-right-plus btn btn-success btn-sm btn-number pull-left rounded-0" input_id="'.$d["pro_id"].'" data-type="plus" data-field="">
                                             <span class="nc-icon nc-simple-add"></span>
                                         </button>
                                     </span>
                             </div>
                      </td>
                      <td style="width: 103px">
-                        <input type="number" value="'.$pro_cart['discount'].'" class="form-control cart_discount_input" cart-id="'.$d['cart_id'].'" name="discount" id="discount">
+                        <input type="number" value="'.$pro_cart['discount'].'" class="form-control cart_discount_input rounded-0" cart-id="'.$d['cart_id'].'" name="discount" id="discount">
                      </td>
                      <td style="width: 103px">
-                        <select class="form-control vat_tax_selection" name="vat_tax" id="vat_tax_select" cart-id="'.$d['cart_id'].'">
+                        <select class="form-control vat_tax_selection rounded-0" name="vat_tax" id="vat_tax_select" cart-id="'.$d['cart_id'].'">
                             <option value="0" selected>None</option>';
                                 foreach ($vat_tax as $vt){
                                     echo '<option value="'.$vt['vid'].'" '.($vt['vid'] == $d['vat_id']?'selected':'').'>'. $vt['vtaxdetails'] .'</option>';
@@ -356,7 +356,7 @@ if (isset($_POST['get_cart']) && !empty($_POST['get_cart'])){
                         <span style="float:right">Due:</span>
                     </th>
                     <th>
-                       <span style="float:right"><span>'.number_format(((array_sum($total)+array_sum($payable_vat))-($get_paid_amount['paid_amount'])), 2).' '.$currency['meta_value'].'</span> </span>
+                       <span style="float:right"><span>'.number_format(((array_sum($total)+array_sum($payable_vat))-((isset($get_paid_amount['paid_amount'])?$get_paid_amount['paid_amount']:array_sum($total)+array_sum($payable_vat)))), 2).' '.$currency['meta_value'].'</span> </span>
 
                     </th>
                 </tr>
@@ -365,8 +365,8 @@ if (isset($_POST['get_cart']) && !empty($_POST['get_cart'])){
                 <tr>
 
                     <th class="text-left">Total Products: '.count($data).'<br>Total Qty: '.array_sum($qty_total).' L</th>
-                    <th class="text-right" colspan="4" >
-                        <span style="font-size:18px">Total Amount:</span><br>
+                    <th class="text-right" colspan="4" style="font-size:18px">
+                        <span>Total Amount:</span><br>
                         Paid:
                        
                     </th>
@@ -375,7 +375,7 @@ if (isset($_POST['get_cart']) && !empty($_POST['get_cart'])){
 
                         "<span style='font-size:18px' class='totalpayable' payableamount=".(array_sum($total)+array_sum($payable_vat)).">".(array_sum($total)+array_sum($payable_vat)).' '.$currency['meta_value'].'</span><br>'.
 
-                        '<input class="form-control" name="paid_amount" id="paid_amount" value="'.(!empty($get_paid_amount['paid_amount'])?$get_paid_amount['paid_amount']:0).'">'.'
+                        '<input class="form-control rounded-0" name="paid_amount" id="paid_amount" value="'.(!isset($get_paid_amount['paid_amount']) && $get_paid_amount['paid_amount'] == null ?(array_sum($total)+array_sum($payable_vat)):$get_paid_amount['paid_amount']).'">'.'
                
                     </th>
 
@@ -393,36 +393,6 @@ if (isset($_POST['get_cart']) && !empty($_POST['get_cart'])){
     }
 }
 
-
-// if (isset($_POST['mi_do_cart_serial_update']) && !empty($_POST['mi_do_cart_serial_update'])){
-//     $cid = mi_secure_input($_POST['cid']);
-//     $sls = json_encode($_POST['cvl']);
-
-//     if (empty($cid) || !is_numeric($cid)){
-//         $msg = array('status' => 'error', 'message'=>'Id is undefined');
-//     }else{
-//         $getdata = mi_db_read_by_id('mi_product_cart', array('cart_id'=>$cid));
-//         if (count($getdata) > 0){
-
-//             $update = mi_db_update(
-//                     'mi_product_cart',
-//                     array('product_serials' => $sls),
-//                     array('cart_id' => $cid)
-//             );
-
-//             if ($update){
-//                 $msg = array('status' => 'success', 'message'=>'Cart Updated');
-//             }else{
-//                 $msg = array('status' => 'error', 'message'=>'Cart not updated');
-//             }
-
-//         }else{
-//             $msg = array('status' => 'error', 'message'=>'Something getting wrong');
-//         }
-//     }
-
-//     echo json_encode($msg);
-// }
 
 if (isset($_POST['extra_updater']) && !empty($_POST['extra_updater'])){
     $uid = str_replace('mi_', '', base64_decode($_SESSION['session_id']));
@@ -570,7 +540,7 @@ if (isset($_POST['note_updater']) && !empty($_POST['note_updater'])){
 
 
 function row_repeater($number){
-    $get_i = 20 - $number;
+    $get_i = 25 - $number;
     $html = '';
     for ($i=1;$i<=$get_i;$i++){
         $html .= '<tr>
@@ -679,23 +649,23 @@ if (isset($_POST['get_cart_plain']) && !empty($_POST['get_cart_plain'])){
         $viewdat .=    '<tr>
                        
                         <th class="text-right" colspan="7" style="padding: 3px">Due: </th>
-                       <th class="text-right" style="padding: 3px">'.((array_sum($total)+array_sum($payable_vat)) - ($get_paid_amount['paid_amount'])).' '.$currency['meta_value'].'</th>
+                       <th class="text-right" style="padding: 3px">'.number_format(((array_sum($total)+array_sum($payable_vat))-((isset($get_paid_amount['paid_amount'])?$get_paid_amount['paid_amount']:array_sum($total)+array_sum($payable_vat)))), 2).' '.$currency['meta_value'].'</th>
                     </tr>';
 
         $viewdat .=  '<tr>
 
                             <th class="text-left" colspan="2">Total Products: '.count($data).'<br>Total Qty: '.array_sum($qty_total).' L</th>
-                            <th class="text-right" colspan="5" >
-                                <span style="font-size:15px">Total Amount:</span><br>
+                            <th class="text-right" colspan="5" style="font-size:18px">
+                                <span>Total Amount:</span><br>
                                 Paid:
                                
                             </th>
         
-                            <th class="text-right">'.
+                            <th class="text-right" style="font-size:18px">'.
 
-                                "<span style='font-size:15px' class='totalpayable' payableamount=".(array_sum($total)+array_sum($payable_vat)).">".(array_sum($total)+array_sum($payable_vat)).' '.$currency['meta_value'].'</span><br>'.
+                                "<span class='totalpayable' payableamount=".(array_sum($total)+array_sum($payable_vat)).">".(array_sum($total)+array_sum($payable_vat)).' '.$currency['meta_value'].'</span><br>'.
 
-                                '<span>'.$get_paid_amount['paid_amount'].' ' . $currency['meta_value'] . '</span>'.'
+                                '<span>'.(isset($get_paid_amount['paid_amount'])?$get_paid_amount['paid_amount']: array_sum($total)+array_sum($payable_vat)).' ' . $currency['meta_value'] . '</span>'.'
                        
                             </th>
         
@@ -706,7 +676,7 @@ if (isset($_POST['get_cart_plain']) && !empty($_POST['get_cart_plain'])){
         $viewdat.= "<h3 class='mt-4'>No Product Added to Basket Yet</h3>";
     }
 
-    echo json_encode(array('data'=>$viewdat, 'due'=>((array_sum($total)+array_sum($payable_vat)) - ($get_paid_amount['paid_amount'])), 'note'=> $get_paid_amount['note']));
+    echo json_encode(array('data'=>$viewdat, 'due'=>((array_sum($total)+array_sum($payable_vat)) - ((isset($get_paid_amount['paid_amount'])?$get_paid_amount['paid_amount']: array_sum($total)+array_sum($payable_vat)))), 'note'=> $get_paid_amount['note']));
 }
 
 
@@ -746,15 +716,36 @@ if (isset($_POST['add_pro_cart']) && !empty($_POST['add_pro_cart'])){
         $chkProStock = mi_db_read_by_id('mi_products', array('pro_id'=>$id))[0];
 
         if ($chkProStock['pro_stock'] != 0){
+            $user_id = str_replace('mi_', '', base64_decode($_SESSION['session_id']));
             $credentials = array(
                 'pro_id' => $id,
                 'pro_qty' => $qty,
-                'user_id' => str_replace('mi_', '', base64_decode($_SESSION['session_id']))
+                'user_id' => $user_id
             );
 
             $data = mi_db_insert('mi_product_cart', $credentials);
 
             if ($data){
+                //------------calculate total amount----------------
+//                $totalAmount = [];
+//                $cart_items = mi_db_read_by_id('mi_product_cart', array('user_id'=> $user_id));
+//                foreach ($cart_items as $item){
+//                    $product = mi_db_read_by_id('mi_products', array('pro_id' => $item['pro_id']))[0];
+//
+//                    $price = $product['pro_price'] * $item['pro_qty'];
+//                    $discount = ($item['discount']/100) * $price;
+//                    $priceWithoutDiscount = $price - $discount;
+//
+//                    $vat = ($item['vat']/100) * $priceWithoutDiscount;
+//                    $totalAmount[] = $priceWithoutDiscount + $vat;
+//
+//                }
+//                mi_db_insert('sales_meta', array(
+//                        'paid_amount'=> array_sum($totalAmount),
+//                        'user_id' => $user_id,
+//                        'note' => ''
+//                        )
+//                );
                 $msg = array('status' => 'success', 'message'=>'Successfully Updated Product in Basket');
             }else{
                 $msg = array('status' => 'error', 'message'=>'Product not found');
@@ -894,6 +885,7 @@ if (isset($_POST['minus_cart_item_id']) && !empty($_POST['minus_cart_item_id']))
 if (isset($_POST['clear_all_basket']) && !empty($_POST['clear_all_basket'])){
     $id = array(str_replace('mi_', '', base64_decode($_SESSION['session_id'])));
     $data = mi_db_delete('mi_product_cart', 'user_id', $id);
+    $del_sales_meta = mi_db_delete('sales_meta', 'user_id', $id);
 
     if ($data){
         echo "All Records Deleted";
@@ -968,7 +960,12 @@ if (isset($_POST['complete_purchase_item']) && !empty($_POST['complete_purchase_
         $order_product_details = implode(', ', $proid);
 //        print_r(array_sum($vats)); return;
         $total_amount = (array_sum($total) + array_sum($vats));
-        $paid_amount = $get_sales_meta['paid_amount'];
+
+        if (isset($get_sales_meta['paid_amount'])){
+            $paid_amount = $get_sales_meta['paid_amount'];
+        }else{
+            $paid_amount = $total_amount;
+        }
 
         $inser_data = array(
             'order_products_details' => $order_product_details,
@@ -1099,15 +1096,15 @@ if (isset($_POST['complete_purchase_item']) && !empty($_POST['complete_purchase_
             $htmlData.= '<tr>
 
                             <th class="text-left" colspan="2">Total Products: '.count($data).'<br>Total Qty: '.array_sum($qty_total).' L</th>
-                                    <th class="text-right" colspan="5" >
-                                        <span style="font-size:15px">Total Amount:</span><br>
+                                    <th class="text-right" colspan="5" style="font-size:18px">
+                                        <span >Total Amount:</span><br>
                                         Paid:
                                        
                             </th>
                 
-                            <th class="text-right">'.
+                            <th class="text-right" style="font-size:18px">'.
 
-                                "<span style='font-size:15px' class='totalpayable' payableamount=".($bewDat['total_amount']).">".($bewDat['total_amount']).' '.$currency['meta_value'].'</span><br>'.
+                                "<span class='totalpayable' payableamount=".($bewDat['total_amount']).">".($bewDat['total_amount']).' '.$currency['meta_value'].'</span><br>'.
 
                                 '<span>'.($bewDat['paid_amount']).' ' . $currency['meta_value'] . '</span>'.'
                                
@@ -1237,7 +1234,7 @@ if (isset($_POST['singleRefundSubmit']) && !empty($_POST['singleRefundSubmit']))
                     }else{
                         $vat = ($new_pro['vat']/100) * $prod_price;
                     }
-                    $minusAmountUps[] = $prod_price + $vat;
+                    $minusAmountUps[] = ($prod_price + $vat) * $refund_data[$search]['qty'];
                 }else{
                     echo "Error to update stock";
                 }
@@ -1782,7 +1779,7 @@ if (isset($_GET['filter_today'])){
     foreach ($todaysAmnt as $tvl){
         $todaySales[] = $tvl['total_amount'];
     }
-    $todaySaleAmount = array_sum($todaySales);
+    $todaySaleAmount = number_format(array_sum($todaySales), 2);
 
     echo '<h1 class="display-1" style="font-size: 5rem;padding: 1.6rem 0rem;line-height: 100px;">
             <strong>'. $todaySale .'</strong>
@@ -1804,7 +1801,7 @@ if (isset($_GET['filter_lastWeek'])){
     foreach ($lastWeekAmnt as $tvl){
         $lastWeekSales[] = $tvl['total_amount'];
     }
-    $lastWeekSaleAmount = array_sum($lastWeekSales);
+    $lastWeekSaleAmount = number_format(array_sum($lastWeekSales), 2);
     
     echo '<h1 class="display-1" style="font-size: 5rem;padding: 1.6rem 0rem;line-height: 100px;">
             <strong>'. $lastWeekSale .'</strong>
@@ -1827,7 +1824,7 @@ if (isset($_GET['filter_lastMonth'])){
     foreach ($lastMonthAmnt as $tvl){
         $lastMonthSales[] = $tvl['total_amount'];
     }
-    $lastMonthSaleAmount = array_sum($lastMonthSales);
+    $lastMonthSaleAmount = number_format(array_sum($lastMonthSales), 2);
 
     echo '<h1 class="display-1" style="font-size: 5rem;padding: 1.6rem 0rem;line-height: 100px;">
             <strong>'. $lastMonthSale .'</strong>
@@ -1852,7 +1849,7 @@ if (isset($_GET['filter_today_exp'])){
     $todayExpAmount = array_sum($todayExp);
 
     echo '<span class="display-1" style="font-size: 4rem;padding: 3rem 0rem;line-height: 169px;">
-            <strong>'. $todayExpAmount .'</strong>
+            <strong>'. number_format($todayExpAmount, 2) .'</strong>
           </span>
           <span style="font-size: 2rem;">'.$currency['meta_value'].'</span>';
 }
@@ -1870,7 +1867,7 @@ if (isset($_GET['filter_lastWeek_exp'])){
     $lastWeekExpAmount = array_sum($lastWeekExp);
 
     echo '<span class="display-1" style="font-size: 4rem;padding: 3rem 0rem;line-height: 169px;">
-            <strong>'. $lastWeekExpAmount .'</strong>
+            <strong>'. number_format($lastWeekExpAmount, 2) .'</strong>
           </span>
           <span style="font-size: 2rem;">'.$currency['meta_value'].'</span>';
 }
@@ -1889,7 +1886,7 @@ if (isset($_GET['filter_lastMonth_exp'])){
     $lastMonthExpAmount = array_sum($lastMonthExp);
 
     echo '<span class="display-1" style="font-size: 4rem;padding: 3rem 0rem;line-height: 169px;">
-            <strong>'. $lastMonthExpAmount .'</strong>
+            <strong>'. number_format($lastMonthExpAmount, 2) .'</strong>
           </span>
           <span style="font-size: 2rem;">'.$currency['meta_value'].'</span>';
 }
@@ -1906,7 +1903,7 @@ if (isset($_GET['filter_total_exp'])){
     $totalExpAmount = array_sum($totalExp);
 
     echo '<span class="display-1" style="font-size: 4rem;padding: 3rem 0rem;line-height: 169px;">
-            <strong>'. $totalExpAmount .'</strong>
+            <strong>'. number_format($totalExpAmount, 2) .'</strong>
           </span>
           <span style="font-size: 2rem;">'.$currency['meta_value'].'</span>';
 }
@@ -2329,7 +2326,7 @@ if (isset($_GET['mi_custom_key_for_orderData']) && !empty($_GET['mi_custom_key_f
                 </label>
             </div>',
             $d['trx_id'],
-            $d['cname'],
+            ($d['cid'] !=0 ?$d['cname']:'Unknown'),
             'Items: '.$order_items.'<br>Qty: '.array_sum($order_qty). ' L',
             (number_format($d['total_amount'], 2))." ".$currency['meta_value']."
                 <br>

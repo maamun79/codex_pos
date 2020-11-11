@@ -42,23 +42,24 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                     base64_decode($_SESSION['session_type']) == "mi_1" ||
                                     base64_decode($_SESSION['session_type']) == "mi_2"){?>
                                     <th style="max-width: 50px;">
-                                        <div class="checkbox pull-left">
-                                            <label style="font-size: 1.5em">
-                                                <input type="checkbox" value="" class="selectAll">
-                                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>
-                                            </label>
-                                        </div>
+<!--                                        <div class="checkbox pull-left">-->
+<!--                                            <label style="font-size: 1.5em">-->
+<!--                                                <input type="checkbox" value="" class="selectAll">-->
+<!--                                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>-->
+<!--                                            </label>-->
+<!--                                        </div>-->
+                                        #
                                     </th>
                                 <?php }else{?>
-                                    <th>SL.</th>
+                                    <th class="table_font_small">SL.</th>
                                 <?php }?>
-                                <th>Order ID</th>
-                                <th>Customer</th>
-                                <th>Details</th>
-                                <th>Total Amount</th>
-                                <th>Order Date</th>
-                                <th>Total Due</th>
-                                <th>Actions</th>
+                                <th class="table_font_small">Order ID</th>
+                                <th class="table_font_small">Customer</th>
+                                <th class="table_font_small">Details</th>
+                                <th class="table_font_small">Total Amount</th>
+                                <th class="table_font_small">Order Date</th>
+                                <th class="table_font_small">Total Due</th>
+                                <th class="table_font_small">Actions</th>
                             </tr>
                             </thead>
                         </table>

@@ -105,10 +105,10 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                     </div>
                                 </th>
                                 <?php }?>
-                                <th>Expense Title</th>
-                                <th>Expense Amount</th>
-                                <th>Expense Date</th>
-                                <th>Added By</th>
+                                <th class="table_font_small">Expense Title</th>
+                                <th class="table_font_small">Expense Amount</th>
+                                <th class="table_font_small">Expense Date</th>
+                                <th class="table_font_small">Added By</th>
                                 <?php if (base64_decode($_SESSION['session_type']) == "mi_1"){?>
                                 <th>Action</th>
                                 <?php }?>

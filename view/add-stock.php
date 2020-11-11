@@ -227,7 +227,7 @@ foreach ($data as $dd){
                                 <th colspan="8"></th>
                             </tr>
                             <tr>
-                                <th style="max-width: 50px;">
+                                <th style="max-width: 50px;" class="table_font_small">
                                     <!--  <div class="checkbox pull-left">
                                          <label style="font-size: 1.5em">
                                              <input type="checkbox" value="" class="selectAll">
@@ -236,13 +236,13 @@ foreach ($data as $dd){
                                      </div> -->
                                     #
                                 </th>
-                                <th>Product</th>
-                                <th>Supplier</th>
+                                <th class="table_font_small text-left">Product</th>
+                                <th class="table_font_small">Supplier</th>
                                 <!--                        <th>Attach.</th>-->
-                                <th>Qty (L)</th>
-                                <th>Total</th>
-                                <th>Due</th>
-                                <th>Action</th>
+                                <th class="table_font_small">Qty (L)</th>
+                                <th class="table_font_small">Total</th>
+                                <th class="table_font_small">Due</th>
+                                <th class="table_font_small">Action</th>
                             </tr>
                             </thead>
                             <tbody class="text-center">
@@ -258,7 +258,7 @@ foreach ($data as $dd){
                                             </label>
                                         </div>
                                     </td>
-                                    <td>
+                                    <td class="text-left">
                                         <a href="single_product.php?mi_pro_id=<?=$d['product_id'];?>">
                                             <?=mi_db_read_by_id('mi_products', array('pro_id'=>$d['product_id']))[0]['pro_title'];?>
                                         </a>
@@ -272,7 +272,7 @@ foreach ($data as $dd){
                                     </td>
 
                                     <td>
-                                        <?=$d['expanse'];?> <?=$currency['meta_value']?>
+                                        <?=$d['expanse'];?> <?=$currency['meta_value']?><br>
                                         <?php if ($d['refund_date'] !== '0000-00-00 00:00:00'){?>
                                             <span class="badge badge-dark" style="font-size: 12px;">Returned</span><br>
                                             <sub>

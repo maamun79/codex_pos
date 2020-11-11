@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2020 at 01:24 PM
+-- Generation Time: Nov 11, 2020 at 04:15 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.9
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `stock_2`
+-- Database: `codex_pos`
 --
 
 -- --------------------------------------------------------
@@ -98,7 +98,27 @@ INSERT INTO `customers` (`id`, `customer_name`, `phone`, `address`, `type`, `cus
 (88, 'Honda parts', '321', 'C N B Bzaar', 1, 0),
 (89, 'Joi Enterprice', '311', 'Polash', 1, 0),
 (90, 'Test 2', '+8806068829238', '126 North Bend River Road', 1, 0),
-(91, 'meta', '6068829238', '126 North Bend River Road', 1, 0);
+(91, 'meta1', '6068829238', '126 North Bend River Road', 1, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `expense_type`
+--
+
+CREATE TABLE `expense_type` (
+  `id` int(11) NOT NULL,
+  `type` varchar(100) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `expense_type`
+--
+
+INSERT INTO `expense_type` (`id`, `type`, `created_at`) VALUES
+(1, 'Tea cost', '2020-11-09 20:46:24'),
+(2, 'Biscuit', '2020-11-09 21:01:18');
 
 -- --------------------------------------------------------
 
@@ -155,14 +175,12 @@ CREATE TABLE `mi_orders` (
   `order_id` int(11) NOT NULL,
   `order_products_details` text NOT NULL,
   `trx_id` text NOT NULL,
-  `total_due` float NOT NULL,
-  `no_tax_amount` float NOT NULL,
-  `tax_percentage` int(11) NOT NULL,
+  `total_amount` float NOT NULL,
+  `paid_amount` float NOT NULL,
   `order_created` datetime NOT NULL DEFAULT current_timestamp(),
   `refund_date` datetime NOT NULL,
   `single_refund_date` datetime NOT NULL,
   `order_extra_note` text NOT NULL,
-  `order_extra_amount` text NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `customer_id` int(11) NOT NULL,
   `customer_name` text DEFAULT NULL,
@@ -174,31 +192,24 @@ CREATE TABLE `mi_orders` (
 -- Dumping data for table `mi_orders`
 --
 
-INSERT INTO `mi_orders` (`order_id`, `order_products_details`, `trx_id`, `total_due`, `no_tax_amount`, `tax_percentage`, `order_created`, `refund_date`, `single_refund_date`, `order_extra_note`, `order_extra_amount`, `user_id`, `customer_id`, `customer_name`, `customer_phone`, `customer_address`) VALUES
-(93, '{\"pro_id\":\"228\",\"pro_qty\":\"1\"}, {\"pro_id\":\"226\",\"pro_qty\":\"1\"}', '6c2e4eb9165', 40, 730, 5, '2020-10-18 21:41:14', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Extra Note and Add/Less Details', '-80', 1, 0, NULL, NULL, NULL),
-(94, '{\"pro_id\":\"228\",\"pro_qty\":\"1\"}', '6ef1beda493', 40, 80, 5, '2020-10-18 21:45:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', '0', 1, 0, NULL, NULL, NULL),
-(95, '{\"pro_id\":\"228\",\"pro_qty\":\"1\"}, {\"pro_id\":\"226\",\"pro_qty\":\"1\"}', '4e42922c785', 60, 730, 5, '2020-10-18 21:51:07', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Extra Note and Add/Less Details', '-6', 1, 0, NULL, NULL, NULL),
-(96, '{\"pro_id\":\"230\",\"pro_qty\":\"2\"}, {\"pro_id\":\"228\",\"pro_qty\":\"2\"}', 'ba964103248', 100, 800, 5, '2020-10-18 22:00:48', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Extra Note and Add/Less Details', '-40', 1, 0, NULL, NULL, NULL),
-(97, '{\"pro_id\":\"230\",\"pro_qty\":\"2\"}, {\"pro_id\":\"228\",\"pro_qty\":\"2\"}', '3482a805919', 100, 800, 5, '2020-10-18 22:04:41', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Extra Note and Add/Less Details', '-40', 1, 0, NULL, NULL, NULL),
-(98, '{\"pro_id\":\"230\",\"pro_qty\":\"1\"}, {\"pro_id\":\"228\",\"pro_qty\":\"2\"}', '6d0d2b8b46', 100, 480, 5, '2020-10-18 22:06:14', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Extra Note and Add/Less Details', '-4', 1, 0, NULL, NULL, NULL),
-(99, '{\"pro_id\":\"230\",\"pro_qty\":\"1\"}, {\"pro_id\":\"228\",\"pro_qty\":\"1\"}', '012fb38a961', 0, 400, 5, '2020-10-18 22:06:57', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', '0', 1, 0, NULL, NULL, NULL),
-(100, '{\"pro_id\":\"230\",\"pro_qty\":\"1\"}, {\"pro_id\":\"228\",\"pro_qty\":\"1\"}', 'a7860fb1171', 50, 400, 5, '2020-10-18 22:07:28', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Extra Note and Add/Less Details', '-20', 1, 0, NULL, NULL, NULL),
-(101, '{\"pro_id\":\"230\",\"pro_qty\":\"1\"}, {\"pro_id\":\"228\",\"pro_qty\":0}', '319153f4480', 10, 320, 5, '2020-10-18 22:09:47', '0000-00-00 00:00:00', '2020-10-19 00:39:37', 'Extra Note and Add/Less Details', '-20', 1, 0, NULL, NULL, NULL),
-(102, '{\"pro_id\":\"228\",\"pro_qty\":\"1\"}, {\"pro_id\":\"230\",\"pro_qty\":0}', 'f61142ec161', 0, 80, 5, '2020-10-18 22:12:51', '0000-00-00 00:00:00', '2020-10-19 00:36:43', 'Extra Note and Add/Less Details', '-20', 1, 0, NULL, NULL, NULL),
-(103, '{\"pro_id\":\"229\",\"pro_qty\":\"1\"}, {\"pro_id\":\"231\",\"pro_qty\":0}', 'ec4234a2513', 0, 150, 5, '2020-10-18 22:13:29', '2020-10-19 00:39:55', '2020-10-18 23:20:59', 'Extra Note and Add/Less Details', '-10', 1, 0, NULL, NULL, NULL),
-(104, '{\"pro_id\":\"228\",\"pro_qty\":\"1\"}', '3eaece70540', 20, 80, 5, '2020-10-19 02:59:49', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Extra Note and Add/Less Details', '-4', 1, 0, NULL, NULL, NULL),
-(105, '{\"pro_id\":\"228\",\"pro_qty\":\"2\"}, {\"pro_id\":\"226\",\"pro_qty\":\"2\"}', '4c0684ff879', 0, 1460, 5, '2020-10-19 03:11:04', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', '0', 1, 0, NULL, NULL, NULL),
-(106, '{\"pro_id\":\"230\",\"pro_qty\":\"2\"}, {\"pro_id\":\"228\",\"pro_qty\":\"2\"}', 'b64656f0952', 0, 800, 5, '2020-10-19 03:12:22', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', '0', 1, 0, '', 0, ''),
-(107, '{\"pro_id\":\"230\",\"pro_qty\":\"1\"}, {\"pro_id\":\"228\",\"pro_qty\":\"1\"}', '1d0e262b694', 0, 400, 5, '2020-10-19 03:19:06', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', '0', 1, 0, 'Test 1', 2147483647, '126 North Bend River Road'),
-(108, '{\"pro_id\":\"228\",\"pro_qty\":\"1\"}, {\"pro_id\":\"226\",\"pro_qty\":\"1\"}', 'be81884d520', 36, 730, 5, '2020-10-19 14:55:17', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Extra Note and Add/Less Details', '-30', 1, 0, '', 0, ''),
-(109, '{\"pro_id\":\"230\",\"pro_qty\":\"2\"}, {\"pro_id\":\"228\",\"pro_qty\":\"2\"}', '1e48cdff630', 100, 800, 5, '2020-10-19 15:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Extra Note and Add/Less Details', '-40', 1, 91, '', 0, ''),
-(110, '{\"pro_id\":\"230\",\"pro_qty\":\"1\"}, {\"pro_id\":\"228\",\"pro_qty\":\"1\"}', 'a7c3c79c253', 0, 400, 5, '2020-10-19 15:41:46', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', '0', 1, 0, '', 0, ''),
-(111, '{\"pro_id\":\"228\",\"pro_qty\":\"1\"}, {\"pro_id\":\"230\",\"pro_qty\":\"1\"}', 'fcae7cf0861', 0, 400, 5, '2020-10-19 15:44:56', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', '0', 1, 0, '', 0, ''),
-(112, '{\"pro_id\":\"226\",\"pro_qty\":\"1\"}, {\"pro_id\":\"228\",\"pro_qty\":\"1\"}', '3dfd78ec616', 0, 730, 5, '2020-10-20 17:01:21', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', '0', 1, 90, '', 0, ''),
-(113, '{\"pro_id\":\"227\",\"pro_qty\":\"1\"}', 'b0ce2b413', 0, 510, 5, '2020-10-22 00:05:31', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', '0', 1, 0, '', 0, ''),
-(114, '{\"pro_id\":\"229\",\"pro_qty\":\"2\"}, {\"pro_id\":\"227\",\"pro_qty\":\"2\"}', 'fc73b319851', 100, 1320, 5, '2020-10-22 00:06:17', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Extra Note and Add/Less Details', '-20', 1, 0, '', 0, ''),
-(115, '{\"pro_id\":\"227\",\"pro_qty\":\"1\"}, {\"pro_id\":\"225\",\"pro_qty\":\"1\"}', 'a781905e288', 100, 830, 5, '2020-10-22 01:07:45', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Extra Note and Add/Less Details', '10', 1, 0, '', 0, ''),
-(116, '{\"pro_id\":\"227\",\"pro_qty\":\"1\"}, {\"pro_id\":\"225\",\"pro_qty\":\"1\"}', '93e351cf266', 70, 830, 5, '2020-10-22 01:17:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Extra Note and Add/Less Details', '-1.5', 1, 0, '', 0, '');
+INSERT INTO `mi_orders` (`order_id`, `order_products_details`, `trx_id`, `total_amount`, `paid_amount`, `order_created`, `refund_date`, `single_refund_date`, `order_extra_note`, `user_id`, `customer_id`, `customer_name`, `customer_phone`, `customer_address`) VALUES
+(150, '{\"pro_id\":\"240\",\"pro_qty\":4,\"pro_price\":\"200\",\"discount\":\"5\",\"vat_id\":\"1\",\"vat\":\"5\"}, {\"pro_id\":\"238\",\"pro_qty\":3,\"pro_price\":\"115\",\"discount\":\"2\",\"vat_id\":\"3\",\"vat\":\"10\"}', '79419168343', 1293.88, 1293.88, '2020-11-10 15:27:03', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 90, NULL, NULL, NULL),
+(151, '{\"pro_id\":\"240\",\"pro_qty\":1,\"pro_price\":\"200\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', '3ddb048b15', 400, 400, '2020-11-10 15:47:02', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 89, NULL, NULL, NULL),
+(152, '{\"pro_id\":\"240\",\"pro_qty\":\"3\",\"pro_price\":\"200\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', 'f32d69a3518', 600, 0, '2020-11-10 15:55:19', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 0, NULL, NULL, NULL),
+(153, '{\"pro_id\":\"240\",\"pro_qty\":2,\"pro_price\":\"200\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', '7259dbe6576', 400, 400, '2020-11-10 15:56:43', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 0, NULL, NULL, NULL),
+(154, '{\"pro_id\":\"240\",\"pro_qty\":\"2\",\"pro_price\":\"200\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', 'a48eb1ca68', 400, 300, '2020-11-10 16:27:37', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 0, NULL, NULL, NULL),
+(155, '{\"pro_id\":\"236\",\"pro_qty\":\"3\",\"pro_price\":\"100\",\"discount\":\"5\",\"vat_id\":\"1\",\"vat\":\"5\"}, {\"pro_id\":\"240\",\"pro_qty\":\"2\",\"pro_price\":\"200\",\"discount\":\"2\",\"vat_id\":\"3\",\"vat\":\"10\"}', '009a574a736', 730.45, 0, '2020-11-10 16:44:25', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 0, NULL, NULL, NULL),
+(156, '{\"pro_id\":\"239\",\"pro_qty\":\"1\",\"pro_price\":\"120\",\"discount\":\"5\",\"vat_id\":\"1\",\"vat\":\"5\"}, {\"pro_id\":\"237\",\"pro_qty\":\"1\",\"pro_price\":\"110\",\"discount\":\"2\",\"vat_id\":\"3\",\"vat\":\"10\"}', 'f17786b1358', 238.28, 238.28, '2020-11-10 17:36:03', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 0, NULL, NULL, NULL),
+(157, '{\"pro_id\":\"240\",\"pro_qty\":\"1\",\"pro_price\":\"200\",\"discount\":\"5\",\"vat_id\":\"1\",\"vat\":\"5\"}, {\"pro_id\":\"238\",\"pro_qty\":\"1\",\"pro_price\":\"115\",\"discount\":\"2\",\"vat_id\":\"3\",\"vat\":\"10\"}', 'b7aec494384', 323.47, 320, '2020-11-10 17:37:16', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 0, NULL, NULL, NULL),
+(158, '{\"pro_id\":\"239\",\"pro_qty\":\"1\",\"pro_price\":\"120\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"240\",\"pro_qty\":\"1\",\"pro_price\":\"200\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', '7bd69efa943', 320, 320, '2020-11-10 18:15:20', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 0, NULL, NULL, NULL),
+(159, '{\"pro_id\":\"240\",\"pro_qty\":0,\"pro_price\":\"200\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"238\",\"pro_qty\":\"1\",\"pro_price\":\"115\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', 'cfceb794238', 115, 115, '2020-11-10 18:15:37', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 0, NULL, NULL, NULL),
+(160, '{\"pro_id\":\"240\",\"pro_qty\":0,\"pro_price\":\"200\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"238\",\"pro_qty\":\"1\",\"pro_price\":\"115\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', '0d137126295', 115, 115, '2020-11-10 18:23:16', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'test', 1, 0, NULL, NULL, NULL),
+(161, '{\"pro_id\":\"239\",\"pro_qty\":\"1\",\"pro_price\":\"120\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"237\",\"pro_qty\":\"1\",\"pro_price\":\"110\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', '59d3829492', 230, 230, '2020-11-10 18:41:14', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 0, NULL, NULL, NULL),
+(162, '{\"pro_id\":\"239\",\"pro_qty\":\"1\",\"pro_price\":\"120\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"237\",\"pro_qty\":\"1\",\"pro_price\":\"110\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', 'cd7f80d2969', 230, 230, '2020-11-10 18:41:28', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'test1', 1, 0, NULL, NULL, NULL),
+(163, '{\"pro_id\":\"240\",\"pro_qty\":\"1\",\"pro_price\":\"200\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"238\",\"pro_qty\":\"1\",\"pro_price\":\"115\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', 'c1345fb7705', 315, 315, '2020-11-10 18:44:27', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'test', 1, 0, NULL, NULL, NULL),
+(164, '{\"pro_id\":\"239\",\"pro_qty\":1,\"pro_price\":\"120\",\"discount\":\"2\",\"vat_id\":\"1\",\"vat\":\"5\"}, {\"pro_id\":\"237\",\"pro_qty\":1,\"pro_price\":\"110\",\"discount\":\"5\",\"vat_id\":\"3\",\"vat\":\"10\"}', 'f6fd5473182', 238.43, 238.43, '2020-11-10 19:07:57', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 91, NULL, NULL, NULL),
+(165, '{\"pro_id\":\"237\",\"pro_qty\":\"2\",\"pro_price\":\"110\",\"discount\":\"0\",\"vat_id\":\"1\",\"vat\":\"5\"}, {\"pro_id\":\"239\",\"pro_qty\":\"2\",\"pro_price\":\"120\",\"discount\":\"0\",\"vat_id\":\"3\",\"vat\":\"10\"}, {\"pro_id\":\"236\",\"pro_qty\":\"2\",\"pro_price\":\"100\",\"discount\":\"0\",\"vat_id\":\"1\",\"vat\":\"5\"}, {\"pro_id\":\"234\",\"pro_qty\":\"2\",\"pro_price\":\"135\",\"discount\":\"0\",\"vat_id\":\"3\",\"vat\":\"10\"}, {\"pro_id\":\"235\",\"pro_qty\":\"2\",\"pro_price\":\"140\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"232\",\"pro_qty\":\"1\",\"pro_price\":\"120\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"238\",\"pro_qty\":\"1\",\"pro_price\":\"115\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"240\",\"pro_qty\":\"1\",\"pro_price\":\"200\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"233\",\"pro_qty\":\"1\",\"pro_price\":\"150\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', '9a2d6414257', 1867, 1867, '2020-11-11 00:09:31', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 0, NULL, NULL, NULL),
+(166, '{\"pro_id\":\"239\",\"pro_qty\":\"2\",\"pro_price\":\"120\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"237\",\"pro_qty\":\"1\",\"pro_price\":\"110\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"240\",\"pro_qty\":\"1\",\"pro_price\":\"200\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"238\",\"pro_qty\":\"1\",\"pro_price\":\"115\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', 'e9fa90af940', 665, 665, '2020-11-11 20:42:07', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 0, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -231,15 +242,15 @@ CREATE TABLE `mi_products` (
 --
 
 INSERT INTO `mi_products` (`pro_id`, `pro_title`, `pro_price`, `pro_img`, `pro_stock`, `pro_stock_type`, `pro_brand`, `pro_cat`, `pro_status`, `pro_added`, `pro_supplier`, `pro_in_total_stock`, `last_stock_load_qty`, `last_stock_updated`, `pro_serial`, `buy_price`, `pro_model_number`) VALUES
-(222, 'Albaik', 450, 'f0ffe31187c0fd3149e14f33a9aeac54albaik.png', 50, 1, 46, 14, 1, '2020-09-10 15:22:02', 0, 15, 10, '2020-10-09 01:31:39', '', 350, 'AK-205'),
-(223, 'Burger', 360, 'f3e5bbb3a4518ff9208f1d5195fe63aeburger.png', 40, 1, 46, 15, 1, '2020-09-10 15:22:38', 0, 20, 10, '2020-10-09 01:32:52', '', 300, 'BK-002'),
-(224, 'French Fry', 120, 'd0e14c11c1da30484efcb1c58fcaa4e5french_fry.png', 49, 1, 46, 15, 1, '2020-09-10 15:23:12', 0, 25, 10, '2020-10-09 01:33:26', '', 80, 'FK-603'),
-(225, 'Nugget', 320, '37c8b2e98edaaa0de9f87d1889bb9a1bnugget.png', 47, 1, 46, 14, 1, '2020-09-10 15:23:50', 0, 21, 10, '2020-10-09 01:33:44', '', 250, 'NK-807'),
-(226, 'Pizza', 650, 'e4b2afb3c691cc6cc8ad7a70a7e5457apizza.png', 32, 1, 46, 14, 1, '2020-09-10 15:24:21', 0, 22, 10, '2020-10-09 01:34:04', '', 500, 'PK-608'),
-(227, 'Pupps Nuggs Chili Cheese', 510, '8d7e47209d28c5ee13a7c149434a1df6PuppsNuggs_Chili_Cheese_Pup.png', 33, 1, 46, 14, 1, '2020-09-10 15:25:27', 0, 18, 10, '2020-10-09 01:34:37', '[]', 300, 'PK=903'),
-(228, 'Samosa', 80, '5f9cdda2c0489400571080300ed6c3c2samosa.jpg', 18, 1, 46, 15, 1, '2020-09-10 15:25:57', 0, 15, 15, '2020-09-10 15:32:53', '', 100, 'SK-101'),
-(229, 'Sandwich', 150, 'f67117ba2ac43947039c0ac9dac80535sandwich.png', 41, 1, 46, 14, 1, '2020-09-10 15:26:31', 0, 11, 11, '2020-09-10 15:33:20', '', 200, 'SK-505'),
-(230, 'Spanish Omelette', 320, 'f91e9af6ba71f27507d13f55e93f3183spanish-omelette.png', 30, 1, 46, 14, 1, '2020-09-10 15:27:14', 0, 20, 20, '2020-09-10 15:33:48', '', 250, 'SO-777');
+(232, 'Air Compressor Oils', 120, '5e74d90269546c4fdcd59a8990eaf90fmak-compressor-oil-500x500.png', 499, 1, 47, 16, 1, '2020-11-10 14:21:23', 0, 500, 500, '2020-11-10 15:18:18', '', 80, 'SB-05'),
+(233, 'Hydraulic Oil', 150, '5a7911694327ba624169137828e75dd5155285.png', 199, 1, 48, 16, 1, '2020-11-10 14:22:36', 0, 200, 200, '2020-11-10 15:19:22', '', 120, 'SK-101'),
+(234, 'Turbine Oil', 135, 'fa11ba6b8f9010f6dbf0ce62936dc77bP66_1Q_TURBINE_OIL_32-1.png', 148, 1, 48, 16, 1, '2020-11-10 14:23:28', 0, 150, 150, '2020-11-10 15:19:54', '', 110, 'ST-002'),
+(235, 'Rock Drill Lubricant', 140, 'e503148cf1bd3af800e322ccb91e3c5f20L-ROCK-DRILL-100-460.png', 198, 1, 47, 17, 1, '2020-11-10 14:24:18', 0, 200, 200, '2020-11-10 15:21:08', '', 120, 'SD-005'),
+(236, 'Mobil 1', 100, 'b7f9900f46af160e153df8f4df639f09Mobil 1 V Twin Oil 20W 50 fs square md.jpg', 245, 1, 47, 17, 1, '2020-11-10 14:58:50', 0, 250, 250, '2020-11-10 15:21:30', '', 80, '20W-50'),
+(237, 'Valvoline Motor Oil', 110, '4a7a251aa741983b183f3f2b4d34dca31155.05.png', 193, 1, 48, 17, 1, '2020-11-10 15:00:43', 0, 200, 200, '2020-11-10 15:22:01', '', 90, 'VM-007'),
+(238, 'Pennzoil Motor Oil', 115, 'f232d18c23b3b2e161877dd59304a0c1pennzoil-gt-performance-racing-25w-50.png', 91, 1, 47, 17, 1, '2020-11-10 15:02:01', 0, 100, 100, '2020-11-10 15:22:39', '', 100, 'PM-001'),
+(239, 'Amsoil Synthetic Motor Oil', 120, '1642f43985ea6975776ff68f3fe4a8f707ace4ec70536130b0023fd96e63573d.jpg', 141, 1, 48, 17, 1, '2020-11-10 15:03:19', 0, 150, 150, '2020-11-10 15:23:04', '', 105, 'AS-002'),
+(240, 'Daphne Marine Oil', 200, '74bb2815a1fa1560c26083efcebe6addIdemitsu-lubricant.png', 181, 1, 47, 18, 1, '2020-11-10 15:06:02', 0, 200, 200, '2020-11-10 15:23:31', '', 180, '15W-40');
 
 -- --------------------------------------------------------
 
@@ -261,7 +272,8 @@ CREATE TABLE `mi_product_brand` (
 --
 
 INSERT INTO `mi_product_brand` (`br_id`, `br_title`, `br_slug`, `br_icon`, `br_icon_type`, `br_added`) VALUES
-(46, 'B-1', 'b-1', 'fab fa-adn', 2, '2020-09-10 15:21:14');
+(47, 'Red', 'red', '', 2, '2020-11-07 16:14:42'),
+(48, 'Natural', 'natural', '', 0, '2020-11-07 16:15:11');
 
 -- --------------------------------------------------------
 
@@ -273,16 +285,11 @@ CREATE TABLE `mi_product_cart` (
   `cart_id` int(11) NOT NULL,
   `pro_id` int(11) NOT NULL,
   `pro_qty` int(11) NOT NULL,
+  `vat_id` int(11) NOT NULL,
+  `discount` float NOT NULL,
   `cart_added` datetime NOT NULL DEFAULT current_timestamp(),
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `mi_product_cart`
---
-
-INSERT INTO `mi_product_cart` (`cart_id`, `pro_id`, `pro_qty`, `cart_added`, `user_id`) VALUES
-(140, 228, 1, '2020-10-18 20:28:21', 0);
 
 -- --------------------------------------------------------
 
@@ -304,8 +311,9 @@ CREATE TABLE `mi_product_category` (
 --
 
 INSERT INTO `mi_product_category` (`cat_id`, `cat_title`, `cat_slug`, `cat_icn`, `cat_icon_type`, `cat_added`) VALUES
-(14, 'Fast Food', 'fastfood', 'fas fa-atlas', 2, '2020-09-10 15:20:15'),
-(15, 'Drinks', 'drinks', 'fab fa-affiliatetheme', 2, '2020-09-10 15:20:31');
+(16, 'Industrial', 'industrial', 'fas fa-archway', 2, '2020-11-07 16:02:10'),
+(17, 'Automotive', 'automotive', 'fas fa-ambulance', 2, '2020-11-07 16:02:44'),
+(18, 'Marine', 'marine', 'fab fa-docker', 2, '2020-11-07 16:04:01');
 
 -- --------------------------------------------------------
 
@@ -343,9 +351,9 @@ CREATE TABLE `mi_purchase_vat` (
   `vtaxdetails` text NOT NULL,
   `vtaxadded` datetime NOT NULL DEFAULT current_timestamp(),
   `vtaxstatus` int(11) DEFAULT 1,
-  `purchase_extra` text NOT NULL,
+  `note` text NOT NULL,
   `extra_amount` text DEFAULT NULL,
-  `due` int(11) NOT NULL,
+  `paid` float NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -353,8 +361,9 @@ CREATE TABLE `mi_purchase_vat` (
 -- Dumping data for table `mi_purchase_vat`
 --
 
-INSERT INTO `mi_purchase_vat` (`vid`, `vtax`, `vtaxdetails`, `vtaxadded`, `vtaxstatus`, `purchase_extra`, `extra_amount`, `due`, `user_id`) VALUES
-(1, 5, 'VAT', '2019-08-22 01:14:47', 1, '', '0', 0, 1);
+INSERT INTO `mi_purchase_vat` (`vid`, `vtax`, `vtaxdetails`, `vtaxadded`, `vtaxstatus`, `note`, `extra_amount`, `paid`, `user_id`) VALUES
+(1, 5, 'VAT', '2019-08-22 01:14:47', 1, 'Extra Note and Add/Less Details', '0', 0, 1),
+(3, 10, 'Tax', '2019-08-22 01:14:47', 1, 'Extra Note and Add/Less Details', '0', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -383,12 +392,15 @@ CREATE TABLE `mi_stocks` (
 --
 
 INSERT INTO `mi_stocks` (`stock_id`, `supplier_id`, `product_id`, `stock_qty`, `invoice_id`, `invoice_picture`, `expanse`, `unit_price`, `ex_due`, `ex_note`, `upload_date`, `refund_date`, `pro_serials`) VALUES
-(59, 5, 222, 10, '', '', 3500, 350, 150, '', '2020-10-09 01:31:39', '0000-00-00 00:00:00', ''),
-(60, 5, 223, 10, '', '', 3000, 300, 0, '', '2020-10-09 01:32:52', '2020-10-19 01:28:57', ''),
-(61, 5, 224, 10, '', '', 800, 80, 0, '', '2020-10-09 01:33:26', '0000-00-00 00:00:00', ''),
-(62, 5, 225, 10, '', '', 2500, 250, 0, '', '2020-10-09 01:33:44', '0000-00-00 00:00:00', ''),
-(63, 5, 226, 0, '', '', 0, 500, 0, '', '2020-10-09 01:34:04', '2020-10-19 01:28:45', ''),
-(64, 5, 227, 10, '', '', 3000, 300, 0, '', '2020-10-09 01:34:37', '2020-10-19 01:21:30', '');
+(69, 5, 232, 500, '', '', 40000, 80, 0, '', '2020-11-10 15:18:17', '0000-00-00 00:00:00', ''),
+(70, 5, 233, 200, '', '', 24000, 120, 0, '', '2020-11-10 15:19:22', '0000-00-00 00:00:00', ''),
+(71, 5, 234, 150, '', '', 16500, 110, 0, '', '2020-11-10 15:19:54', '0000-00-00 00:00:00', ''),
+(72, 5, 235, 200, '', '', 24000, 120, 0, '', '2020-11-10 15:21:08', '0000-00-00 00:00:00', ''),
+(73, 5, 236, 250, '', '', 20000, 80, 0, '', '2020-11-10 15:21:30', '0000-00-00 00:00:00', ''),
+(74, 5, 237, 200, '', '', 18000, 90, 0, '', '2020-11-10 15:22:01', '0000-00-00 00:00:00', ''),
+(75, 5, 238, 100, '', '', 10000, 100, 0, '', '2020-11-10 15:22:39', '0000-00-00 00:00:00', ''),
+(76, 5, 239, 150, '', '', 15750, 105, 0, '', '2020-11-10 15:23:04', '0000-00-00 00:00:00', ''),
+(77, 5, 240, 200, '', '', 36000, 180, 0, '', '2020-11-10 15:23:31', '0000-00-00 00:00:00', '');
 
 -- --------------------------------------------------------
 
@@ -432,7 +444,7 @@ INSERT INTO `mi_users` (`id`, `user_id`, `pass`, `user_name`, `user_designation`
 
 CREATE TABLE `regular_expenses` (
   `id` int(5) NOT NULL,
-  `title` varchar(100) NOT NULL,
+  `type_id` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
   `user_id` int(5) NOT NULL,
   `expense_date` datetime NOT NULL,
@@ -443,10 +455,23 @@ CREATE TABLE `regular_expenses` (
 -- Dumping data for table `regular_expenses`
 --
 
-INSERT INTO `regular_expenses` (`id`, `title`, `amount`, `user_id`, `expense_date`, `created_at`) VALUES
-(8, 'Test ', 125, 1, '2020-10-08 22:09:43', '2020-10-08 14:03:52'),
-(9, 'Test 2', 500, 1, '2020-10-03 01:25:41', '2020-10-07 19:25:41'),
-(10, 'Test 3', 250, 1, '2020-10-08 20:05:31', '2020-10-08 14:05:31');
+INSERT INTO `regular_expenses` (`id`, `type_id`, `amount`, `user_id`, `expense_date`, `created_at`) VALUES
+(8, 2, 125, 1, '2020-10-08 22:09:43', '2020-11-09 21:11:00'),
+(9, 1, 500, 1, '2020-10-03 01:25:41', '2020-11-09 20:50:08');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sales_meta`
+--
+
+CREATE TABLE `sales_meta` (
+  `id` int(11) NOT NULL,
+  `paid_amount` float DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  `note` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -466,13 +491,13 @@ CREATE TABLE `settings_meta` (
 --
 
 INSERT INTO `settings_meta` (`id`, `meta_name`, `meta_value`, `type`) VALUES
-(1, 'shop_logo', 'uploads/settings-img/9b7218b220d42cd685dc048f21d569bapngfind.com-restaurants-logo-png-3409742.png', 'image'),
+(1, 'shop_logo', 'uploads/settings-img/428ea692ce174a13f4f01d24e15a1340castrol.png', 'image'),
 (2, 'shop_address', 'Taher Tower Shopping Center, Suite-306 (2nd Floor) ', 'shop_details'),
 (3, 'shop_email', 'contact@softminion.com', 'shop_details'),
 (4, 'shop_phone', '01976-301-581', 'shop_details'),
 (5, 'shop_note', 'Thank you for your business!  Payment is expected within 31 days; ', 'shop_details'),
 (6, 'footer_text', 'Soft Minion', 'footer'),
-(7, 'shop_currency', '$', 'currency'),
+(7, 'shop_currency', 'Tk', 'currency'),
 (8, 'footer_link', 'https://www.softminion.com/', 'footer');
 
 --
@@ -483,6 +508,12 @@ INSERT INTO `settings_meta` (`id`, `meta_name`, `meta_value`, `type`) VALUES
 -- Indexes for table `customers`
 --
 ALTER TABLE `customers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `expense_type`
+--
+ALTER TABLE `expense_type`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -558,6 +589,12 @@ ALTER TABLE `regular_expenses`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `sales_meta`
+--
+ALTER TABLE `sales_meta`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `settings_meta`
 --
 ALTER TABLE `settings_meta`
@@ -572,6 +609,12 @@ ALTER TABLE `settings_meta`
 --
 ALTER TABLE `customers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+
+--
+-- AUTO_INCREMENT for table `expense_type`
+--
+ALTER TABLE `expense_type`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `investments`
@@ -589,31 +632,31 @@ ALTER TABLE `mi_membership`
 -- AUTO_INCREMENT for table `mi_orders`
 --
 ALTER TABLE `mi_orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=167;
 
 --
 -- AUTO_INCREMENT for table `mi_products`
 --
 ALTER TABLE `mi_products`
-  MODIFY `pro_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=232;
+  MODIFY `pro_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=241;
 
 --
 -- AUTO_INCREMENT for table `mi_product_brand`
 --
 ALTER TABLE `mi_product_brand`
-  MODIFY `br_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `br_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `mi_product_cart`
 --
 ALTER TABLE `mi_product_cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=204;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=400;
 
 --
 -- AUTO_INCREMENT for table `mi_product_category`
 --
 ALTER TABLE `mi_product_category`
-  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `mi_product_suppliers`
@@ -625,13 +668,13 @@ ALTER TABLE `mi_product_suppliers`
 -- AUTO_INCREMENT for table `mi_purchase_vat`
 --
 ALTER TABLE `mi_purchase_vat`
-  MODIFY `vid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `vid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `mi_stocks`
 --
 ALTER TABLE `mi_stocks`
-  MODIFY `stock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `stock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT for table `mi_users`
@@ -643,7 +686,13 @@ ALTER TABLE `mi_users`
 -- AUTO_INCREMENT for table `regular_expenses`
 --
 ALTER TABLE `regular_expenses`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `sales_meta`
+--
+ALTER TABLE `sales_meta`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `settings_meta`

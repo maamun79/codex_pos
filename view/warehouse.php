@@ -41,14 +41,14 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                 </label>
                             </div>
                         </th>
-                        <th>Image</th>
-                        <th>Grade</th>
-                        <th>Product Name</th>
-                        <th>Stock</th>
-                        <th>Category</th>
-                        <th>Color</th>
-                        <th>Price</th>
-                        <th>Actions</th>
+                        <th class="table_font_small">Image</th>
+                        <th class="table_font_small">Grade</th>
+                        <th class="table_font_small">Product Name</th>
+                        <th class="table_font_small">Stock</th>
+                        <th class="table_font_small">Category</th>
+                        <th class="table_font_small">Color</th>
+                        <th class="table_font_small">Price</th>
+                        <th class="table_font_small">Actions</th>
                     </tr>
                   </thead>
                   <tbody class="text-center">

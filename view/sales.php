@@ -55,7 +55,7 @@ $due_amount = array_sum($total)-$paid_amount;
               <div class="card-header">
                 <h5 class="card-title pull-left" style="margin-top: 10px !important;">All Products</h5>
                   <select type="text" id="sort_brand" class="pull-right" style="height: 30px;margin-left: 10px; margin-top: 0; max-width: 150px;">
-                      <option value="0">Brand</option>
+                      <option value="0">Color</option>
                       <?php
                       $getCat = mi_db_read_all('mi_product_brand', 'br_id', 'DESC');
                       foreach ($getCat as $ct){
@@ -83,8 +83,8 @@ $due_amount = array_sum($total)-$paid_amount;
                       </div>
 
                       <div class="d-flex justify-content-center">
-                          <button class="btn btn-success btn-sm" id="page-prev"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Prev</button>
-                          <button class="btn btn-success btn-sm" id="page-next">Next <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
+                          <button class="btn btn-success btn-sm rounded-0" id="page-prev"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Prev</button>
+                          <button class="btn btn-success btn-sm rounded-0" id="page-next">Next <i class="fa fa-angle-double-right" aria-hidden="true"></i></button>
                       </div>
 
 
@@ -99,10 +99,7 @@ $due_amount = array_sum($total)-$paid_amount;
                 <div class="card" style="max-height: 775px;">
                     <div class="card-header ">
                         <h5 class="card-title pull-left"><i class="nc-icon nc-bag-16"></i> User Basket</h5>
-                        <button class="btn btn-danger btn-sm pull-right cart_clear_btn">Clear <i class="nc-icon nc-simple-remove"></i></button>
-                        <form id="mi_barcode_proCart" autocomplete="off">
-                            <input type="text" class="mi_pro_for_bar" autocomplete="off" id="mi_pro_for_bar" name="pro_id">
-                        </form>
+                        <button class="btn btn-danger btn-sm pull-right cart_clear_btn rounded-0">Clear <i class="nc-icon nc-simple-remove"></i></button>
                     </div>
 
                     
@@ -112,13 +109,10 @@ $due_amount = array_sum($total)-$paid_amount;
 
 
                     <div class="card-footer ">
-                        <button class="btn btn-dark pull-left" onclick="barScanFocus()" style="margin-right: 5px;">
-                            <i class="fa fa-barcode"></i>
-                        </button>
-                        <button class="btn btn-primary pull-left mi_print_btn" style="margin-right: 5px;">
+                        <button class="btn btn-primary pull-left mi_print_btn rounded-0" style="margin-right: 5px;">
                             <i class="fa fa-print"></i>
                         </button>
-                        <button class="btn btn-success pull-left" data-toggle="modal" data-target="#addCustomerSales">
+                        <button class="btn btn-success pull-left rounded-0" data-toggle="modal" data-target="#addCustomerSales">
                             <i class="fa fa-user-alt"></i>
                         </button>
                         <div class="form-group float-left col-md-4 col-sm-6">
@@ -133,7 +127,7 @@ $due_amount = array_sum($total)-$paid_amount;
                             echo  '</select>';
                             ?>
                         </div>
-                        <button class="btn btn-primary pull-right mi_complete_purchase">Purchase</button>
+                        <button class="btn btn-primary pull-right mi_complete_purchase rounded-0">Purchase</button>
                     </div>
                 </div>
             </div>

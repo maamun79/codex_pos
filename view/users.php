@@ -143,12 +143,12 @@ if (isset($_GET['user_edit'])){
                             </div>
                         </th>
                         <?php }?>
-                        <th>Name</th>
-                        <th>Id</th>
-                        <th>Contact</th>
-                        <th>Created By</th>
-                        <th>Status</th>
-                        <th>Action</th>
+                        <th class="table_font_small">Name</th>
+                        <th class="table_font_small">Id</th>
+                        <th class="table_font_small">Contact</th>
+                        <th class="table_font_small">Created By</th>
+                        <th class="table_font_small">Status</th>
+                        <th class="table_font_small">Action</th>
                     </tr>
                   </thead>
                   <tbody class="text-center">

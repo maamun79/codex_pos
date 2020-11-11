@@ -89,8 +89,6 @@ $footer_link = mi_db_read_by_id('settings_meta', array('meta_name'=>'footer_link
 
 <script src="plugins/chart/canvasjs.min.js"></script>
 
-<!--   Core JS Files   -->
-<script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
 <!--  Notifications Plugin    -->
 <script src="assets/js/plugins/bootstrap-notify.js"></script>
 <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->

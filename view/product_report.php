@@ -52,7 +52,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                           <p><strong>Name:</strong> <?=$miProD['pro_title'];?></p>
                                           <p><strong>Sell Price:</strong> <?=$currency['meta_value']?> <?=$miProD['pro_price'];?></p>
                                           <p><strong>Buy Price:</strong> <?=$currency['meta_value']?> <?=$miProD['buy_price'];?></p>
-                                          <p><strong>Available Qty:</strong> <?=$miProD['pro_stock'];?> Pcs</p>
+                                          <p><strong>Available Qty:</strong> <?=$miProD['pro_stock'];?> L</p>
                                           <p><strong>Brand:</strong> <?=mi_db_read_by_id('mi_product_brand', array('br_id'=>$miProD['pro_brand']))[0]['br_title'];?></p>
                                           <p><strong>Category:</strong> <?=mi_db_read_by_id('mi_product_category', array('cat_id'=>$miProD['pro_cat']))[0]['cat_title'];?></p>
                                       </div>
@@ -132,7 +132,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                               </tbody>
                                               <tfoot>
                                               <th colspan="2">Total</th>
-                                              <th><?=array_sum($repOrQty);?> Pcs</th>
+                                              <th><?=array_sum($repOrQty);?> L</th>
                                               <th colspan="2"><?=$currency['meta_value']?> <?=array_sum($repOrTotal);?></th>
                                               </tfoot>
                                           </table>
@@ -156,13 +156,13 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                           <table class="table table-bordered table-striped">
                                               <thead>
                                               <tr>
-                                                  <th>#</th>
-                                                  <th>Order Id</th>
-                                                  <th>Order Quantity</th>
-                                                  <th>Product Total</th>
-                                                  <th>Order Total</th>
-                                                  <th>Order Status</th>
-                                                  <th>Order time</th>
+                                                  <th class="table_head_font_small">#</th>
+                                                  <th class="table_head_font_small">Order Id</th>
+                                                  <th class="table_head_font_small">Order Quantity</th>
+                                                  <th class="table_head_font_small">Product Total</th>
+                                                  <th class="table_head_font_small">Order Total</th>
+                                                  <th class="table_head_font_small">Order Status</th>
+                                                  <th class="table_head_font_small">Order time</th>
                                               </tr>
                                               </thead>
                                               <tbody>
@@ -187,17 +187,17 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                                                       <a class="text-body font-weight-bold" href="view_orders.php?mi_order_view=<?=$rorder['order_id'];?>"><?=$rorder['trx_id'];?></a>
                                                                   </td>
                                                                   <td>
-                                                                      <?=json_decode($v)->{'pro_qty'};?> Pcs
+                                                                      <?=json_decode($v)->{'pro_qty'};?> L
                                                                   </td>
 
                                                                   <td><?=$currency['meta_value']?> <?=($get_Prc['pro_price'] * json_decode($v)->{'pro_qty'});?></td>
-                                                                  <td><?=$currency['meta_value']?> <?=$rorder['no_tax_amount']+(($rorder['tax_percentage']/100)*$rorder['no_tax_amount']) + ((!empty($rorder['order_extra_amount']))?$rorder['order_extra_amount']:0);?></td>
+                                                                  <td><?=$currency['meta_value']?> <?=$rorder['total_amount'];?></td>
                                                                   <td><?=($rorder['refund_date'] == "0000-00-00 00:00:00")?'Active':'Refunded';?></td>
                                                                   <td><?=$rorder['order_created'];?></td>
                                                               </tr>
                                                               <?php
                                                               $getTotalQty[] = json_decode($v)->{'pro_qty'};
-                                                              $getTotalPrc[] = $rorder['no_tax_amount']+(($rorder['tax_percentage']/100)*$rorder['no_tax_amount']) + ((!empty($rorder['order_extra_amount']))?$rorder['order_extra_amount']:0);
+                                                              $getTotalPrc[] = $rorder['total_amount'];
                                                               $getTotalpro[] = ($get_Prc['pro_price'] * json_decode($v)->{'pro_qty'});
 
                                                               $router++;}}}}?>
@@ -205,7 +205,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                               <tfoot>
                                               <tr>
                                                   <th colspan="2">Total: </th>
-                                                  <th><?=array_sum($getTotalQty);?> Pcs</th>
+                                                  <th><?=array_sum($getTotalQty);?> L</th>
                                                   <th><?=$currency['meta_value']?> <?=array_sum($getTotalpro);?></th>
                                                   <th><?=$currency['meta_value']?> <?=array_sum($getTotalPrc);?></th>
                                                   <th colspan="3"></th>
@@ -231,14 +231,14 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                           <table class="table table-bordered table-striped">
                                               <thead>
                                               <tr>
-                                                  <th>#</th>
-                                                  <th>Stock Id</th>
-                                                  <th>Supplier</th>
-                                                  <th>Stock qty</th>
-                                                  <th>Stock total</th>
-                                                  <th>Product unit</th>
-                                                  <th>Supply time</th>
-                                                  <th>Supply status</th>
+                                                  <th class="table_head_font_small">#</th>
+                                                  <th class="table_head_font_small">Stock Id</th>
+                                                  <th class="table_head_font_small">Supplier</th>
+                                                  <th class="table_head_font_small">Stock qty</th>
+                                                  <th class="table_head_font_small">Stock total</th>
+                                                  <th class="table_head_font_small">Product unit</th>
+                                                  <th class="table_head_font_small">Supply time</th>
+                                                  <th class="table_head_font_small">Supply status</th>
                                               </tr>
                                               </thead>
                                               <tbody>
@@ -263,7 +263,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                                       $shower .= "<td>".$romm."</td>";
                                                       $shower .= "<td>stk_".$supUp['stock_id']."</td>";
                                                       $shower .= "<td><strong>".$repsupSup['sup_name']."</strong><br><sub>".$repsupSup['sup_company']."</sub></td>";
-                                                      $shower .= "<td>".$supUp['stock_qty']." Pcs</td>";
+                                                      $shower .= "<td>".$supUp['stock_qty']." L</td>";
                                                       $shower .= "<td>".$currency['meta_value']." ".$supUp['expanse']."</td>";
                                                       $shower .= "<td>".$currency['meta_value']." ".$supUp['unit_price']."</td>";
                                                       $shower .= "<td>".$supUp['upload_date']."</td>";
@@ -283,7 +283,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                               <tfoot>
                                               <tr>
                                                   <th colspan="3">Total:</th>
-                                                  <th><?=array_sum($supTotalQty);?> Pcs</th>
+                                                  <th><?=array_sum($supTotalQty);?> L</th>
                                                   <th><?=$currency['meta_value']?> <?=array_sum($supTotalPrc);?></th>
                                                   <th><?=$currency['meta_value']?> <?=array_sum($supTotalpro);?></th>
                                                   <th colspan="3"></th>

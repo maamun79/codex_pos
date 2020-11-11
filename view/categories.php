@@ -239,11 +239,11 @@ if (isset($_GET['mi_cat_edit'])){
                                 </label>
                             </div>
                         </th>
-                        <th>Category Icon</th>
-                        <th>Category Name</th>
-                        <th>Category Slug</th>
-                        <th>Category Icon Type</th>
-                        <th>Action</th>
+                        <th class="table_font_small">Category Icon</th>
+                        <th class="table_font_small">Category Name</th>
+                        <th class="table_font_small">Category Slug</th>
+                        <th class="table_font_small">Category Icon Type</th>
+                        <th class="table_font_small">Action</th>
                     </tr>
                   </thead>
                   <tbody class="text-center">

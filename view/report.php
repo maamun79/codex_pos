@@ -1,4 +1,5 @@
 
+<?=mi_header();?>
 <?php
 
 if (base64_decode($_SESSION['session_type']) !== "mi_1" &&
@@ -28,8 +29,10 @@ if (isset($_GET['g']) && !empty($_GET['g'])){
 }elseif(isset($_GET['get_rep'])){
 
     if (empty($_GET['rep_from'])){
-        $from = "";
-        echo mi_notifier("From date is required", "error");
+//        $from = "";
+        echo mi_notifier('From date is required', 'error');
+        mi_redirect('report.php');
+
     }else{
         $from = $_GET['rep_from']. ' 00:00:01';
     }
@@ -67,7 +70,6 @@ if (!empty(mi_get_session('alert'))  && count(mi_get_session('alert'))>0){
         margin-left: 0px !important;
     }
 </style>
-<?=mi_header();?>
 <?=mi_sidebar();?>
 <div class="main-panel">
     <?=mi_nav();?>
@@ -83,41 +85,13 @@ if (!empty(mi_get_session('alert'))  && count(mi_get_session('alert'))>0){
                         </div>
 
                         <div class="col-md-12">
-<!--                            <form action="report.php" method="get" autocomplete="off">-->
-<!--                                <div class="row">-->
-<!--                                    <div class="col-md-4 col-sm-6">-->
-<!--                                        <div class="input-group">-->
-<!--                                            <input type="text" name="rep_from" class="form-control datepicker" data-date-format="yyyy-mm-dd" placeholder="Choose from date" autocomplete="off">-->
-<!--                                            <div class="input-group-prepend">-->
-<!--                                              <span class="input-group-text">-->
-<!--                                                  <i class="nc-icon nc-calendar-60"></i>-->
-<!--                                              </span>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    <div class="col-md-4 col-sm-6">-->
-<!--                                        <div class="input-group">-->
-<!--                                            <input type="text" name="rep_to" class="form-control datepicker" data-date-format="yyyy-mm-dd" placeholder="Choose to date" autocomplete="off">-->
-<!--                                            <div class="input-group-prepend">-->
-<!--                                              <span class="input-group-text">-->
-<!--                                                  <i class="nc-icon nc-calendar-60"></i>-->
-<!--                                              </span>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    <div class="col-md-4 col-sm-6">-->
-<!--                                        <button class="btn btn-spinner" type="submit" name="get_rep" style="margin-top: 0;">Generate</button>-->
-<!--                                        <button class="btn btn-default" type="button" id="miReportPrintBtn" style="margin-top: 0;"><i class="fa fa-print"></i></button>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </form>-->
                             <a href="report.php?g=today" class="btn btn-dark <?=($pera == 'today'?'filter-active':'')?> <?=(isset($pera) || isset($_GET['get_rep'])?'':'filter-active')?>">Today</a>
                             <a href="report.php?g=last-week" class="btn btn-dark <?=($pera == 'last-week'?'filter-active':'')?>">Last Week</a>
                             <a href="report.php?g=last-month" class="btn btn-dark <?=($pera == 'last-month'?'filter-active':'')?>">Last Month</a>
                             <a href="report.php?g=last-six-month" class="btn btn-dark <?=($pera == 'last-six-month'?'filter-active':'')?>">Last Six Month</a>
                             <a href="report.php?g=last-year" class="btn btn-dark <?=($pera == 'last-year'?'filter-active':'')?>">Last Year</a>
                             <a href="report.php?g=all-time" class="btn btn-dark <?=($pera == 'all-time'?'filter-active':'')?>">All Time</a>
-                            <a class="btn btn-dark <?=($_GET['get_rep']?'filter-active':'')?>" role="button" data-toggle="collapse" href="#customReport" aria-expanded="false" aria-controls="customReport">
+                            <a class="btn btn-dark <?=($_GET['rep_from'] && !empty($_GET['rep_from'])?'filter-active':'')?>" role="button" data-toggle="collapse" href="#customReport" aria-expanded="false" aria-controls="customReport">
                                 Custom Report
                             </a>
                         </div>
@@ -214,9 +188,9 @@ if (!empty(mi_get_session('alert'))  && count(mi_get_session('alert'))>0){
                                                                         $prod_stocks[] = $prod['pro_in_total_stock'];
                                                                     }
 //                                                                    print_r(array_sum($prod_stocks)); return;
-                                                                    echo array_sum($prod_stocks).' Pcs';
+                                                                    echo array_sum($prod_stocks).' L';
                                                                 }else{
-                                                                    echo mi_db_tbl_sum('mi_products', 'pro_in_total_stock', array('pro_status' => 1), array($from, $to), 'pro_added').'Pcs';
+                                                                    echo mi_db_tbl_sum('mi_products', 'pro_in_total_stock', array('pro_status' => 1), array($from, $to), 'pro_added').'L';
                                                                 }?>
                                                             </strong>
                                                         </div>
@@ -232,9 +206,9 @@ if (!empty(mi_get_session('alert'))  && count(mi_get_session('alert'))>0){
                                                                         $prod_stocks[] = $prod['pro_stock'];
                                                                     }
 //
-                                                                    echo array_sum($prod_stocks).' Pcs';
+                                                                    echo array_sum($prod_stocks).' L';
                                                                 }else{
-                                                                    echo mi_db_tbl_sum('mi_products', 'pro_stock', array('pro_status'=> 1),  array($from, $to), 'pro_added').'Pcs';
+                                                                    echo mi_db_tbl_sum('mi_products', 'pro_stock', array('pro_status'=> 1),  array($from, $to), 'pro_added').'L';
                                                                 }?>
                                                             </strong>
                                                         </div>
@@ -619,7 +593,7 @@ if (!empty(mi_get_session('alert'))  && count(mi_get_session('alert'))>0){
 
             var chart = new CanvasJS.Chart("chartContainer", {
                 animationEnabled: true,
-                theme: "light2",
+                theme: "light",
                 title:{
                     text: "Top 5 sold products",
                 },
@@ -641,7 +615,7 @@ if (!empty(mi_get_session('alert'))  && count(mi_get_session('alert'))>0){
 
             var chart1 = new CanvasJS.Chart("chartProfitContainer", {
                 animationEnabled: true,
-                theme: "light2",
+                theme: "light",
                 title:{
                     text: "Top 5 profitable products",
                 },

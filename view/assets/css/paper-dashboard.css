@@ -4457,6 +4457,8 @@ License - nucleoapp.com/license/
   padding-bottom: 0;
 }
 
+
+
 .table>thead>tr>th {
   font-size: 14px;
   font-weight: 700;
@@ -4494,6 +4496,16 @@ License - nucleoapp.com/license/
 .table>tfoot>tr>td {
   padding: 12px 7px;
   vertical-align: middle;
+}
+
+.table-cart tbody tr td{
+  padding: 0 !important;
+  margin: 0!important;
+}
+
+.pro_details_table tbody tr td{
+  padding: 0 !important;
+  margin: 0!important;
 }
 
 .table .th-description {
@@ -4618,7 +4630,7 @@ License - nucleoapp.com/license/
 .off-canvas-sidebar .sidebar-wrapper {
   position: relative;
   height: calc(100vh - 75px);
-  overflow: auto;
+  /*overflow: auto;*/
   width: 200px;
   z-index: 4;
   padding-bottom: 100px;
@@ -6890,9 +6902,6 @@ td{
 .item{width: 24mm;}
 .itemtext{font-size: .5em;}
 
-#legalcopy{
-  margin-top: 5mm;
-}
 
 .legal{
   bottom: 0px;
@@ -7181,7 +7190,7 @@ td{
 
 .cart_discount_input{
   width: 60%;
-  padding: 0;
+  padding: 2px;
   margin: 0 auto;
   text-align: center;
 }
@@ -7203,7 +7212,7 @@ td{
 
 .paid_or_due_seal{
   position: absolute;
-  padding: 5px 30px;
+  padding: 5px 15px;
   top: 0;
   left: 0;
   width: 100%;
@@ -7239,7 +7248,7 @@ input[type=number] {
 
 .quantity{
   width: 40px;
-  height: 24px;
+  height: 21px;
   background:#fff;
   font-size: 10px;
   padding: 0;

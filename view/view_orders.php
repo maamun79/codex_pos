@@ -120,7 +120,7 @@ $note = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_note'))[0];
                         <h5 class="card-title">Ordered Product Details</h5>
                     </div>
                     <div class="card-body">
-                        <table class="table no-border table_font_small text-center">
+                        <table class="table no-border table-striped table_font_small text-center pro_details_table">
                             <thead>
                             <tr>
                                 <th class="table_head_font_small">#</th>
@@ -142,7 +142,7 @@ $note = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_note'))[0];
                                 ?>
                                 <tr>
                                     <td><?=$key+1;?></td>
-                                    <td><img src="Uploads/<?=$get_pro['pro_img'];?>" class="img-thumbnail img-fluid" style="width: 60px;"></td>
+                                    <td><img src="Uploads/<?=$get_pro['pro_img'];?>" class="img-thumbnail img-fluid" style="width: 60px; height: 70px"></td>
                                     <td class="text-left">
                                         <?=$get_pro['pro_title'];?>
                                     </td>
@@ -276,7 +276,7 @@ $note = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_note'))[0];
                                 <?php
                                         $rounder++;
                                     }
-                                    $get_i = 20 - count($ttl_array);
+                                    $get_i = 25 - count($ttl_array);
                                     for ($i=1;$i<=$get_i;$i++){
                                         ?>
                                         <tr>

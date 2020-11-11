@@ -81,9 +81,9 @@ if (isset($_GET['et'])){
                                         </label>
                                     </div>
                                 </th>
-                                <th>Title</th>
-                                <th>Create Date</th>
-                                <th>Action</th>
+                                <th class="table_font_small">Title</th>
+                                <th class="table_font_small">Create Date</th>
+                                <th class="table_font_small">Action</th>
                             </tr>
                             </thead>
                             <tbody class="text-center">

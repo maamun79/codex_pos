@@ -240,11 +240,11 @@ if (isset($_GET['mi_br_edit'])){
                                 </label>
                             </div>
                         </th>
-                        <th>Color Icon</th>
-                        <th>Color Name</th>
-                        <th>Color Slug</th>
-                        <th>Color Icon Type</th>
-                        <th>Action</th>
+                        <th class="table_font_small">Color Icon</th>
+                        <th class="table_font_small">Color Name</th>
+                        <th class="table_font_small">Color Slug</th>
+                        <th class="table_font_small">Color Icon Type</th>
+                        <th class="table_font_small">Action</th>
                     </tr>
                   </thead>
                   <tbody class="text-center">

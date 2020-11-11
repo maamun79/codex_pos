@@ -20,6 +20,139 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
             base64_decode($_SESSION['session_type']) == "mi_1" ||
             base64_decode($_SESSION['session_type']) == "mi_2"){?>
             <div class="row">
+                <div class="col-md-3 col-sm-4" style="padding: 0 8px">
+                    <a href="orders.php" class="text-center">
+                        <div class="card card-stats bg-primary text-white rounded-0" style="margin-bottom: 16px">
+                            <div class="card-body">
+                                <div>
+                                    <div class="numbers text-center" style="padding: 25px 5px; padding-top: 10px;">
+                                        <p class="">Orders</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-4" style="padding: 0 8px">
+                    <a href="warehouse.php" class="text-center">
+                        <div class="card card-stats bg-primary text-white rounded-0" style="margin-bottom: 16px">
+                            <div class="card-body">
+                                <div>
+                                    <div class="numbers text-center" style="padding: 25px 5px; padding-top: 10px;">
+                                        <p class="">Products</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-2 col-sm-4" style="padding: 0 8px">
+                    <a href="add-stock.php" class="text-center">
+                        <div class="card card-stats bg-primary text-white rounded-0" style="margin-bottom: 16px">
+                            <div class="card-body">
+                                <div>
+                                    <div class="numbers text-center" style="padding: 25px 5px; padding-top: 10px;">
+                                        <p class="">Stock</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-2 col-sm-4" style="padding: 0 8px">
+                    <a href="suppliers.php" class="text-center">
+                        <div class="card card-stats bg-primary text-white rounded-0" style="margin-bottom: 16px">
+                            <div class="card-body">
+                                <div>
+                                    <div class="numbers text-center" style="padding: 25px 5px; padding-top: 10px;">
+                                        <p class="">Suppliers</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-2 col-sm-4" style="padding: 0 8px">
+                    <a href="report.php" class="text-center">
+                        <div class="card card-stats bg-primary text-white rounded-0" style="margin-bottom: 16px">
+                            <div class="card-body">
+                                <div>
+                                    <div class="numbers text-center" style="padding: 25px 5px; padding-top: 10px;">
+                                        <p class="">Report</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-4" style="padding: 0 8px;">
+                    <a href="shop-settings.php" class="text-center">
+                        <div class="card card-stats text-white rounded-0" style="background-color: #66615b;">
+                            <div class="card-body">
+                                <div>
+                                    <div class="numbers text-center" style="padding: 25px 5px; padding-top: 10px;">
+                                        <p class="">Shop Settings</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-4" style="padding: 0 8px">
+                    <a href="expense.php" class="text-center">
+                        <div class="card card-stats text-white rounded-0" style="background-color: #66615b;">
+                            <div class="card-body">
+                                <div>
+                                    <div class="numbers text-center" style="padding: 25px 5px; padding-top: 10px;">
+                                        <p class="">Regular Expenses</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-2 col-sm-4" style="padding: 0 8px">
+                    <a href="vat.php" class="text-center">
+                        <div class="card card-stats text-white rounded-0" style="background-color: #66615b;">
+                            <div class="card-body">
+                                <div>
+                                    <div class="numbers text-center" style="padding: 25px 5px; padding-top: 10px;">
+                                        <p class="">VAT</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-2 col-sm-4" style="padding: 0 8px">
+                    <a href="users.php" class="text-center">
+                        <div class="card card-stats text-white rounded-0" style="background-color: #66615b;">
+                            <div class="card-body">
+                                <div>
+                                    <div class="numbers text-center" style="padding: 25px 5px; padding-top: 10px;">
+                                        <p class="">Staffs</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-2 col-sm-4" style="padding: 0 8px">
+                    <a href="customers.php" class="text-center">
+                        <div class="card card-stats text-white rounded-0" style="background-color: #66615b;">
+                            <div class="card-body">
+                                <div>
+                                    <div class="numbers text-center" style="padding: 25px 5px; padding-top: 10px;">
+                                        <p class="">Customers</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+            <div class="row">
                 <div style="padding: 8px" class="col-lg-3 col-md-6 col-sm-6">
                     <div class="card card-stats">
                         <div class="card-body">
@@ -92,7 +225,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                                     $total_saleslf[] = $totalval['total_amount'];
                                                 }
                                             }
-                                            echo number_format(array_sum($total_saleslf));
+                                            echo number_format(array_sum($total_saleslf), 2);
                                             ?>
                                         <p>
                                     </div>
@@ -161,7 +294,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                         $todaySaleAmount = array_sum($todaySales);
                         ?>
                         <h5>
-                            Sale Amount : <strong><?=number_format($todaySaleAmount);?> <?=$currency['meta_value']?></strong>
+                            Sale Amount: <strong><?=number_format($todaySaleAmount, 2);?> <?=$currency['meta_value']?></strong>
                         </h5>
                     </div>
                     <div class="card-footer ">
@@ -423,7 +556,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
 
                 var chart = new CanvasJS.Chart("chartContainer", {
                     animationEnabled: true,
-                    theme: "light2",
+                    theme: "light",
                     title:{
                         text: "Top 15 sold products",
                     },

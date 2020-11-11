@@ -106,10 +106,10 @@ if (isset($_GET['ve'])){
                                         </label>
                                     </div>
                                 </th>
-                                <th>VAT Details</th>
-                                <th>VAT Percentage</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                                <th class="table_font_small">VAT Details</th>
+                                <th class="table_font_small">VAT Percentage</th>
+                                <th class="table_font_small">Status</th>
+                                <th class="table_font_small">Action</th>
                             </tr>
                             </thead>
                             <tbody class="text-center">
