@@ -7262,3 +7262,7 @@ input[type=number] {
 .table_head_font_small{
   font-size: 10px !important;
 }
+
+#getnewcustomer{
+  height: 35px !important;
+}

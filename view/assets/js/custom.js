@@ -881,6 +881,10 @@ $(document).ready(function () {
         tokenSeparators: [' ', ' ']
     });
 
+    $('#getnewcustomer').select2({
+        dropdownParent: $('#select-customer')
+    });
+
     $("#miStockUnitPrice").blur(function (e) {
         e.preventDefault();
         var value = $(this).val();

@@ -94,6 +94,7 @@ $footer_link = mi_db_read_by_id('settings_meta', array('meta_name'=>'footer_link
 <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="assets/js/paper-dashboard.min.js" type="text/javascript"></script>
 
+
 <script src="plugins/datatable/datatables.min.js"></script>
 <script src="plugins/datatable/Buttons-1.5.6/js/dataTables.buttons.min.js"></script>
 <script src="plugins/datatable/Buttons-1.5.6/js/buttons.print.js"></script>
@@ -111,6 +112,7 @@ $footer_link = mi_db_read_by_id('settings_meta', array('meta_name'=>'footer_link
 <script src="plugins/fancybox/jquery.fancybox.min.js"></script>
 <script src="plugins/printjs/divjs.js"></script>
 <script src="plugins/bootstrap-select/select2.full.min.js"></script>
+<!--<script src="plugins/tail-select/tail.select.min.js"></script>-->
 
 <!--<script src="plugins/printjs/printThis.js"></script>-->
 <script src="assets/js/animatedModal.min.js"></script>
