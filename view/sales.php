@@ -108,14 +108,14 @@ $due_amount = array_sum($total)-$paid_amount;
                     </div>
 
 
-                    <div class="card-footer ">
+                    <div class="card-footer">
                         <button class="btn btn-primary pull-left mi_print_btn rounded-0" style="margin-right: 5px;">
                             <i class="fa fa-print"></i>
                         </button>
                         <button class="btn btn-success pull-left rounded-0" data-toggle="modal" data-target="#addCustomerSales">
                             <i class="fa fa-user-alt"></i>
                         </button>
-                        <div class="form-group float-left col-md-4 col-sm-6">
+                        <div class="form-group float-left col-md-4 col-sm-6" id="select-customer">
                             <?php
                             echo '<select class="form-control" id="getnewcustomer" style="z-index:999999;">
                                             <option value="">Select Customer</option>';

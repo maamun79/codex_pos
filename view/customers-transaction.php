@@ -4,6 +4,8 @@ if (base64_decode($_SESSION['session_type']) !== "mi_1" &&
     base64_decode($_SESSION['session_type']) !== "mi_2" && !isset($_GET['c'])){
     mi_redirect(MI_BASE_URL.'logout.php');
 }
+
+$currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency','type'=>'currency'))[0];
 ?>
 
 <?=mi_sidebar();?>
@@ -47,8 +49,8 @@ if (base64_decode($_SESSION['session_type']) !== "mi_1" &&
                             $total_tr = [];
                             $total_due = [];
                             foreach ($data as $d){
-                                $total_tr[] = ($d['no_tax_amount'] + (($d['tax_percentage']/100)*$d['no_tax_amount']) + ((!empty($d['order_extra_amount']))?$d['order_extra_amount']:0));
-                                $total_due[] = $d['total_due'];
+                                $total_tr[] = $d['total_amount'];
+                                $total_due[] = ($d['total_amount'] - $d['paid_amount']);
                                     $vvl = explode(', ', $d['order_products_details']);
                                     $item_qty = [];
 
@@ -66,14 +68,14 @@ if (base64_decode($_SESSION['session_type']) !== "mi_1" &&
                                         Total Items: <?=count($vvl);?><br>
                                         Total Qty: <?=array_sum($item_qty);?>
                                     </td>
-                                    <td><?=number_format(($d['no_tax_amount'] + (($d['tax_percentage']/100)*$d['no_tax_amount']) + ((!empty($d['order_extra_amount']))?$d['order_extra_amount']:0)));?> BDT</td>
+                                    <td><?=number_format($d['total_amount'], 2);?> <?=$currency['meta_value']?></td>
                                     <td>
                                         <?=date('d M Y', strtotime($d['order_created']));?>
                                         <br>
                                         <?=date('h:i:s A', strtotime($d['order_created']));?>
                                     </td>
                                     <td class="text-center">
-                                        <span><?=number_format($d['total_due']); ?> TK</span>
+                                        <span><?=number_format($d['total_amount'] - $d['paid_amount'], 2); ?> TK</span>
                                     </td>
 
                                 </tr>
@@ -82,8 +84,8 @@ if (base64_decode($_SESSION['session_type']) !== "mi_1" &&
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th colspan="4" class="text-right">Total Amount - <?= number_format(array_sum($total_tr));?> Tk</th>
-                                    <th colspan="2" class="text-right">Total Due - <?= number_format(array_sum($total_due));?> Tk</th>
+                                    <th colspan="4" class="text-right">Total Amount - <?= number_format(array_sum($total_tr),2);?> Tk</th>
+                                    <th colspan="2" class="text-right">Total Due - <?= number_format(array_sum($total_due),2);?> Tk</th>
                                 </tr>
                             </tfoot>
                         </table>
