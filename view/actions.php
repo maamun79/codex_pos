@@ -540,7 +540,7 @@ if (isset($_POST['note_updater']) && !empty($_POST['note_updater'])){
 
 
 function row_repeater($number){
-    $get_i = 25 - $number;
+    $get_i = 22 - $number;
     $html = '';
     for ($i=1;$i<=$get_i;$i++){
         $html .= '<tr>

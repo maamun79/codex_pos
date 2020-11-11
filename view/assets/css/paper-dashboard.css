@@ -6861,7 +6861,7 @@ table.dataTable thead th, table.dataTable thead td, table.dataTable.no-footer{
 
 
 #top{margin-bottom: 10px;padding-bottom: 5px;}
-#mid{margin-bottom: 10px;padding-bottom: 5px;}
+#mid{margin-bottom: 10px;padding-bottom: 5px;padding-top: 25px;}
 #bot{
     min-height: 50px;
     padding: 0;
