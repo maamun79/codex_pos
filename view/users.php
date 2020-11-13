@@ -91,7 +91,7 @@ if (isset($_GET['user_edit'])){
                                                 <div class="funkyradio">
                                                     <div class="funkyradio-primary">
                                                         <input type="radio" name="usr_type" id="radio1" value="2" <?=(!empty($getudata['user_type']))?(($getudata['user_type'] == 2)?'checked':''):''?>/>
-                                                        <label for="radio1">Shop Manager</label>
+                                                        <label for="radio1">Accounts</label>
                                                     </div>
                                                 </div>
                                             </div>

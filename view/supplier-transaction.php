@@ -1,7 +1,7 @@
 <?=mi_header();?>
 <?php
 if (base64_decode($_SESSION['session_type']) !== "mi_1" &&
-    base64_decode($_SESSION['session_type']) !== "mi_2" && !isset($_GET['c'])){
+    base64_decode($_SESSION['session_type']) !== "mi_2" && !isset($_GET['st'])){
     mi_redirect(MI_BASE_URL.'logout.php');
 }
 
@@ -18,7 +18,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
             <div class="col-md-12">
                 <div class="card ">
                     <div class="card-header">
-                        <h5 class="card-title">Customer Transactions</h5>
+                        <h5 class="card-title">Supplier Transactions</h5>
                         <div class="showmsg"></div>
                     </div>
                     <div class="card-body table-responsive">
@@ -33,10 +33,11 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                             <?php }?>
                             <tr>
                                 <th>SL.</th>
-                                <th>Order ID</th>
-                                <th>Product Details</th>
+                                <th>Invoice ID</th>
+                                <th class="text-left">Product</th>
+                                <th>Stock Quantity</th>
+                                <th>Date</th>
                                 <th>Total Amount</th>
-                                <th>Order Date</th>
                                 <th>Total Due</th>
                             </tr>
                             </thead>
@@ -44,38 +45,35 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                             <?php
 
                             $round = 1;
-                            $data = mi_db_read_by_id('mi_orders', array('customer_id'=> mi_secure_input($_GET['c'])), false, 'order_id', 'DESC');
+                            $data = mi_db_read_by_id('mi_stocks', array('supplier_id'=> mi_secure_input($_GET['st'])), false, 'stock_id', 'DESC');
 
-                            $total_tr = [];
+                            $total_amount = [];
                             $total_due = [];
                             foreach ($data as $d){
-                                $total_tr[] = $d['total_amount'];
-                                $total_due[] = ($d['total_amount'] - $d['paid_amount']);
-                                    $vvl = explode(', ', $d['order_products_details']);
-                                    $item_qty = [];
+                                $product = mi_db_read_by_id('mi_products', array('pro_id' => $d['product_id']))[0];
 
-                                    foreach ($vvl as $k => $v){
-                                        $get_pro_id = json_decode($v)->{'pro_id'};
-                                        $item_qty[] = json_decode($v)->{'pro_qty'};
-                                    }
+                                $total_amount[] = $d['expanse'];
+                                $total_due[] = ($d['expanse'] - $d['ex_paid']);
                                 ?>
                                 <tr>
                                     <td><?=$round;?></td>
                                     <td>
-                                        <strong><?=$d['trx_id'];?></strong>
+                                        <strong><?=$d['invoice_id'];?></strong>
                                     </td>
-                                    <td>
-                                        Total Items: <?=count($vvl);?><br>
-                                        Total Qty: <?=array_sum($item_qty);?>
+                                    <td class="text-left">
+                                        <a href="product_report.php?mi_pro_id=<?=$product['pro_id'];?>"><?=$product['pro_title'];?></a>
                                     </td>
-                                    <td><?=number_format($d['total_amount'], 2);?> <?=$currency['meta_value']?></td>
+                                    <td><?=$d['stock_qty']?> L</td>
                                     <td>
-                                        <?=date('d M Y', strtotime($d['order_created']));?>
+                                        <?=date('d M Y', strtotime($d['upload_date']));?>
                                         <br>
-                                        <?=date('h:i:s A', strtotime($d['order_created']));?>
+                                        <?=date('h:i:s A', strtotime($d['upload_date']));?>
                                     </td>
                                     <td class="text-center">
-                                        <span><?=number_format($d['total_amount'] - $d['paid_amount'], 2); ?> <?= $currency['meta_value']?></span>
+                                        <span><?=number_format($d['expanse'], 2); ?> <?=$currency['meta_value']?></span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span><?=number_format($d['expanse'] - $d['ex_paid'], 2); ?> <?=$currency['meta_value']?></span>
                                     </td>
 
                                 </tr>
@@ -84,8 +82,8 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th colspan="4" class="text-right">Total Amount - <?= number_format(array_sum($total_tr),2);?> <?=$currency['meta_value']?></th>
-                                    <th colspan="2" class="text-right">Total Due - <?= number_format(array_sum($total_due),2);?> <?=$currency['meta_value']?></th>
+                                    <th colspan="6" class="text-right">Total Amount - <?= number_format(array_sum($total_amount),2);?> <?=$currency['meta_value']?></th>
+                                    <th colspan="1" class="text-right">Total Due - <?= number_format(array_sum($total_due),2);?> <?=$currency['meta_value']?></th>
                                 </tr>
                             </tfoot>
                         </table>

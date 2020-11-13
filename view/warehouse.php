@@ -84,7 +84,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                       <td><?=(!empty($d['pro_brand']))?mi_db_read_by_id('mi_product_brand', array('br_id'=>$d['pro_brand']))[0]['br_title']:'N/A';?></td>
                       <td><?=$d['pro_price'];?> <?=$currency['meta_value']?></td>
                       <td>
-                          <a title="Edit" href="single_product.php?mi_pro_id=<?=$d['pro_id'];?>" class="btn btn-sm btn-dark btn-rounded mt-1"><i class="fa fa-edit"></i></a>
+                          <a title="Edit" href="single_product.php?mi_pro_id=<?=$d['pro_id'];?>" class="btn btn-sm btn-success btn-rounded mt-1"><i class="fa fa-edit"></i></a>
                           <a title="Analytics" href="product_report.php?mi_pro_id=<?=$d['pro_id'];?>" class="btn btn-sm btn-dark btn-rounded mt-1"><i class="nc-icon nc-chart-bar-32"></i></a>
                       </td>
                   </tr>

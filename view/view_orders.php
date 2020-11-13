@@ -211,7 +211,12 @@ $note = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_note'))[0];
 
                 <div id="bot">
 
-                    <div id="mi_billing_table">
+                    <div id="mi_billing_table" style="background: url('<?=MI_CDN_URL.$logo['meta_value']?>'); 
+                                                     background-repeat: no-repeat;
+                                                     background-position: center;
+                                                     z-index:99;
+                                                     background-color: white;"
+                                                     >
                         <div class="info mi_invoice_id">
                             <h2 style="font-size: 15px !important;float: left; margin-bottom: 2px">Invoice ID: <?=$data['trx_id']?></h2>
                         </div>

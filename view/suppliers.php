@@ -73,8 +73,10 @@ if (base64_decode($_SESSION['session_type']) !== "mi_1" &&
                       <td><?=(!empty($d['sup_address']))? $d['sup_address']:'N/A';?></td>
                       <td><?=$d['sup_added'];?></td>
                       <td>
-                          <a href="single_supplier.php?mi_sup_id=<?=$d['sup_id'];?>" class="btn btn-sm btn-dark btn-rounded"><i class="nc-icon nc-settings"></i>&nbsp;Edit</a>
+                          <a title="Edit" href="single_supplier.php?mi_sup_id=<?=$d['sup_id'];?>" class="btn btn-sm btn-dark btn-rounded"><i class="fa fa-edit"></i></a>
+                          <a title="View" href="supplier-transaction.php?st=<?=$d['sup_id'];?>" class="btn btn-sm btn-success btn-rounded"><i class="nc-icon nc-chart-bar-32"></i></a>
                       </td>
+                                  
                   </tr>
                   <?php }?>
                   </tbody>

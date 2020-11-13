@@ -135,7 +135,7 @@ if (isset($_GET['customer_edit'])){
                       <td>N/A</td>
                       <td>N/A</td>
                       <td>
-                          <a title="Edit" href="customers-transaction.php?c=0" class="btn btn-sm btn-default btn-rounded"><i class="nc-icon nc-chart-bar-32"></i></a>
+                          <a title="Edit" href="customers-transaction.php?c=0" class="btn btn-sm btn-success btn-rounded"><i class="nc-icon nc-chart-bar-32"></i></a>
                       </td>
                   </tr>
                   <?php
@@ -176,8 +176,8 @@ if (isset($_GET['customer_edit'])){
                                   <p class="badge badge-dark"><?=($d['customer_status'] == 0)?'Active':'Inactive';?></p>
                               </td>
                               <td>
-                                  <a title="Edit" href="customers.php?customer_edit=<?=$d['id'];?>" class="btn btn-sm btn-default btn-rounded"><i class="fa fa-edit"></i></a>
-                                  <a title="Edit" href="customers-transaction.php?c=<?=$d['id'];?>" class="btn btn-sm btn-default btn-rounded"><i class="nc-icon nc-chart-bar-32"></i></a>
+                                  <a title="Edit" href="customers.php?customer_edit=<?=$d['id'];?>" class="btn btn-sm btn-dark btn-rounded"><i class="fa fa-edit"></i></a>
+                                  <a title="View" href="customers-transaction.php?c=<?=$d['id'];?>" class="btn btn-sm btn-success btn-rounded"><i class="nc-icon nc-chart-bar-32"></i></a>
                               </td>
 
                           </tr>
