@@ -104,6 +104,15 @@ $logo = mi_db_read_by_id('settings_meta', array('type'=>'image'))[0];
                             </div>
                         </a>
                     </li>
+
+                    <li>
+                        <a href="vat_history.php" style="padding: 0" class="text-white">
+                            <div class="row">
+                                <div class="col-md-2"><i class="nc-icon nc-zoom-split mr-2 text-white"></i></div>
+                                <div class="col-md-10 text-left text-white" style="padding-left: 25px">VAT History</div>
+                            </div>
+                        </a>
+                    </li>
                 <?php }?>
 
                 <li>

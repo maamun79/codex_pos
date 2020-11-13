@@ -7266,3 +7266,20 @@ input[type=number] {
 #getnewcustomer{
   height: 35px !important;
 }
+
+.custom_card_layout_padding{
+  padding: 25px 5px !important; 
+  padding-top: 10px !important;
+}
+
+.custom_coulmn_visibility_background{
+  background-color: #7986cb;
+}
+
+.custom_csv_background{
+  background-color: #20A464;
+}
+
+.custom_pdf_background{
+  background-color: #AD0B00;
+}

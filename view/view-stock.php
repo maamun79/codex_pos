@@ -47,13 +47,16 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                 </span>
                             </li>
                             <li class="nav-item">
-                                <strong>Total Expenses:</strong> <span><?=$getstock[0]['expanse'];?> <?=$currency['meta_value']?></span>
-                            </li>
-                            <li class="nav-item">
                                 <strong>Product Unit Price:</strong> <span><?=$getstock[0]['unit_price'];?> <?=$currency['meta_value']?></span>
                             </li>
                             <li class="nav-item">
-                                <strong>Expense Due:</strong> <span><?=$getstock[0]['ex_due'];?> <?=$currency['meta_value']?></span>
+                                <strong>Total Expenses:</strong> <span><?=$getstock[0]['expanse'];?> <?=$currency['meta_value']?></span>
+                            </li>
+                            <li class="nav-item">
+                                <strong>Total Paid:</strong> <span><?=$getstock[0]['ex_paid'];?> <?=$currency['meta_value']?></span>
+                            </li>
+                            <li class="nav-item">
+                                <strong>Expense Due:</strong> <span><?=($getstock[0]['expanse'] - $getstock[0]['ex_paid']);?> <?=$currency['meta_value']?></span>
                             </li>
                             <li class="nav-item">
                                 <strong>Stock Uploaded:</strong> <span><?=$getstock[0]['upload_date'];?></span>
@@ -108,16 +111,16 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                           <strong>Sell Price:</strong> <span><?=$products[0]['pro_price'];?> <?=$currency['meta_value']?></span>
                       </li>
                       <li class="nav-item">
-                          <strong>Current Stock:</strong> <span><?=$products[0]['pro_stock'];?> Pcs</span>
+                          <strong>Current Stock:</strong> <span><?=$products[0]['pro_stock'];?> L</span>
                       </li>
                       <li class="nav-item">
-                          <strong>Total Stock:</strong> <span><?=$products[0]['pro_in_total_stock'];?> Pcs</span>
+                          <strong>Total Stock:</strong> <span><?=$products[0]['pro_in_total_stock'];?> L</span>
                       </li>
                       <li class="nav-item">
                           <strong>Last Uploaded Stock:</strong> <span><?=$products[0]['last_stock_updated'];?></span>
                       </li>
                       <li class="nav-item">
-                          <strong>Last Uploaded Stock Qty:</strong> <span><?=$products[0]['last_stock_load_qty'];?> Pcs</span>
+                          <strong>Last Uploaded Stock Qty:</strong> <span><?=$products[0]['last_stock_load_qty'];?> L</span>
                       </li>
                       <li class="nav-item">
                           <strong>Serials Added:</strong> <span><?=implode(' | ', json_decode($getstock[0]['pro_serials'], JSON_PRETTY_PRINT));?></span>

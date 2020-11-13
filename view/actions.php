@@ -1250,9 +1250,16 @@ if (isset($_POST['singleRefundSubmit']) && !empty($_POST['singleRefundSubmit']))
         echo json_encode($msg);
         return;
     }else{
+        $due = $selPro['total_amount'] - $selPro['paid_amount'];
         $updated_amount = $selPro['total_amount'] - array_sum($minusAmountUps);
-        $update_paid_amount = $selPro['paid_amount'] - (array_sum($minusAmountUps) - ($selPro['total_amount'] - $selPro['paid_amount']));
+        
 
+        if($due > array_sum($minusAmountUps)){
+            $update_paid_amount = $selPro['paid_amount'];
+        }else{
+            $update_paid_amount = $selPro['paid_amount'] - (array_sum($minusAmountUps) - $due);
+        }
+        
         $updatedData = array(
             'order_products_details' => implode(', ',$actual_data),
             'total_amount' => $updated_amount,
@@ -2088,30 +2095,30 @@ if (isset($_POST['singleStockRefundSubmit']) && $_POST['singleStockRefundSubmit'
         $msg = array('status' => 'error', 'message' => 'Invalid refund quantity for this stock');
     }else{
         $stock_ref_amount = $ref_qty * $stock['unit_price'];
-        if ($stock_ref_amount > $stock['ex_due']){
-            $rest_amnt = $stock_ref_amount - $stock['ex_due'];
-            $final_amnt = $stock['expanse'] - $stock_ref_amount;
+        $total_amount = $stock['expanse'];
+        $paid_amount = $stock['ex_paid'];
+        $due = $total_amount - $paid_amount;
 
-            $data = array(
-                'stock_qty' => $stock['stock_qty'] - $ref_qty,
-                'ex_due' => 0,
-                'expanse' => $final_amnt
-            );
+        $up_total_expense = $total_amount - $stock_ref_amount;
+        
+        if($due > $stock_ref_amount){
+            $up_paid_amount = $paid_amount;
         }else{
-            $rest_due = $stock['ex_due'] - $stock_ref_amount;
-            $ex_amnt = $stock['expanse'] - $stock_ref_amount;
-
-            $data = array(
-                'ex_due' => $rest_due,
-                'expanse' => $ex_amnt
-            );
+            $up_paid_amount = $paid_amount - ($stock_ref_amount - $due);
         }
+
+        $data = array(
+            'ex_paid' => $up_paid_amount,
+            'expanse' => $up_total_expense
+        );
+
         $stock_update = mi_db_update('mi_stocks', $data, array('stock_id'=>$stock_id));
 
         if ($stock_update == true){
-            $product_update = mi_db_update('mi_products', array('pro_stock' => $product['pro_stock']-$ref_qty), array('pro_id' => $stock['product_id']));
+            $product_update = mi_db_update('mi_products', array('pro_stock' => $product['pro_stock']-$ref_qty), array('pro_id' => $product['pro_id']));
+            $stock_update = mi_db_update('mi_stocks', array('stock_qty'=> $stock['stock_qty'] - $ref_qty), array('stock_id'=> $stock_id));
 
-            if ($product_update == true){
+            if ($product_update && $stock_update == true){
                 $msg = array('status' => 'success', 'message' => 'Product stock refunded');
             }
         }
@@ -2155,15 +2162,17 @@ if (isset($_POST['stock_add_due']) && !empty($_POST['stock_add_due'])) {
     $due_stock          =mi_secure_input($_POST['stock_due']);
     $sid                =mi_secure_input($_POST['sid']);
 
-    if ($provided_stock_due < 0) {
+    $stock = mi_db_read_by_id('mi_stocks', array('stock_id'=> $sid))[0];
+    $total_paid = $stock['ex_paid'] + $provided_stock_due;
+
+    if ($provided_stock_due < 1) {
         $msg = array('status' => 'error', 'message' => 'Provided due should be grater than 0 TK.');
     }elseif ($provided_stock_due> $due_stock) {
 
         $msg = array('status' => 'error', 'message' => 'Provided due should not be grater than current due.');
     }else{
-        $rest_due=$due_stock-$provided_stock_due;
 
-        $updated=mi_db_update('mi_stocks', array('ex_due'=>$rest_due), array('stock_id'=>$sid));
+        $updated=mi_db_update('mi_stocks', array('ex_paid'=>$total_paid), array('stock_id'=>$sid));
         if ($updated) {
             $msg = array('status' => 'success', 'message' => 'Due added successfully.');
         }else{
@@ -2383,7 +2392,7 @@ if (isset($_POST['mi_get_single_refund_form']) && !empty($_POST['mi_get_single_r
                           <input type="hidden" name="ref_data[id]['.$kp.']" value="'.$get_ref_pro['pro_id'].'">
                           <div class="col-md-2 d-flex justify-content-center">'.($kp + 1).'</div>
                           <div class="col-md-6">'.$get_ref_pro['pro_title'].'</div>
-                          <div class="col-md-2 d-flex justify-content-center">'.$prod['pro_qty'].'</div>
+                          <div class="col-md-2 d-flex justify-content-center">'.$prod['pro_qty'].' L</div>
                           <div class="col-md-2 d-flex justify-content-center">
                               <input name="ref_data[qty]['.$kp.']" class="form-control" type="'.($prod['pro_qty']==0?'hidden':'number').'" min="1" max="'.$prod['pro_qty'].'">
                           </div>
@@ -2411,4 +2420,30 @@ if (isset($_POST['customer_id_new']) && !empty($_POST['customer_id_new'])) {
 
     echo json_encode($msg);
 
+}
+
+// ----------------------single stock refund modal--------------------
+if (isset($_POST['mi_get_single_stock_refund_form']) && !empty($_POST['mi_get_single_stock_refund_form']) && $_POST['mi_get_single_stock_refund_form'] == 1){
+
+    $stock_id = mi_secure_input($_POST['stock_id']);
+    $get_stock = mi_db_read_by_id('mi_stocks', array('stock_id'=>$stock_id));
+
+    $htmls = '';
+    foreach($get_stock as $k=> $stock){
+        $product = mi_db_read_by_id('mi_products', array('pro_id'=> $stock['product_id']))[0];
+        $htmls.= '<div class="row">
+                            <div class="col-md-6 col-sm-3">'.$product['pro_title'].'</div>
+                                <div class="col-md-2 col-sm-3 d-flex justify-content-center">'.$stock['stock_qty'].' L</div>
+                                <div class="col-md-2 col-sm-3 d-flex justify-content-center">'.$product['pro_stock'].' L</div>
+                                <div class="col-md-2 col-sm-3 d-flex justify-content-center">
+                                    <input name="ref_stock_qty"
+                                           class="form-control" type="'.($product['pro_stock']==0?'hidden':'number').'">
+                                </div>
+                    </div>
+                    <hr>';
+
+    }
+    $msg = array('status'=>'success', 'msg'=>"Data fetched", 'data'=>$htmls);
+
+    echo json_encode($msg);
 }

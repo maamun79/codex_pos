@@ -9,7 +9,7 @@
                     <span class="navbar-toggler-bar bar3"></span>
                 </button>
             </div>
-            <a class="btn btn-primary btn-sm mi_title_btn" style="text-transform: uppercase;display: none;" href="index.php"><i class="nc-icon nc-minimal-left" style="font: normal normal bolder 14px/1 'nucleo-icons';"></i>&nbsp;<label style="line-height: 0;">Back to Dashboard</label></a>&nbsp;&nbsp;
+            <a class="btn btn-sm mi_title_btn" style="text-transform: uppercase;display: none; background-color: #0277bd" href="index.php"><i class="nc-icon nc-minimal-left" style="font: normal normal bolder 14px/1 'nucleo-icons';"></i>&nbsp;<label style="line-height: 0;">Back to Home</label></a>&nbsp;&nbsp;
             <a class="navbar-brand mi_titles_page" style="text-transform: uppercase;"></a>
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,7 +26,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="btn btn-primary m-0 sales_pg" style="text-transform: uppercase;display: none;" href="sales.php"><label style="line-height: 0;">Go to Sales</label>&nbsp;<i class="nc-icon nc-minimal-right" style="font: normal normal bolder 14px/1 'nucleo-icons';"></i></a>
+                    <a class="btn btn-primary m-0 sales_pg" style="text-transform: uppercase;display: none;" href="sales.php"><label style="line-height: 0;">Go to Invoice</label>&nbsp;<i class="nc-icon nc-minimal-right" style="font: normal normal bolder 14px/1 'nucleo-icons';"></i></a>
                 </li>
             </ul>
         </div>

@@ -12,10 +12,10 @@ if (isset($_POST['add_stock'])){
     $stamn = mi_secure_input($_POST['stock_amount']);
     $stunit = mi_secure_input($_POST['stock_unit_price']);
 
-    if (isset($_POST['stock_due'])){
-        $stdue = mi_secure_input($_POST['stock_due']);
+    if (isset($_POST['stock_paid'])){
+        $stpaid = mi_secure_input($_POST['stock_paid']);
     }else{
-        $stdue = 0;
+        $stpaid = 0;
     }
     if (isset($_POST['stock_invoice_id'])){
         $stinv = mi_secure_input($_POST['stock_invoice_id']);
@@ -66,7 +66,7 @@ if (isset($_POST['add_stock'])){
             'invoice_picture' => $stinvoice,
             'expanse' => $stamn,
             'unit_price' => $stunit,
-            'ex_due' => $stdue,
+            'ex_paid' => $stpaid,
             'ex_note' => $stext
         );
 
@@ -173,8 +173,12 @@ foreach ($data as $dd){
 
 
                                 <div class="col-md-12 form-group">
-                                    <label>Expense Due</label>
-                                    <input type="number" name="stock_due" class="form-control" min="1">
+                                    <label>Paid Amount*</label>
+                                    <input type="number" name="stock_paid" id="stockPaidAmount" value="1" class="form-control" >
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <label>Total Due</label>
+                                    <input type="number" name="stock_due" id="miTotalStockDue" class="form-control" value="0" min="0" readonly>
                                 </div>
                                 <div class="col-md-12 form-group">
                                     <label>Invoice Id</label>
@@ -247,7 +251,11 @@ foreach ($data as $dd){
                             </thead>
                             <tbody class="text-center">
                             <?php
+                            $total_expenses = [];
+                            $total_due = [];
                             foreach ($data as $k => $d){
+                                $total_expenses[] = $d['expanse'];
+                                $total_due[] = $d['expanse'] - $d['ex_paid'];
                                 ?>
                                 <tr>
                                     <td style="padding-left: 18px !important;max-width: 50px;">
@@ -272,7 +280,7 @@ foreach ($data as $dd){
                                     </td>
 
                                     <td>
-                                        <?=$d['expanse'];?> <?=$currency['meta_value']?><br>
+                                        <?=number_format($d['expanse'], 2);?> <?=$currency['meta_value']?><br>
                                         <?php if ($d['refund_date'] !== '0000-00-00 00:00:00'){?>
                                             <span class="badge badge-dark" style="font-size: 12px;">Returned</span><br>
                                             <sub>
@@ -281,15 +289,14 @@ foreach ($data as $dd){
                                         <?php }?>
                                     </td>
                                     <td class="text-center">
-                                        <?php if ($d['ex_due'] > 0){?>
-                                            <span><?=$d['ex_due']; ?> <?=$currency['meta_value']?></span>
+                                        <?php if (($d['expanse'] - $d['ex_paid']) > 0){?>
+                                            <span><?=number_format($d['expanse'] - $d['ex_paid'], 2); ?> <?=$currency['meta_value']?></span>
                                         <?php }else{echo "Paid";}?>
                                         <?php
-                                        if ($d['ex_due']>0) {?>
-
+                                        if (($d['expanse'] - $d['ex_paid'])>0) {?>
                                             <br><button
                                                     class="showStockduetk btn btn-sm btn-info"
-                                                    type="button" data-toggle="modal" data-placement="top" title="Due collection" data-target="#update_stock_due" amount_stock_due="<?=$d['ex_due'] ?>" stock_id="<?=$d['stock_id'] ?>" stock_payable="<?= $d['expanse']; ?>"><i class="fa fa-edit"></i>
+                                                    type="button" data-toggle="modal" data-placement="top" title="Due collection" data-target="#update_stock_due" amount_stock_due="<?=$d['expanse'] - $d['ex_paid'] ?>" stock_id="<?=$d['stock_id'] ?>" stock_payable="<?= $d['expanse']; ?>"><i class="fa fa-edit"></i>
                                             </button>
                                         <?php } ?>
                                     </td>
@@ -318,8 +325,7 @@ foreach ($data as $dd){
                                                             class="dropdown-item singleStockRefundForm"
                                                             type="button"
                                                             value="<?=$d['stock_id'];?>"
-                                                            data-toggle="modal"
-                                                            data-target="#singleStockRefund<?=$d['stock_id']?>">
+                                                            >
                                                         Single Refund
                                                     </button>
                                                 <?php }?>
@@ -330,6 +336,12 @@ foreach ($data as $dd){
                                 </tr>
                             <?php }?>
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="4" class="text-right">Total Expense - <?= number_format(array_sum($total_expenses),2);?> Tk</th>
+                                    <th colspan="3" class="text-right">Total Due - <?= number_format(array_sum($total_due),2);?> Tk</th>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -337,8 +349,7 @@ foreach ($data as $dd){
         </div>
         <!-----------------------------------single stock refund modal----------------------------------->
         <!-- Modal -->
-        <?php foreach ($data as $k => $d){?>
-            <div class="modal fade modal-lg" id="singleStockRefund<?=$d['stock_id']?>" style="max-width: 100%" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal fade modal-lg" id="singleStockRefund" style="max-width: 100%" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" style="width: 800px" role="document">
                     <div class="modal-content p-3">
                         <div class="modal-header">
@@ -351,9 +362,9 @@ foreach ($data as $dd){
                         $product = mi_db_read_by_id('mi_products', array('pro_id'=> $d['product_id']))[0];
 
                         ?>
-                        <form action="" method="post" name="singleStockRefundForm" class="singleStockRefundForm">
+                        <form action="" method="post" name="singleStockRefundFormSubmitter" class="singleStockRefundFormSubmitter">
                             <div class="modal-body">
-                                <input type="hidden" name="stock_id" value="<?=$d['stock_id']?>">
+                                <input type="hidden" name="stock_id" value="">
                                 <div class="row">
                                     <div class="col-md-6 col-sm-3"><strong>Title</strong></div>
                                     <div class="col-md-2 col-sm-3 d-flex justify-content-center"><strong>Qty</strong></div>
@@ -361,14 +372,8 @@ foreach ($data as $dd){
                                     <div class="col-md-2 col-sm-3 d-flex justify-content-center"><strong>Refund Qty</strong></div>
                                 </div>
                                 <hr>
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-3"><?= $product['pro_title'] ?></div>
-                                    <div class="col-md-2 col-sm-3 d-flex justify-content-center"><?= $d['stock_qty'] ?></div>
-                                    <div class="col-md-2 col-sm-3 d-flex justify-content-center"><?= $product['pro_stock'] ?></div>
-                                    <div class="col-md-2 col-sm-3 d-flex justify-content-center">
-                                        <input name="ref_stock_qty"
-                                               class="form-control" type="<?=($product['pro_stock']==0?'hidden':'number')?>">
-                                    </div>
+                                <div id="stock_refund_field">
+                                    
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -381,7 +386,6 @@ foreach ($data as $dd){
                     </div>
                 </div>
             </div>
-        <?php }?>
         <!-----------------------------------single stock refund modal----------------------------------->
 
         <!--          ------------------------------------due collection modal-------------------------------------->
