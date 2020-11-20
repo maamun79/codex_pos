@@ -51,7 +51,7 @@ $logo = mi_db_read_by_id('settings_meta', array('type'=>'image'))[0];
                 <li class="dropdown">
                     <a href="#" style="padding: 0" class="dropdown-toggle text-white" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="row">
-                            <div class="col-md-2"><i class="nc-icon nc-app mr-2 text-white"></i></div>
+                            <div class="col-md-2"><i class="nc-icon nc-money-coins mr-2 text-white"></i></div>
                             <div class="col-md-10 text-left text-white" style="padding-left: 25px">Expenses</div>
                         </div>
                     </a>
@@ -108,7 +108,7 @@ $logo = mi_db_read_by_id('settings_meta', array('type'=>'image'))[0];
                     <li>
                         <a href="vat_history.php" style="padding: 0" class="text-white">
                             <div class="row">
-                                <div class="col-md-2"><i class="nc-icon nc-zoom-split mr-2 text-white"></i></div>
+                                <div class="col-md-2"><i class="nc-icon nc-credit-card mr-2 text-white"></i></div>
                                 <div class="col-md-10 text-left text-white" style="padding-left: 25px">VAT History</div>
                             </div>
                         </a>

@@ -22,75 +22,92 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                         <div class="showmsg"></div>
                     </div>
                     <div class="card-body table-responsive">
-                        <table class="table table-full-width mi_datatable">
+                        <table class="table table-full-width" id="supplier_transaction_datatable">
+                            <input type="hidden" id="trans_sup_id" value="<?=mi_secure_input($_GET['st']);?>">
                             <thead class="text-primary text-center">
                             <?php if (
                             base64_decode($_SESSION['session_type']) == "mi_1" ||
                             base64_decode($_SESSION['session_type']) == "mi_2"){?>
                             <tr>
-                                <th colspan="9"></th>
+                                <th colspan="9" style="padding-right: 0">
+                                    <div class="row justify-content-end" style="padding-right: 10px">
+                                        <div class="col-md-3 col-sm-6 text-right">
+                                            <div class="input-group">
+                                                <input type="text" name="sup_start_date" id="sup_start_date" class="form-control datepicker" data-date-format="yyyy-mm-dd" placeholder="Choose from date" autocomplete="off">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="nc-icon nc-calendar-60"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 text-right">
+                                            <div class="input-group">
+                                                <input type="text" name="sup_end_date" id="sup_end_date" class="form-control datepicker" data-date-format="yyyy-mm-dd" placeholder="Choose to date" autocomplete="off">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="nc-icon nc-calendar-60"></i></span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1" style="padding-right: 0">
+                                            <button class="btn btn-dark" id="sup_trans_date_search"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                        </div>
+                                    </div>
+                                </th>
                             </tr>
                             <?php }?>
                             <tr>
                                 <th>SL.</th>
-                                <th>Invoice ID</th>
                                 <th class="text-left">Product</th>
                                 <th>Stock Quantity</th>
                                 <th>Date</th>
                                 <th>Total Amount</th>
+                                <th>Paid Amount</th>
                                 <th>Total Due</th>
                             </tr>
                             </thead>
-                            <tbody class="text-center">
-                            <?php
-
-                            $round = 1;
-                            $data = mi_db_read_by_id('mi_stocks', array('supplier_id'=> mi_secure_input($_GET['st'])), false, 'stock_id', 'DESC');
-
-                            $total_amount = [];
-                            $total_due = [];
-                            foreach ($data as $d){
-                                $product = mi_db_read_by_id('mi_products', array('pro_id' => $d['product_id']))[0];
-
-                                $total_amount[] = $d['expanse'];
-                                $total_due[] = ($d['expanse'] - $d['ex_paid']);
-                                ?>
-                                <tr>
-                                    <td><?=$round;?></td>
-                                    <td>
-                                        <strong><?=$d['invoice_id'];?></strong>
-                                    </td>
-                                    <td class="text-left">
-                                        <a href="product_report.php?mi_pro_id=<?=$product['pro_id'];?>"><?=$product['pro_title'];?></a>
-                                    </td>
-                                    <td><?=$d['stock_qty']?> L</td>
-                                    <td>
-                                        <?=date('d M Y', strtotime($d['upload_date']));?>
-                                        <br>
-                                        <?=date('h:i:s A', strtotime($d['upload_date']));?>
-                                    </td>
-                                    <td class="text-center">
-                                        <span><?=number_format($d['expanse'], 2); ?> <?=$currency['meta_value']?></span>
-                                    </td>
-                                    <td class="text-center">
-                                        <span><?=number_format($d['expanse'] - $d['ex_paid'], 2); ?> <?=$currency['meta_value']?></span>
-                                    </td>
-
-                                </tr>
-                                <!-----------------------------------single product refund modal----------------------------------->
-                            <?php $round++;}?>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th colspan="6" class="text-right">Total Amount - <?= number_format(array_sum($total_amount),2);?> <?=$currency['meta_value']?></th>
-                                    <th colspan="1" class="text-right">Total Due - <?= number_format(array_sum($total_due),2);?> <?=$currency['meta_value']?></th>
-                                </tr>
-                            </tfoot>
                         </table>
                 </div>
             </div>
         </div>
     </div>
+
+        <!--          ------------------------------------due collection modal-------------------------------------->
+        <div class="modal fade" id="update_stock_due" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="width: 450px">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Due Collection</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <form class="form-horizontal" id="mi_add_due" autocomplete="off">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 form-group">
+                                    <strong>Total Payable: <span id="totalStockpayable"></span> <?=$currency['meta_value']?></strong><br>
+                                    <strong>Total Paid   : <span id="totalStockpaid"></span> <?=$currency['meta_value']?></strong><br>
+                                    <strong>Total Due    : <span id="stock_current_due"></span> <?=$currency['meta_value']?></strong><br><br>
+
+                                    <input type="hidden" id="keep_stock_id" value="">
+                                    <input type="hidden" id="keep_stock_amount" value="">
+                                    <input type="hidden" id="keep_stock_paid" value="">
+
+                                    <label>Collection Amount:</label>
+                                    <input type="number" class="form-control" value="0" min="0" max="" id="due_stock_amount" required="">
+                                    <button class="btn btn-sm btn-danger" id="add_stock_due_update">Update</button>
+                                </div>
+
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
 </div>
 
 

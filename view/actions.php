@@ -1330,11 +1330,19 @@ if (isset($_POST['mi_user_adding_form']) && !empty($_POST['mi_user_adding_form']
     $created = mi_secure_input($_POST['created_by']);
     $udi = mi_secure_input($_POST['usr_id']);
     $unm = mi_secure_input($_POST['usr_name']);
+    $fatherName = mi_secure_input($_POST['father_name']);
+    $motherName = mi_secure_input($_POST['mother_name']);
     $uph = mi_secure_input($_POST['usr_phone']);
+    $address = mi_secure_input($_POST['address']);
     $uem = mi_secure_input($_POST['usr_email']);
     $ups = mi_secure_input($_POST['usr_pass']);
+    $nid_no = mi_secure_input($_POST['nid_no']);
+    $salary = mi_secure_input($_POST['salary']);
     $ust = mi_secure_input($_POST['usr_status']);
     $utp = mi_secure_input($_POST['usr_type']);
+
+    $nid_photo = $_FILES['staff_nid'];
+    $user_photo = $_FILES['staff_photo'];
 
     $last_id = mi_db_read_all('mi_users', 'id', 'DESC', '1')[0];
 
@@ -1355,17 +1363,93 @@ if (isset($_POST['mi_user_adding_form']) && !empty($_POST['mi_user_adding_form']
         if (count($checkUser) > 0){
             $msg = array('status' => 'error', 'message' => 'User id already exists');
         }else{
-            $data = array(
-                'user_id'           => $udi,
-                'pass'              => md5($ups),
-                'user_name'         => $unm,
-                'user_designation'  => ($utp == 2)?'Shop Manager':'Sales Man',
-                'status'            => $ust,
-                'user_type'         => $utp,
-                'created_by'        => $created,
-                'email'             => $uem,
-                'phone'             => $uph
+            $up_nid = mi_uploader(
+                $nid_photo['name'],
+                $nid_photo['tmp_name'],
+                'uploads/staff-images/',
+                array('png', 'PNG', 'jpg', 'jpeg', 'JPG', 'gif', 'JPEG')
             );
+            $up_photo = mi_uploader(
+                $user_photo['name'],
+                $user_photo['tmp_name'],
+                'uploads/staff-images/',
+                array('png', 'PNG', 'jpg', 'jpeg', 'JPG', 'gif', 'JPEG')
+            );
+
+            if (!empty($nid_photo['name']) && !empty($user_photo['name'])) {
+
+                $data = array(
+                    'user_id'           => $udi,
+                    'pass'              => md5($ups),
+                    'user_name'         => $unm,
+                    'father_name'       => $fatherName,
+                    'mother_name'       => $motherName,
+                    'address'           => $address,
+                    'nid_no'            => $nid_no,
+                    'salary'            => $salary,
+                    'user_designation'  => ($utp == 2)?'Accounts':'Sales Man',
+                    'status'            => $ust,
+                    'user_type'         => $utp,
+                    'created_by'        => $created,
+                    'email'             => $uem,
+                    'phone'             => $uph,
+                    'nid_photo'         => $up_nid,
+                    'user_photo'        => $up_photo
+                );
+            }elseif (!empty($nid_photo['name'])){
+                $data = array(
+                    'user_id'           => $udi,
+                    'pass'              => md5($ups),
+                    'user_name'         => $unm,
+                    'father_name'       => $fatherName,
+                    'mother_name'       => $motherName,
+                    'address'           => $address,
+                    'nid_no'            => $nid_no,
+                    'salary'            => $salary,
+                    'user_designation'  => ($utp == 2)?'Accounts':'Sales Man',
+                    'status'            => $ust,
+                    'user_type'         => $utp,
+                    'created_by'        => $created,
+                    'email'             => $uem,
+                    'phone'             => $uph,
+                    'nid_photo'         => $up_nid
+                );
+            }elseif (!empty($user_photo['name'])){
+                $data = array(
+                    'user_id'           => $udi,
+                    'pass'              => md5($ups),
+                    'user_name'         => $unm,
+                    'father_name'       => $fatherName,
+                    'mother_name'       => $motherName,
+                    'address'           => $address,
+                    'nid_no'            => $nid_no,
+                    'salary'            => $salary,
+                    'user_designation'  => ($utp == 2)?'Accounts':'Sales Man',
+                    'status'            => $ust,
+                    'user_type'         => $utp,
+                    'created_by'        => $created,
+                    'email'             => $uem,
+                    'phone'             => $uph,
+                    'user_photo'        => $up_photo
+                );
+            }else{
+                $data = array(
+                    'user_id'           => $udi,
+                    'pass'              => md5($ups),
+                    'user_name'         => $unm,
+                    'father_name'       => $fatherName,
+                    'mother_name'       => $motherName,
+                    'address'           => $address,
+                    'nid_no'            => $nid_no,
+                    'salary'            => $salary,
+                    'user_designation'  => ($utp == 2)?'Accounts':'Sales Man',
+                    'status'            => $ust,
+                    'user_type'         => $utp,
+                    'created_by'        => $created,
+                    'email'             => $uem,
+                    'phone'             => $uph
+                );
+            }
 
             $insert = mi_db_insert('mi_users', $data);
 
@@ -1387,12 +1471,23 @@ if (isset($_POST['mi_user_adding_form']) && !empty($_POST['mi_user_adding_form']
 if (isset($_POST['mi_user_updating_form']) && !empty($_POST['mi_user_updating_form'])){
 
     $uid = mi_secure_input(base64_decode($_POST['csxrf']));
+
+    $udi = mi_secure_input($_POST['usr_id']);
     $unm = mi_secure_input($_POST['usr_name']);
+    $fatherName = mi_secure_input($_POST['father_name']);
+    $motherName = mi_secure_input($_POST['mother_name']);
     $uph = mi_secure_input($_POST['usr_phone']);
+    $address = mi_secure_input($_POST['address']);
     $uem = mi_secure_input($_POST['usr_email']);
     $ups = mi_secure_input($_POST['usr_pass']);
+    $nid_no = mi_secure_input($_POST['nid_no']);
+    $salary = mi_secure_input($_POST['salary']);
     $ust = mi_secure_input($_POST['usr_status']);
     $utp = mi_secure_input($_POST['usr_type']);
+
+    $nid_photo = $_FILES['staff_nid'];
+    $user_photo = $_FILES['staff_photo'];
+
 
     if (empty($uid)){
         $msg = array('status' => 'error', 'message' => 'User Undefined');
@@ -1404,26 +1499,59 @@ if (isset($_POST['mi_user_updating_form']) && !empty($_POST['mi_user_updating_fo
         $msg = array('status' => 'error', 'message' => 'User type is required');
     }else{
 
+        $staff_info = mi_db_read_by_id('mi_users', array('id' => $uid))[0];
+
         if (isset($ups) && !empty($ups)){
-            $data = array(
-                'pass'              => md5($ups),
-                'user_name'         => $unm,
-                'user_designation'  => ($utp == 2)?'Shop Manager':'Sales Man',
-                'status'            => $ust,
-                'user_type'         => $utp,
-                'email'             => $uem,
-                'phone'             => $uph
-            );
+            $password = md5($ups);
         }else{
-            $data = array(
-                'user_name'         => $unm,
-                'user_designation'  => ($utp == 2)?'Shop Manager':'Sales Man',
-                'status'            => $ust,
-                'user_type'         => $utp,
-                'email'             => $uem,
-                'phone'             => $uph
-            );
+            $password = $staff_info['pass'];
         }
+
+        if (!empty($nid_photo['name'])){
+            $up_nid = mi_uploader(
+                $nid_photo['name'],
+                $nid_photo['tmp_name'],
+                'uploads/staff-images/',
+                array('png', 'PNG', 'jpg', 'jpeg', 'JPG', 'gif', 'JPEG')
+            );
+            if ($up_nid != false){
+                unlink($staff_info['nid_photo']);
+            }
+        }else{
+            $up_nid = $staff_info['nid_photo'];
+        }
+
+        if (!empty($user_photo['name'])){
+            $up_photo = mi_uploader(
+                $user_photo['name'],
+                $user_photo['tmp_name'],
+                'uploads/staff-images/',
+                array('png', 'PNG', 'jpg', 'jpeg', 'JPG', 'gif', 'JPEG')
+            );
+            if ($up_photo != false){
+                unlink($staff_info['user_photo']);
+            }
+        }else{
+            $up_photo = $staff_info['user_photo'];
+        }
+
+        $data = array(
+            'user_id'           => $staff_info['user_id'],
+            'pass'              => $password,
+            'user_name'         => $unm,
+            'father_name'       => $fatherName,
+            'mother_name'       => $motherName,
+            'address'           => $address,
+            'nid_no'            => $nid_no,
+            'salary'            => $salary,
+            'user_designation'  => ($utp == 2)?'Accounts':'Sales Man',
+            'status'            => $ust,
+            'user_type'         => $utp,
+            'email'             => $uem,
+            'phone'             => $uph,
+            'nid_photo'         => $up_nid,
+            'user_photo'        => $up_photo
+        );
 
 
         $insert = mi_db_update('mi_users', $data, array('id'=>$uid));
@@ -1936,7 +2064,8 @@ if (isset($_POST['addExpenseForm']) && !empty($_POST['addExpenseForm'])){
             'type_id' => $title,
             'amount' => $amount,
             'expense_date' => $expDate.' '.date('H:i:s'),
-            'user_id' => $userId
+            'user_id' => $userId,
+            'type' => 'regular'
         );
         $insert = mi_db_insert('regular_expenses', $data);
         if ($insert == true){
@@ -2127,8 +2256,8 @@ if (isset($_POST['singleStockRefundSubmit']) && $_POST['singleStockRefundSubmit'
 }
 
 //----------------------------full stock refund-------------------------
-if (isset($_POST['stock_ref_id']) && !empty($_POST['stock_ref_id'])){
-    $stock_id = mi_secure_input($_POST['stock_ref_id']);
+if (isset($_POST['refundStock']) && !empty($_POST['refundStock'])){
+    $stock_id = mi_secure_input($_POST['refundStock']);
 
     $stock = mi_db_read_by_id('mi_stocks', array('stock_id' => $stock_id))[0];
     $product = mi_db_read_by_id('mi_products', array('pro_id' => $stock['product_id']))[0];
@@ -2281,6 +2410,10 @@ if (isset($_GET['mi_custom_key_for_orderData']) && !empty($_GET['mi_custom_key_f
     $order = mi_secure_input($_GET['order'][0]['dir']);
     $search = mi_secure_input($_GET['search']['value']);
 
+    $date_search = mi_secure_input($_GET['is_date_search']);
+    $start = mi_secure_input($_GET['start_date']);
+    $end = mi_secure_input($_GET['end_date']);
+
     if (!empty($search)) {
         $data_query = "SELECT 
                             mi_orders.order_id, 
@@ -2296,6 +2429,22 @@ if (isset($_GET['mi_custom_key_for_orderData']) && !empty($_GET['mi_custom_key_f
                     WHERE mi_orders.trx_id LIKE '%".$search."%' 
                     ORDER BY '".$order."' LIMIT ".$start_number.",".$length."
                     ";
+    }elseif ($date_search == 'yes'){
+        $data_query = "SELECT 
+                            mi_orders.order_id,
+                            mi_orders.order_products_details, 
+                            mi_orders.trx_id, 
+                            mi_orders.total_amount, 
+                            mi_orders.paid_amount, 
+                            mi_orders.refund_date,
+                            mi_orders.order_created,
+                            customers.id as cid,
+                            customers.customer_name as cname
+                    FROM mi_orders LEFT OUTER JOIN customers ON mi_orders.customer_id = customers.id 
+                    WHERE mi_orders.order_created BETWEEN '".$start."' AND '".$end."'
+                    ORDER BY mi_orders.order_id DESC LIMIT ".$start_number.",".$length." 
+                    ";
+
     }else{
         $data_query = "SELECT 
                             mi_orders.order_id,
@@ -2446,4 +2595,707 @@ if (isset($_POST['mi_get_single_stock_refund_form']) && !empty($_POST['mi_get_si
     $msg = array('status'=>'success', 'msg'=>"Data fetched", 'data'=>$htmls);
 
     echo json_encode($msg);
+}
+
+//------------------------salary due add-------------------------
+if (isset($_POST['salary_add_due']) && !empty($_POST['salary_add_due'])) {
+
+    $provided_salary_due = mi_secure_input($_POST['provided_salary_due']);
+    $due_salary          = mi_secure_input($_POST['salary_due']);
+    $staff_id            = mi_secure_input($_POST['staff_id']);
+    $user_id             = str_replace('mi_', '', base64_decode($_SESSION['session_id']));
+
+    if ($provided_salary_due < 1){
+        $msg = array('status' => 'error', 'message' => 'Provided salary should be grater than 0 TK.');
+    }else{
+        $paid_salary = mi_db_custom_query("SELECT * FROM regular_expenses WHERE staff_id =".$staff_id." AND  MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(CURDATE())");
+        if (count($paid_salary) > 0){
+            $total_salary = $paid_salary[0]['amount'] + $provided_salary_due;
+            $data = array(
+                    'amount' => $total_salary
+            );
+            $update = mi_db_update('regular_expenses', $data, array('staff_id' => $staff_id));
+            if ($update == true){
+                $msg = array('status' => 'success', 'message' => 'Salary updated');
+            }else{
+                $msg = array('status' => 'error', 'message' => 'Error to update salary');
+            }
+
+        }else{
+            $data = array(
+                    'amount' => $provided_salary_due,
+                    'user_id' => $user_id,
+                    'expense_date' => date('Y-m-d h:i:s'),
+                    'staff_id' => $staff_id,
+                    'type' => 'salary'
+            );
+            $insert = mi_db_insert('regular_expenses', $data);
+            if ($insert == true){
+                $msg = array('status' => 'success', 'message' => 'Salary updated');
+            }else{
+                $msg = array('status' => 'error', 'message' => 'Error to update salary');
+            }
+        }
+    }
+
+    echo json_encode($msg);
+
+}
+
+//--------------------product datatable---------------------
+
+if (isset($_GET['mi_custom_key_for_productData']) && !empty($_GET['mi_custom_key_for_productData']) && $_GET['mi_custom_key_for_productData'] == 1) {
+    $start_number = mi_secure_input($_GET['start']);
+    $length = mi_secure_input($_GET['length']);
+    $order = mi_secure_input($_GET['order'][0]['dir']);
+    $search = mi_secure_input($_GET['search']['value']);
+
+    $cat_sort = mi_secure_input($_GET['cat_sort']);
+    $cat_id = mi_secure_input($_GET['cat_id']);
+    $color_sort = mi_secure_input($_GET['color_sort']);
+    $color_id = mi_secure_input($_GET['color_id']);
+
+    if (!empty($search)) {
+        $data_query = "SELECT 
+                            mi_products.pro_id, 
+                            mi_products.pro_title,
+                            mi_products.pro_price, 
+                            mi_products.pro_img, 
+                            mi_products.pro_stock, 
+                            mi_products.pro_model_number,
+                            mi_products.pro_added,
+                            mi_product_category.cat_id as catId,
+                            mi_product_category.cat_title as catName,
+                            mi_product_brand.br_id as brId,
+                            mi_product_brand.br_title as brTitle
+                    FROM mi_products LEFT OUTER JOIN mi_product_category ON mi_products.pro_cat = mi_product_category.cat_id
+                                     LEFT OUTER JOIN mi_product_brand ON mi_products.pro_brand = mi_product_brand.br_id
+                    WHERE mi_products.pro_title
+                    LIKE '%".$search."%' 
+                    ORDER BY '".$order."' LIMIT ".$start_number.",".$length."
+                    ";
+    }elseif($cat_sort == 'yes'){
+        $data_query = "SELECT 
+                            mi_products.pro_id, 
+                            mi_products.pro_title,
+                            mi_products.pro_price, 
+                            mi_products.pro_img, 
+                            mi_products.pro_stock, 
+                            mi_products.pro_model_number,
+                            mi_products.pro_added,
+                            mi_product_category.cat_id as catId,
+                            mi_product_category.cat_title as catName,
+                            mi_product_brand.br_id as brId,
+                            mi_product_brand.br_title as brTitle
+                    FROM mi_products LEFT OUTER JOIN mi_product_category ON mi_products.pro_cat = mi_product_category.cat_id
+                                     LEFT OUTER JOIN mi_product_brand ON mi_products.pro_brand = mi_product_brand.br_id
+                    WHERE mi_products.pro_cat = ".$cat_id."
+                    ORDER BY mi_products.pro_id DESC LIMIT ".$start_number.",".$length."
+                    ";
+    }elseif ($color_sort == 'yes'){
+        $data_query = "SELECT 
+                            mi_products.pro_id, 
+                            mi_products.pro_title,
+                            mi_products.pro_price, 
+                            mi_products.pro_img, 
+                            mi_products.pro_stock, 
+                            mi_products.pro_model_number,
+                            mi_products.pro_added,
+                            mi_product_category.cat_id as catId,
+                            mi_product_category.cat_title as catName,
+                            mi_product_brand.br_id as brId,
+                            mi_product_brand.br_title as brTitle
+                    FROM mi_products LEFT OUTER JOIN mi_product_category ON mi_products.pro_cat = mi_product_category.cat_id
+                                     LEFT OUTER JOIN mi_product_brand ON mi_products.pro_brand = mi_product_brand.br_id
+                    WHERE mi_products.pro_brand = ".$color_id."
+                    ORDER BY mi_products.pro_id DESC LIMIT ".$start_number.",".$length."
+                    ";
+    }else{
+        $data_query = "SELECT 
+                            mi_products.pro_id, 
+                            mi_products.pro_title,
+                            mi_products.pro_price, 
+                            mi_products.pro_img, 
+                            mi_products.pro_stock, 
+                            mi_products.pro_model_number,
+                            mi_products.pro_added,
+                            mi_product_category.cat_id as catId,
+                            mi_product_category.cat_title as catName,
+                            mi_product_brand.br_id as brId,
+                            mi_product_brand.br_title as brTitle
+                    FROM mi_products LEFT OUTER JOIN mi_product_category ON mi_products.pro_cat = mi_product_category.cat_id
+                                     LEFT OUTER JOIN mi_product_brand ON mi_products.pro_brand = mi_product_brand.br_id 
+                    ORDER BY mi_products.pro_id DESC LIMIT ".$start_number.",".$length."
+                    ";
+    }
+    $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency','type'=>'currency'))[0];
+    $query_execute = mi_db_custom_query($data_query);
+    $data = [];
+    foreach ($query_execute as $key => $d) {
+
+        $data[] = [
+            '<div class="checkbox">
+                <label style="font-size: 1.5em">
+                    <input type="checkbox" value="'.$d['pro_id'].'" class="selectorcheck">
+                    <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                </label>
+            </div>',
+
+            '<div>
+                '.(!empty($d['pro_img'])?
+                        '<img src="'.MI_CDN_URL.'/uploads/'.$d['pro_img'].'" alt="" class="img-fluid img-thumbnail" style="max-width: 50px; height: 70px">':
+                        '<img src="'.MI_CDN_URL.'assets/img/empty-img.png" alt="" class="img-fluid img-thumbnail" style="max-width: 50px; height: 70px">').
+            '</div>',
+            (!empty($d['pro_model_number']))? $d['pro_model_number']:'',
+            '<strong>
+                    '.(!empty($d['pro_title']))?$d['pro_title']:'N/A'.'.
+            </strong>',
+            (!empty($d['pro_stock']) && $d['pro_stock'] != 0)? (($d['pro_stock'] > 10)?'<label class="badge badge-primary text-white">'.$d['pro_stock'].' L</label>':'<label class="badge badge-danger text-white">'.$d['pro_stock'].' L</label>'):'<label class="badge badge-danger text-white">Empty</label>',
+            (!empty($d['catName']))?$d['catName']:'N/A',
+            (!empty($d['brTitle']))?$d['brTitle']:'N/A',
+            $d['pro_price']. $currency['meta_value'],
+            '<div>
+                    <a title="Edit" href="single_product.php?mi_pro_id='.$d['pro_id'].'" class="btn btn-sm btn-success btn-rounded mt-1"><i class="fa fa-edit"></i></a>
+                    <a title="Analytics" href="product_report.php?mi_pro_id='.$d['pro_id'].'" class="btn btn-sm btn-dark btn-rounded mt-1"><i class="nc-icon nc-chart-bar-32"></i></a>
+             </div>'
+
+        ];
+    }
+
+
+    echo json_encode(
+        array(
+            'draw'=> mi_secure_input($_GET['draw']),
+            'recordsTotal'=> count($data),
+            'recordsFiltered' => count(mi_db_read_all('mi_products')),
+            'data'=>$data
+        )
+    );
+}
+//------------------------------server side stock datatable-----------------------------------
+if (isset($_GET['mi_custom_key_for_stockData']) && !empty($_GET['mi_custom_key_for_stockData']) && $_GET['mi_custom_key_for_stockData'] == 1) {
+    $start_number = mi_secure_input($_GET['start']);
+    $length = mi_secure_input($_GET['length']);
+    $order = mi_secure_input($_GET['order'][0]['dir']);
+    $search = mi_secure_input($_GET['search']['value']);
+
+    $date_search = mi_secure_input($_GET['is_date_search']);
+    $start = mi_secure_input($_GET['start_date']);
+    $end = mi_secure_input($_GET['end_date']);
+
+
+    if (!empty($search)) {
+        $data_query = "SELECT 
+                            mi_stocks.stock_id, 
+                            mi_stocks.stock_qty,
+                            mi_stocks.expanse, 
+                            mi_stocks.ex_paid,  
+                            mi_stocks.refund_date,
+                            mi_stocks.upload_date,
+                            mi_products.pro_id as pid,
+                            mi_products.pro_title as proTitle,
+                            mi_product_suppliers.sup_id as sid,
+                            mi_product_suppliers.sup_name as sname
+                    FROM mi_stocks LEFT OUTER JOIN mi_products ON mi_stocks.product_id = mi_products.pro_id
+                                   LEFT OUTER JOIN mi_product_suppliers ON mi_stocks.supplier_id = mi_product_suppliers.sup_id
+                    WHERE mi_product_suppliers.sup_name LIKE '%".$search."%' 
+                    ORDER BY '".$order."' LIMIT ".$start_number.",".$length."
+                    ";
+    }elseif ($date_search == 'yes'){
+        $data_query = "SELECT 
+                            mi_stocks.stock_id, 
+                            mi_stocks.stock_qty,
+                            mi_stocks.expanse, 
+                            mi_stocks.ex_paid,  
+                            mi_stocks.refund_date,
+                            mi_stocks.upload_date,
+                            mi_products.pro_id as pid,
+                            mi_products.pro_title as proTitle,
+                            mi_product_suppliers.sup_id as sid,
+                            mi_product_suppliers.sup_name as sname
+                    FROM mi_stocks LEFT OUTER JOIN mi_products ON mi_stocks.product_id = mi_products.pro_id
+                                   LEFT OUTER JOIN mi_product_suppliers ON mi_stocks.supplier_id = mi_product_suppliers.sup_id
+                    WHERE mi_stocks.upload_date BETWEEN '".$start."' AND '".$end."'
+                    ORDER BY mi_stocks.stock_id DESC LIMIT ".$start_number.",".$length." 
+                    ";
+
+    }else{
+        $data_query = "SELECT 
+                            mi_stocks.stock_id, 
+                            mi_stocks.stock_qty,
+                            mi_stocks.expanse, 
+                            mi_stocks.ex_paid,  
+                            mi_stocks.refund_date,
+                            mi_stocks.upload_date,
+                            mi_products.pro_id as pid,
+                            mi_products.pro_title as proTitle,
+                            mi_product_suppliers.sup_id as sid,
+                            mi_product_suppliers.sup_name as sname
+                    FROM mi_stocks LEFT OUTER JOIN mi_products ON mi_stocks.product_id = mi_products.pro_id
+                                   LEFT OUTER JOIN mi_product_suppliers ON mi_stocks.supplier_id = mi_product_suppliers.sup_id
+                    ORDER BY mi_stocks.stock_id DESC LIMIT ".$start_number.",".$length." 
+                    ";
+    }
+    $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency','type'=>'currency'))[0];
+    $query_execute = mi_db_custom_query($data_query);
+    $data = [];
+    $total_expense = [];
+    $total_due = [];
+    $table_footer_data = '';
+    foreach ($query_execute as $key => $d) {
+        $total_expense[] = $d['expanse'];
+        $total_due[] = $d['expanse'] - $d['ex_paid'];
+        $data[] = [
+            '<div class="checkbox text-left">
+                <label style="font-size: 1.5em">
+                    <input type="checkbox" value="'.$d['stock_id'].'" class="selectorcheck">
+                    <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                </label>
+            </div>',
+            $d['proTitle'],
+            $d['sname'],
+            '<div class="text-center">
+                '.$d['stock_qty'].'
+            </div>',
+            '<div class="text-center">
+                '.date('d M Y', strtotime($d['upload_date'])).'<br>'.date('h:i:s A', strtotime($d['upload_date'])).'
+            </div>',
+
+            '<div class="text-center">
+                '.(number_format($d['expanse'], 2))." ".$currency['meta_value']."
+                <br>
+            ".(($d['refund_date'] !== '0000-00-00 00:00:00')?'<span class="badge badge-dark" style="font-size: 12px;">Returned</span><br><sub>'.$d['refund_date'].'</sub>':'').'
+            </div>',
+
+            '<div class="text-center">
+                '.((($d['expanse'] - $d['ex_paid']) > 0)?number_format($d['expanse'] - $d['ex_paid'], 2).' '.$currency['meta_value']:'Paid').
+                ((($d['expanse'] - $d['ex_paid']) > 0)?'<br><button class="showStockduetk btn btn-sm btn-info" type="button" data-toggle="modal" data-placement="top" title="Due collection" data-target="#update_stock_due" amount_stock_due="'.($d['expanse'] - $d['ex_paid']).'" stock_id="'.$d['stock_id'].'" stock_payable="'.$d['expanse'].'"><i class="fa fa-edit"></i></button>':'').'
+            </div>',
+
+            '<div class="text-center">
+                <div class="btn-group mi-custom-button">
+                    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" style="border: 1px solid #d4cece;">
+                        <a href="view-stock.php?view='.$d['stock_id'].'" class="dropdown-item">
+                            View
+                        </a>
+                        '.(($d['refund_date'] == "0000-00-00 00:00:00")?'<button class="dropdown-item stockRefundForm" type="button" value="'.$d['stock_id'].'">Return</button>':'').'
+                        '.(($d['refund_date'] == "0000-00-00 00:00:00")?'<button class="dropdown-item singleStockRefundForm" type="button" value="'.$d['stock_id'].'">Single Refund</button>':'').'    
+                    </div>
+                </div>
+            </div>'
+
+        ];
+    }
+
+    $table_footer_data =
+        '<th>Total Expense - '.array_sum($total_expense).'</th>';
+
+
+    echo json_encode(
+        array(
+            'draw'=> mi_secure_input($_GET['draw']),
+            'recordsTotal'=> count($data),
+            'recordsFiltered' => count(mi_db_read_all('mi_stocks')),
+            'data'=>$data,
+            'footData' => $table_footer_data
+        )
+    );
+}
+
+
+//------------------------------server side supplier transaction datatable-----------------------------------
+if (isset($_GET['mi_custom_key_for_supplierTransactionData']) && !empty($_GET['mi_custom_key_for_supplierTransactionData']) && $_GET['mi_custom_key_for_supplierTransactionData'] == 1) {
+    $start_number = mi_secure_input($_GET['start']);
+    $length = mi_secure_input($_GET['length']);
+    $order = mi_secure_input($_GET['order'][0]['dir']);
+    $search = mi_secure_input($_GET['search']['value']);
+
+    $sup_id = mi_secure_input($_GET['sup_id']);
+//    print_r($sup_id); return;
+
+    $date_search = mi_secure_input($_GET['is_date_search']);
+    $start = mi_secure_input($_GET['start_date']);
+    $end = mi_secure_input($_GET['end_date']);
+
+
+    if (!empty($search)) {
+        $data_query = "SELECT 
+                            mi_stocks.stock_id, 
+                            mi_stocks.stock_qty,
+                            mi_stocks.expanse, 
+                            mi_stocks.ex_paid,  
+                            mi_stocks.refund_date,
+                            mi_stocks.supplier_id,
+                            mi_stocks.upload_date,
+                            mi_products.pro_id as pid,
+                            mi_products.pro_title as proTitle,
+                            mi_product_suppliers.sup_id as sid,
+                            mi_product_suppliers.sup_name as sname
+                    FROM mi_stocks LEFT OUTER JOIN mi_products ON mi_stocks.product_id = mi_products.pro_id
+                                   LEFT OUTER JOIN mi_product_suppliers ON mi_stocks.supplier_id = mi_product_suppliers.sup_id
+                    WHERE mi_stocks.supplier_id = ".$sup_id." AND mi_products.pro_title LIKE '%".$search."%' 
+                    ORDER BY '".$order."' LIMIT ".$start_number.",".$length."
+                    ";
+    }elseif ($date_search == 'yes'){
+        $data_query = "SELECT 
+                            mi_stocks.stock_id, 
+                            mi_stocks.stock_qty,
+                            mi_stocks.expanse, 
+                            mi_stocks.ex_paid,  
+                            mi_stocks.refund_date,
+                            mi_stocks.supplier_id,
+                            mi_stocks.upload_date,
+                            mi_products.pro_id as pid,
+                            mi_products.pro_title as proTitle,
+                            mi_product_suppliers.sup_id as sid,
+                            mi_product_suppliers.sup_name as sname
+                    FROM mi_stocks LEFT OUTER JOIN mi_products ON mi_stocks.product_id = mi_products.pro_id
+                                   LEFT OUTER JOIN mi_product_suppliers ON mi_stocks.supplier_id = mi_product_suppliers.sup_id
+                    WHERE mi_stocks.upload_date BETWEEN '".$start."' AND '".$end."'
+                    ORDER BY mi_stocks.stock_id DESC LIMIT ".$start_number.",".$length." 
+                    ";
+
+    }else{
+        $data_query = "SELECT 
+                            mi_stocks.stock_id, 
+                            mi_stocks.stock_qty,
+                            mi_stocks.expanse, 
+                            mi_stocks.ex_paid,  
+                            mi_stocks.refund_date,
+                            mi_stocks.supplier_id,
+                            mi_stocks.upload_date,
+                            mi_products.pro_id as pid,
+                            mi_products.pro_title as proTitle,
+                            mi_product_suppliers.sup_id as sid,
+                            mi_product_suppliers.sup_name as sname
+                    FROM mi_stocks LEFT OUTER JOIN mi_products ON mi_stocks.product_id = mi_products.pro_id
+                                   LEFT OUTER JOIN mi_product_suppliers ON mi_stocks.supplier_id = mi_product_suppliers.sup_id
+                    WHERE mi_stocks.supplier_id = ".$sup_id."
+                    ORDER BY mi_stocks.stock_id DESC LIMIT ".$start_number.",".$length." 
+                    ";
+    }
+    $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency','type'=>'currency'))[0];
+    $query_execute = mi_db_custom_query($data_query);
+    $data = [];
+    $total_expense = [];
+    $total_due = [];
+    $table_footer_data = '';
+    foreach ($query_execute as $key => $d) {
+        $total_expense[] = $d['expanse'];
+        $total_due[] = $d['expanse'] - $d['ex_paid'];
+        $data[] = [
+            $key+1,
+            '<a href="product_report.php?mi_pro_id='.$d['pid'].'">'.$d['proTitle'].'</a>',
+            '<div class="text-center">
+                '.$d['stock_qty'].'
+            </div>',
+            '<div class="text-center">
+                '.date('d M Y', strtotime($d['upload_date'])).'<br>'.date('h:i:s A', strtotime($d['upload_date'])).'
+            </div>',
+
+            '<div class="text-center">
+                '.(number_format($d['expanse'], 2))." ".$currency['meta_value'].'
+            </div>',
+            '<div class="text-center">
+                '.(number_format($d['ex_paid'], 2))." ".$currency['meta_value'].'
+            </div>',
+
+            '<div class="text-center">
+                '.((($d['expanse'] - $d['ex_paid']) > 0)?number_format($d['expanse'] - $d['ex_paid'], 2).' '.$currency['meta_value']:'Paid').
+            ((($d['expanse'] - $d['ex_paid']) > 0)?'<br><button class="showStockduetk btn btn-sm btn-info" type="button" data-toggle="modal" data-placement="top" title="Due collection" data-target="#update_stock_due" amount_stock_due="'.($d['expanse'] - $d['ex_paid']).'" stock_id="'.$d['stock_id'].'" stock_payable="'.$d['expanse'].'"><i class="fa fa-edit"></i></button>':'').'
+            </div>'
+
+        ];
+    }
+
+    $table_footer_data =
+        '<th>Total Expense - '.array_sum($total_expense).'</th>';
+
+
+    echo json_encode(
+        array(
+            'draw'=> mi_secure_input($_GET['draw']),
+            'recordsTotal'=> count($data),
+            'recordsFiltered' => count(mi_db_read_all('mi_stocks')),
+            'data'=>$data,
+            'footData' => $table_footer_data
+        )
+    );
+}
+
+//------------------------------server side supplier datatable-----------------------------------
+if (isset($_GET['mi_custom_key_for_supplierData']) && !empty($_GET['mi_custom_key_for_supplierData']) && $_GET['mi_custom_key_for_supplierData'] == 1) {
+    $start_number = mi_secure_input($_GET['start']);
+    $length = mi_secure_input($_GET['length']);
+    $order = mi_secure_input($_GET['order'][0]['dir']);
+    $search = mi_secure_input($_GET['search']['value']);
+
+
+    if (!empty($search)) {
+        $data_query = "SELECT 
+                            mi_product_suppliers.sup_id, 
+                            mi_product_suppliers.sup_name,
+                            mi_product_suppliers.sup_company, 
+                            mi_product_suppliers.sup_email,  
+                            mi_product_suppliers.sup_phone,
+                            mi_product_suppliers.sup_address,
+                            mi_product_suppliers.sup_added,
+                            mi_product_suppliers.sup_img
+                    FROM mi_product_suppliers 
+                    WHERE mi_product_suppliers.sup_name LIKE '%".$search."%' 
+                    ORDER BY '".$order."' LIMIT ".$start_number.",".$length."
+                    ";
+    }else{
+        $data_query = "SELECT 
+                            mi_product_suppliers.sup_id, 
+                            mi_product_suppliers.sup_name,
+                            mi_product_suppliers.sup_company, 
+                            mi_product_suppliers.sup_email,  
+                            mi_product_suppliers.sup_phone,
+                            mi_product_suppliers.sup_address,
+                            mi_product_suppliers.sup_added,
+                            mi_product_suppliers.sup_img
+                    FROM mi_product_suppliers
+                    ORDER BY mi_product_suppliers.sup_id DESC LIMIT ".$start_number.",".$length." 
+                    ";
+    }
+
+    $query_execute = mi_db_custom_query($data_query);
+    $data = [];
+    foreach ($query_execute as $key => $d) {
+        $data[] = [
+            '<div class="checkbox">
+                 <label style="font-size: 1.5em">
+                     <input type="checkbox" value="'.$d['sup_id'].'" class="selectorcheck">
+                     <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                 </label>
+             </div>',
+            '<div>
+                '.(!empty($d['sup_img'])?
+                '<img src="'.MI_CDN_URL.'/uploads/'.$d['sup_img'].'" alt="" class="img-fluid img-thumbnail" style="max-width: 70px; height: 70px">':
+                '<img src="'.MI_CDN_URL.'assets/img/empty-img.png" alt="" class="img-fluid img-thumbnail" style="max-width: 70px; height: 70px">').
+            '</div>',
+            '<div class="text-center">
+                '.$d['sup_name'].'
+            </div>',
+            '<div class="text-center">
+                '.$d['sup_company'].'
+            </div>',
+            '<div class="text-center">
+                '.$d['sup_email'].'
+            </div>',
+            '<div class="text-center">
+                '.$d['sup_phone'].'
+            </div>',
+            '<div class="text-center">
+                '.$d['sup_address'].'
+            </div>',
+            '<div class="text-center">
+                '.date('d M Y', strtotime($d['sup_added'])).'<br>'.date('h:i:s A', strtotime($d['sup_added'])).'
+            </div>',
+            '<div class="text-center">
+                <a title="Edit" href="single_supplier.php?mi_sup_id='.$d['sup_id'].'" class="btn btn-sm btn-dark btn-rounded"><i class="fa fa-edit"></i></a>
+                <a title="View" href="supplier-transaction.php?st='.$d['sup_id'].'" class="btn btn-sm btn-success btn-rounded"><i class="nc-icon nc-chart-bar-32"></i></a>
+            </div>'
+
+        ];
+    }
+
+
+    echo json_encode(
+        array(
+            'draw'=> mi_secure_input($_GET['draw']),
+            'recordsTotal'=> count($data),
+            'recordsFiltered' => count(mi_db_read_all('mi_product_suppliers')),
+            'data'=>$data
+        )
+    );
+}
+
+//------------------------------server side customer datatable-----------------------------------
+if (isset($_GET['mi_custom_key_for_customerData']) && !empty($_GET['mi_custom_key_for_customerData']) && $_GET['mi_custom_key_for_customerData'] == 1) {
+    $start_number = mi_secure_input($_GET['start']);
+    $length = mi_secure_input($_GET['length']);
+    $order = mi_secure_input($_GET['order'][0]['dir']);
+    $search = mi_secure_input($_GET['search']['value']);
+
+
+    if (!empty($search)) {
+        $data_query = "SELECT 
+                            customers.id, 
+                            customers.customer_name,
+                            customers.phone, 
+                            customers.address,  
+                            customers.customer_status
+                    FROM customers 
+                    WHERE customers.customer_name LIKE '%".$search."%' 
+                    ORDER BY '".$order."' LIMIT ".$start_number.",".$length."
+                    ";
+    }else{
+        $data_query = "SELECT 
+                            customers.id, 
+                            customers.customer_name,
+                            customers.phone, 
+                            customers.address,  
+                            customers.customer_status
+                    FROM customers 
+                    ORDER BY customers.id DESC LIMIT ".$start_number.",".$length." 
+                    ";
+    }
+
+    $query_execute = mi_db_custom_query($data_query);
+    $data = [];
+    foreach ($query_execute as $key => $d) {
+        $data[] = [
+            '<div class="checkbox">
+                 <label style="font-size: 1.5em">
+                     <input type="checkbox" value="'.$d['id'].'" class="selectorcheck">
+                     <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                 </label>
+             </div>',
+            '<div class="text-left">
+                '.$d['customer_name'].'
+            </div>',
+            '<div class="text-center">
+                '.$d['phone'].'
+            </div>',
+            '<div class="text-center">
+                '.$d['address'].'
+            </div>',
+            '<div>
+                <p class="badge badge-dark text-center">'.($d['customer_status'] == 0)?'Active':'Inactive'.'</p>
+            </div>',
+            '<div class="text-center">
+                <a title="Edit" href="customers.php?customer_edit='.$d['id'].'" class="btn btn-sm btn-dark btn-rounded"><i class="fa fa-edit"></i></a>
+                <a title="View" href="customers-transaction.php?c='.$d['id'].'" class="btn btn-sm btn-success btn-rounded"><i class="nc-icon nc-chart-bar-32"></i></a>
+            </div>',
+            '<div class="text-center">
+                '.date('d M Y', strtotime($d['sup_added'])).'<br>'.date('h:i:s A', strtotime($d['sup_added'])).'
+            </div>'
+
+        ];
+    }
+
+
+    echo json_encode(
+        array(
+            'draw'=> mi_secure_input($_GET['draw']),
+            'recordsTotal'=> count($data),
+            'recordsFiltered' => count(mi_db_read_all('customers')),
+            'data'=>$data
+        )
+    );
+}
+
+//------------------------------server side customer transaction datatable-----------------------------------
+if (isset($_GET['mi_custom_key_for_customerTransactionData']) && !empty($_GET['mi_custom_key_for_customerTransactionData']) && $_GET['mi_custom_key_for_customerTransactionData'] == 1) {
+    $start_number = mi_secure_input($_GET['start']);
+    $length = mi_secure_input($_GET['length']);
+    $order = mi_secure_input($_GET['order'][0]['dir']);
+    $search = mi_secure_input($_GET['search']['value']);
+
+    $customer_id = mi_secure_input($_GET['customer_id']);
+
+    $date_search = mi_secure_input($_GET['is_date_search']);
+    $start = mi_secure_input($_GET['start_date']);
+    $end = mi_secure_input($_GET['end_date']);
+
+    if (!empty($search)) {
+        $data_query = "SELECT 
+                            mi_orders.order_id, 
+                            mi_orders.order_products_details,
+                            mi_orders.trx_id, 
+                            mi_orders.total_amount, 
+                            mi_orders.paid_amount, 
+                            mi_orders.refund_date,
+                            mi_orders.order_created
+                    FROM mi_orders  
+                    WHERE mi_orders.customer_id = ".$customer_id." AND mi_orders.trx_id LIKE '%".$search."%' 
+                    ORDER BY '".$order."' LIMIT ".$start_number.",".$length."
+                    ";
+    }elseif ($date_search == 'yes'){
+        $data_query = "SELECT 
+                            mi_orders.order_id,
+                            mi_orders.order_products_details, 
+                            mi_orders.trx_id, 
+                            mi_orders.total_amount, 
+                            mi_orders.paid_amount, 
+                            mi_orders.refund_date,
+                            mi_orders.order_created
+                    FROM mi_orders
+                    WHERE mi_orders.customer_id = ".$customer_id." AND mi_orders.order_created BETWEEN '".$start."' AND '".$end."'
+                    ORDER BY mi_orders.order_id DESC LIMIT ".$start_number.",".$length." 
+                    ";
+
+    }else{
+        $data_query = "SELECT 
+                            mi_orders.order_id,
+                            mi_orders.order_products_details, 
+                            mi_orders.trx_id, 
+                            mi_orders.total_amount, 
+                            mi_orders.paid_amount, 
+                            mi_orders.refund_date,
+                            mi_orders.order_created
+                    FROM mi_orders
+                    WHERE mi_orders.customer_id = ".$customer_id." 
+                    ORDER BY mi_orders.order_id DESC LIMIT ".$start_number.",".$length." 
+                    ";
+    }
+    $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency','type'=>'currency'))[0];
+    $query_execute = mi_db_custom_query($data_query);
+    $data = [];
+    foreach ($query_execute as $key => $d) {
+        $vvl = explode(', ', $d['order_products_details']);
+        $get_pro_img = array();
+        $due = $d['total_amount'] - $d['paid_amount'];
+
+        $order_items = 0;
+        $order_qty = [];
+        foreach ($vvl as $k => $v){
+            $get_pro_id = json_decode($v)->{'pro_qty'};
+            $order_items += 1;
+            $order_qty[] = $get_pro_id;
+        }
+
+        $data[] = [
+            $key+1,
+            '<div class="text-center">
+                <a href="view_orders.php?mi_order_view='.$d['order_id'].'">
+                    <strong>'.$d['trx_id'].'</strong>
+                </a>
+            </div>',
+            '<div class="text-center">
+                '.'Total Items: '.$order_items.'<br>Total Qty: '.array_sum($order_qty). ' L'.'
+            </div>',
+            '<div class="text-center">
+                '.date('d M Y', strtotime($d['order_created'])).'<br>'.date('h:i:s A', strtotime($d['order_created'])).'
+            </div>',
+            '<div class="text-center">
+                '.(number_format($d['total_amount'], 2))." ".$currency['meta_value']."
+                <br>
+                ".(($d['refund_date'] !== '0000-00-00 00:00:00')?'<span class="badge badge-dark" style="font-size: 12px;">Returned</span><br><sub>'.$d['refund_date'].'</sub>':'').'
+            </div>',
+            '<div class="text-center">
+                '.(number_format($d['paid_amount'], 2))." ".$currency['meta_value'].'
+            </div>',
+            '<div class="text-center">
+                '.(($due > 0)?number_format($due, 2).' '.$currency['meta_value']:'Paid').
+                (($due>0)?'<br><button class="showduetk btn btn-sm btn-info" type="button" data-toggle="modal" data-placement="top" title="Due collection" data-target="#update_due" amount_due="'.$due.'" order_id="'.$d['order_id'].'" payable="'.$d['total_amount'].'"><i class="fa fa-edit"></i></button>':'').'
+            </div>',
+
+        ];
+    }
+
+
+    echo json_encode(
+        array(
+            'draw'=> mi_secure_input($_GET['draw']),
+            'recordsTotal'=> count($data),
+            'recordsFiltered' => count(mi_db_read_by_id('mi_orders', array('customer_id'=> $customer_id))),
+            'data'=>$data
+        )
+    );
 }

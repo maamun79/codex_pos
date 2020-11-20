@@ -190,7 +190,7 @@ if (!empty(mi_get_session('alert'))  && count(mi_get_session('alert'))>0){
 //                                                                    print_r(array_sum($prod_stocks)); return;
                                                                     echo array_sum($prod_stocks).' L';
                                                                 }else{
-                                                                    echo mi_db_tbl_sum('mi_products', 'pro_in_total_stock', array('pro_status' => 1), array($from, $to), 'pro_added').'L';
+                                                                    echo mi_db_tbl_sum('mi_products', 'pro_in_total_stock', array('pro_status' => 1), array($from, $to), 'pro_added').' L';
                                                                 }?>
                                                             </strong>
                                                         </div>
@@ -208,7 +208,7 @@ if (!empty(mi_get_session('alert'))  && count(mi_get_session('alert'))>0){
 //
                                                                     echo array_sum($prod_stocks).' L';
                                                                 }else{
-                                                                    echo mi_db_tbl_sum('mi_products', 'pro_stock', array('pro_status'=> 1),  array($from, $to), 'pro_added').'L';
+                                                                    echo mi_db_tbl_sum('mi_products', 'pro_stock', array('pro_status'=> 1),  array($from, $to), 'pro_added').' L';
                                                                 }?>
                                                             </strong>
                                                         </div>
@@ -266,7 +266,7 @@ if (!empty(mi_get_session('alert'))  && count(mi_get_session('alert'))>0){
                                                                 }
                                                                 echo array_sum($arra);
                                                                 ?>
-                                                                Pcs
+                                                                 L
                                                             </strong>
                                                         </div>
                                                     </div>
@@ -460,7 +460,7 @@ if (!empty(mi_get_session('alert'))  && count(mi_get_session('alert'))>0){
                                         $revenue = (array_sum($sell_amounts))-(array_sum($ttlSupExp)+array_sum($totalExp)+array_sum($totalInv));
                                     ?>
                                     <div class="col-md-4 col-lg-4 col-sm-12">
-                                        <div class="card card-stats text-white <?=($revenue < 0?'loss_background':($revenue>0?'profit_background':'bg-warning'))?>">
+                                        <div class="card card-stats text-white <?=($revenue < 0?'loss_background':($revenue>0?'profit_background':'level_background'))?>">
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-md-12">

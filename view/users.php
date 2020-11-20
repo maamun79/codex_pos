@@ -9,6 +9,8 @@ if (isset($_GET['user_edit'])){
     $ctid = mi_secure_input($_GET['user_edit']);
     $getudata = mi_db_read_by_id('mi_users', array('id' => $ctid))[0];
 }
+
+$currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency','type'=>'currency'))[0];
 ?>
 
       <?=mi_sidebar();?>
@@ -18,107 +20,12 @@ if (isset($_GET['user_edit'])){
 
       <div class="content">
         <div class="row">
-            <div class="col-md-4 col-sm-12 col-xs-12" style="padding-right: 5px">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title"><?=(isset($_GET['user_edit']))?'Update Staff':'Add Staff';?></h5>
-                    </div>
-                    <div class="card-body">
-                        <form class="form-horizontal" id="mi_user_adding_form" autocomplete="off">
-                            <?php if (isset($_GET['user_edit'])){?>
-                                <input type="hidden" name="mi_user_updating_form" value="1">
-                                <input type='hidden' name='csxrf' value='<?=base64_encode($getudata['id']);?>'>
-                            <?php }else{?>
-                                <input type="hidden" name="mi_user_adding_form" value="1">
-                                <input type='hidden' name='created_by' value='<?=str_replace('mi_', '', base64_decode($_SESSION['session_id']));?>'>
-                            <?php }?>
-                            <div class="row">
-                                <div class="col-md-12 col-sm-12 form-group">
-                                    <label>Staff Id</label>
-                                    <?php if (isset($_GET['user_edit'])){?>
-                                        <input type="text" value="<?=(!empty($getudata['user_id']))?$getudata['user_id']:'';?>" disabled="disabled" class="form-control">
-                                    <?php }else{?>
-                                        <input type="text" name="usr_id" placeholder="Enter User Id" class="form-control">
-                                    <?php }?>
-                                </div>
-                                <div class="col-md-12 col-sm-12 form-group">
-                                    <label>Staff Name</label>
-                                    <input type="text" value="<?=(!empty($getudata['user_name']))?$getudata['user_name']:'';?>" name="usr_name" placeholder="Enter User Name" class="form-control">
-                                </div>
-                                <div class="col-md-12 col-sm-12 form-group">
-                                    <label>Staff Phone</label>
-                                    <input type="tel" name="usr_phone" value="<?=(!empty($getudata['phone']))?$getudata['phone']:'';?>" placeholder="Enter User phone" class="form-control">
-                                </div>
-                                <div class="col-md-12 col-sm-12 form-group">
-                                    <label>Staff Email</label>
-                                    <input type="email" name="usr_email" value="<?=(!empty($getudata['email']))?$getudata['email']:'';?>" placeholder="Enter User email" class="form-control">
-                                </div>
-                                <div class="col-md-12 col-sm-12 form-group">
-                                    <label>Staff Password</label>
-                                    <input type="password" name="usr_pass" placeholder="Enter User password" class="form-control">
-                                </div>
 
-                                <div class="col-md-12 col-sm-12 form-group">
-                                    <label>Choose Status</label>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="funkyradio">
-                                                <div class="funkyradio-primary">
-                                                    <input type="radio" name="usr_status" id="radioActive" value="1" <?=(!empty($getudata['status']))?(($getudata['status'] == 1)?'checked':''):'checked'?>/>
-                                                    <label for="radioActive">Active</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="funkyradio">
-                                                <div class="funkyradio-primary">
-                                                    <input type="radio" name="usr_status" id="radioActive1" value="2" <?=(!empty($getudata['status']))?(($getudata['status'] == 2)?'checked':''):''?>/>
-                                                    <label for="radioActive1">Inactive</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 col-sm-12 form-group">
-                                    <label>Choose Staff Type</label>
-                                    <div class="row">
-                                        <?php
-                                        $yourtype = base64_decode($_SESSION['session_type']);
-
-                                        if ($yourtype == 'mi_1'){
-                                            ?>
-                                            <div class="col-md-6">
-                                                <div class="funkyradio">
-                                                    <div class="funkyradio-primary">
-                                                        <input type="radio" name="usr_type" id="radio1" value="2" <?=(!empty($getudata['user_type']))?(($getudata['user_type'] == 2)?'checked':''):''?>/>
-                                                        <label for="radio1">Accounts</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php }?>
-                                        <div class="col-md-6">
-                                            <div class="funkyradio">
-                                                <div class="funkyradio-primary">
-                                                    <input type="radio" name="usr_type" id="radio2" value="3" <?=(!empty($getudata['user_type']))?(($getudata['user_type'] == 3)?'checked':''):'checked'?>/>
-                                                    <label for="radio2">Sales Man</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 btn-block">
-                                    <button type="submit" name="Add_User" value="1" class="btn btn-primary pull-right"><i class="nc-icon <?=(isset($_GET['user_edit']))?'nc-refresh-69':'nc-simple-add'?>"></i>&nbsp; <?=(isset($_GET['user_edit']))?'Update':'Add'?> Staff</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="card-footer"></div>
-                </div>
-            </div>
-          <div class="col-md-8 col-sm-12 col-xs-12" style="padding-left: 5px">
+          <div class="col-md-12 col-sm-12 col-xs-12" style="padding-left: 5px">
             <div class="card">
               <div class="card-header">
-                <h5 class="card-title">All Staffs</h5>
+                <h5 class="card-title pull-left" style="margin-top: 18px">All Staffs</h5>
+                  <a class="btn btn-primary pull-right"href="add-staff.php">Add Staff &nbsp;<i class="nc-icon nc-simple-add"></i></a>
                   <div class="showmsg"></div>
               </div>
               <div class="card-body table-responsive">
@@ -144,11 +51,12 @@ if (isset($_GET['user_edit'])){
                         </th>
                         <?php }?>
                         <th class="table_font_small">Name</th>
-                        <th class="table_font_small">Id</th>
-                        <th class="table_font_small">Contact</th>
-                        <th class="table_font_small">Created By</th>
-                        <th class="table_font_small">Status</th>
-                        <th class="table_font_small">Action</th>
+                        <th class="table_font_small text-center">Id</th>
+                        <th class="table_font_small text-center">Contact</th>
+                        <th class="table_font_small text-center">Created By</th>
+                        <th class="table_font_small text-center">Status</th>
+                        <th class="table_font_small text-center">Salary</th>
+                        <th class="table_font_small text-center">Action</th>
                     </tr>
                   </thead>
                   <tbody class="text-center">
@@ -228,8 +136,25 @@ if (isset($_GET['user_edit'])){
                               <td>
                                   <p class="badge badge-dark"><?=($d['status'] == 1)?'Active':'Inactive';?></p>
                               </td>
+                              <?php
+                                    $expense = mi_db_custom_query("SELECT * FROM regular_expenses WHERE staff_id =".$d['id']." AND  MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(CURDATE())")[0];
+                              ?>
                               <td>
-                                  <a title="Edit" href="users.php?user_edit=<?=$d['id'];?>" class="btn btn-sm btn-default btn-rounded"><i class="fa fa-edit"></i></a>
+                                  <?php
+                                        if (!empty($expense['amount']) && $expense['amount'] >= $d['salary']){
+                                  ?>
+                                      <?=(!empty($d['salary'])?$d['salary']:'0');?> <?=$currency['meta_value']?><br>
+                                      Paid <i class="fa fa-check-circle" aria-hidden="true" style="color: #00c853"></i>
+                                  <?php } else{?>
+                                      <?=(!empty($d['salary'])?$d['salary']:'0');?> <?=$currency['meta_value']?><br>
+                                      <button class="showSalary btn btn-sm btn-danger"
+                                              type="button" data-toggle="modal" data-placement="top" title="Salary payment" data-target="#update_staff_salary" salary_amount="<?=$d['salary']?>" staff_id="<?=$d['id'] ?>" salary_due="<?= $d['salary'] - $expense['amount']; ?>">
+                                          Pay Now
+                                      </button>
+                                  <?php }?>
+                              </td>
+                              <td>
+                                  <a title="Edit" href="add-staff.php?user_edit=<?=$d['id'];?>" class="btn btn-sm btn-default btn-rounded"><i class="fa fa-edit"></i></a>
                               </td>
 
                           </tr>
@@ -240,6 +165,43 @@ if (isset($_GET['user_edit'])){
             </div>
           </div>
         </div>
+<!--          --------------------salary modal-------------------->
+          <div class="modal fade" id="update_staff_salary" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document" style="width: 450px">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Staff Salary Payment</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">
+
+
+                          <form class="form-horizontal" id="mi_add_due" autocomplete="off">
+                              <div class="row">
+                                  <div class="col-md-12 col-sm-12 form-group">
+                                      <strong>Salary: <span id="staff_salary"></span> <?=$currency['meta_value']?></strong><br>
+                                      <strong>Total Paid   : <span id="salary_paid"></span> <?=$currency['meta_value']?></strong><br>
+                                      <strong>Total Due    : <span id="salary_due"></span> <?=$currency['meta_value']?></strong><br><br>
+
+                                      <input type="hidden" id="keep_staff_id" value="">
+                                      <input type="hidden" id="keep_salary_amount" value="">
+                                      <input type="hidden" id="keep_salary_paid" value="">
+
+                                      <label>Collection Amount:</label>
+                                      <input type="number" class="form-control" value="0" min="0" max="" id="salary_due_amount" required="">
+                                      <button class="btn btn-sm btn-danger" id="add_salary_update">Update</button>
+                                  </div>
+
+                              </div>
+                          </form>
+
+                      </div>
+                  </div>
+              </div>
+          </div>
+
       </div>
 
 

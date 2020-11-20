@@ -165,7 +165,12 @@ $note = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_note'))[0];
     <div id="animatedModal" role="dialog" style="z-index: 999999; padding-left: 0px !important; ">
         <button type="button" class="close mi_close close-animatedModal">&times;</button>
         <div class="modal-content border-0" style="top: 5%;background: none">
-            <div id="invoice-POS" style="width:794px; height:1122px;">
+            <div id="invoice-POS" style="width:794px; height:1122px;
+                                        background-image: url('<?=MI_CDN_URL?>uploads/settings-img/invoice_logo.png');
+                                        background-repeat: no-repeat;
+                                        background-position: center;
+                                        z-index:99;
+                                        background-color: white;">
                 <div class="paid_or_due_seal">
                     <?php
                         if (($data['total_amount'] - $data['paid_amount']) > 0){
@@ -211,12 +216,7 @@ $note = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_note'))[0];
 
                 <div id="bot">
 
-                    <div id="mi_billing_table" style="background: url('<?=MI_CDN_URL.$logo['meta_value']?>'); 
-                                                     background-repeat: no-repeat;
-                                                     background-position: center;
-                                                     z-index:99;
-                                                     background-color: white;"
-                                                     >
+                    <div id="mi_billing_table">
                         <div class="info mi_invoice_id">
                             <h2 style="font-size: 15px !important;float: left; margin-bottom: 2px">Invoice ID: <?=$data['trx_id']?></h2>
                         </div>
@@ -281,7 +281,7 @@ $note = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_note'))[0];
                                 <?php
                                         $rounder++;
                                     }
-                                    $get_i = 25 - count($ttl_array);
+                                    $get_i = 23 - count($ttl_array);
                                     for ($i=1;$i<=$get_i;$i++){
                                         ?>
                                         <tr>
@@ -340,13 +340,13 @@ $note = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_note'))[0];
                     </div><!--End Table-->
 
                     <div class="row">
-                        <div id="legalcopy" class="col-sm-10 col-md-10">
+                        <div id="legalcopy" class="col-sm-19 col-md-9">
                             <p id="sales_due_note">N.B. : <span></span></p>
                             <p class="legal"><small><?=$note['meta_value']?></small></p>
                         </div>
-                        <div class="col-sm-2 col-md-2 text-right">
-                            <p>Signature</p>
-                            <p>-------------</p>
+                        <div class="col-sm-3 col-md-3 text-right">
+                            <p>Receiver Signature</p>
+                            <p>-------------------------</p>
                         </div>
 
                     </div>

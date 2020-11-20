@@ -22,7 +22,7 @@ if (base64_decode($_SESSION['session_type']) !== "mi_1" &&
                   <div class="showmsg"></div>
               </div>
               <div class="card-body table-responsive">
-                <table class="table table-full-width mi_datatable">
+                <table class="table table-full-width" id="supplier_datatable">
                   <thead class="text-primary text-center">
                     <tr>
                         <th style="max-width: 50px; padding-top: 0">
@@ -31,13 +31,8 @@ if (base64_decode($_SESSION['session_type']) !== "mi_1" &&
                         <th colspan="8"></th>
                     </tr>
                     <tr>
-                        <th style="max-width: 50px;">
-                            <div class="checkbox pull-left">
-                                <label style="font-size: 1.5em">
-                                    <input type="checkbox" value="" class="selectAll">
-                                    <span class="cr"><i class="cr-icon fa fa-check"></i></span>
-                                </label>
-                            </div>
+                        <th class="text-left" style="max-width: 50px;">
+                            #
                         </th>
                         <th class="table_font_small">Image</th>
                         <th class="table_font_small">Supplier Name</th>
@@ -49,37 +44,6 @@ if (base64_decode($_SESSION['session_type']) !== "mi_1" &&
                         <th class="table_font_small">Actions</th>
                     </tr>
                   </thead>
-                  <tbody class="text-center">
-                  <?php
-
-                  $data = mi_db_read_all('mi_product_suppliers', 'sup_id', 'DESC');
-
-                  foreach ($data as $d){
-                  ?>
-                  <tr>
-                      <td style="padding-left: 18px !important;max-width: 50px;">
-                          <div class="checkbox">
-                              <label style="font-size: 1.5em">
-                                  <input type="checkbox" value="<?=$d['sup_id'];?>" class="selectorcheck">
-                                  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
-                              </label>
-                          </div>
-                      </td>
-                      <td><?=(!empty($d['sup_img']))?'<img class="img-fluid img-thumbnail" src="uploads/'.$d['sup_img'].'" style="max-width: 70px;">': '<img class="img-fluid img-thumbnail" src="uploads/empty-img.png" style="max-width: 70px;">';?></td>
-                      <td><strong><?=(!empty($d['sup_name']))?$d['sup_name']:'N/A';?></strong></td>
-                      <td><?=(!empty($d['sup_company']))? $d['sup_company']: 'N/A';?></td>
-                      <td><?=(!empty($d['sup_email']))? $d['sup_email']:'N/A';?></td>
-                      <td><?=(!empty($d['sup_phone']))? $d['sup_phone']:'N/A';?></td>
-                      <td><?=(!empty($d['sup_address']))? $d['sup_address']:'N/A';?></td>
-                      <td><?=$d['sup_added'];?></td>
-                      <td>
-                          <a title="Edit" href="single_supplier.php?mi_sup_id=<?=$d['sup_id'];?>" class="btn btn-sm btn-dark btn-rounded"><i class="fa fa-edit"></i></a>
-                          <a title="View" href="supplier-transaction.php?st=<?=$d['sup_id'];?>" class="btn btn-sm btn-success btn-rounded"><i class="nc-icon nc-chart-bar-32"></i></a>
-                      </td>
-                                  
-                  </tr>
-                  <?php }?>
-                  </tbody>
                 </table>
               </div>
             </div>

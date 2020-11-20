@@ -301,7 +301,6 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
               </div>
           </div>
       </div>
-    </div>
 
 
 <?=mi_footer();?>

@@ -7367,3 +7367,7 @@ input[type=number] {
 .loss_background {
     background-color: #d50000;
 }
+
+.level_background {
+    background-color: #ff6d00;
+}

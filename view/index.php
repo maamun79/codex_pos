@@ -165,7 +165,10 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                 <div class="col-7 col-md-8">
                                     <div class="numbers">
                                         <p class="card-category">Total Products</p>
-                                        <p class="card-title"><?=mi_db_tbl_row_count('mi_products');?>
+                                        <?php
+                                            $products = mi_db_custom_query("SELECT * FROM mi_products WHERE MONTH(pro_added) = MONTH(CURDATE()) AND YEAR(pro_added) = YEAR(CURDATE())");
+                                        ?>
+                                        <p class="card-title"><?=count($products);?>
                                         <p>
                                     </div>
                                 </div>
@@ -191,7 +194,10 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                 <div class="col-7 col-md-8">
                                     <div class="numbers">
                                         <p class="card-category">Total Sales</p>
-                                        <p class="card-title"><?=mi_db_tbl_row_count('mi_orders', array('refund_date'=>'0000-00-00 00:00:00'));?>
+                                        <?php
+                                            $orders = mi_db_custom_query("SELECT * FROM mi_orders WHERE refund_date = '0000-00-00 00:00:00' AND MONTH(order_created) = MONTH(CURDATE()) AND YEAR(order_created) = YEAR(CURDATE())");
+                                        ?>
+                                        <p class="card-title"><?=count($orders);?>
                                         <p>
                                     </div>
                                 </div>
@@ -217,15 +223,16 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                 <div class="col-7 col-md-8">
                                     <div class="numbers">
                                         <p class="card-category">Total Sell Amount</p>
-                                        <p class="card-title"><?=$currency['meta_value']?> <?php
-                                            $total_saleslf = array();
-                                            $total_saleslfdata = mi_db_read_all('mi_orders');
-                                            foreach ($total_saleslfdata as $totalval){
-                                                if ($totalval['refund_date'] == '0000-00-00 00:00:00'){
-                                                    $total_saleslf[] = $totalval['total_amount'];
+                                        <p class="card-title"><?=$currency['meta_value']?>
+                                            <?php
+                                                $total_saleslf = array();
+                                                $total_saleslfdata = mi_db_custom_query("SELECT * FROM mi_orders WHERE MONTH(order_created) = MONTH(CURDATE()) AND YEAR(order_created) = YEAR(CURDATE())");
+                                                foreach ($total_saleslfdata as $totalval){
+                                                    if ($totalval['refund_date'] == '0000-00-00 00:00:00'){
+                                                        $total_saleslf[] = $totalval['total_amount'];
+                                                    }
                                                 }
-                                            }
-                                            echo number_format(array_sum($total_saleslf), 2);
+                                                echo number_format(array_sum($total_saleslf), 2);
                                             ?>
                                         <p>
                                     </div>
@@ -252,6 +259,9 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                 <div class="col-7 col-md-8">
                                     <div class="numbers">
                                         <p class="card-category">Total Suppliers</p>
+                                        <?php
+                                            $suppliers = mi_db_custom_query("SELECT * FROM mi_product_suppliers WHERE MONTH(sup_added) = MONTH(CURDATE()) AND YEAR(sup_added) = YEAR(CURDATE())");
+                                        ?>
                                         <p class="card-title"><?=mi_db_tbl_row_count('mi_product_suppliers');?>
                                         <p>
                                     </div>

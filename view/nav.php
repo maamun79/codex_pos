@@ -9,7 +9,7 @@
                     <span class="navbar-toggler-bar bar3"></span>
                 </button>
             </div>
-            <a class="btn btn-sm mi_title_btn" style="text-transform: uppercase;display: none; background-color: #0277bd" href="index.php"><i class="nc-icon nc-minimal-left" style="font: normal normal bolder 14px/1 'nucleo-icons';"></i>&nbsp;<label style="line-height: 0;">Back to Home</label></a>&nbsp;&nbsp;
+            <button class="btn btn-sm mi_title_btn goBack" style="text-transform: uppercase;display: none; background-color: #0277bd"><i class="nc-icon nc-minimal-left" style="font: normal normal bolder 14px/1 'nucleo-icons';"></i>&nbsp;<label style="line-height: 0;">Go Back</label></button>&nbsp;&nbsp;
             <a class="navbar-brand mi_titles_page" style="text-transform: uppercase;"></a>
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">

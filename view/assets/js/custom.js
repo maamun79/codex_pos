@@ -3,6 +3,8 @@
  */
 $(document).ready(function() {
 
+    $('.dropify').dropify();
+
     var i = document.location.href.lastIndexOf("/");
     var currentPHP = document.location.href.substr(i + 1);
 
@@ -107,7 +109,7 @@ $(document).ready(function() {
                                     .then((deleted) => {
 
                                         if (dltype == 'product') {
-                                            window.location = "warehouse.php";
+                                            $('#product_datatable').dataTable().api().ajax.reload();
                                         } else if (dltype == 'stocks') {
                                             window.location = "stocks.php";
                                         } else if (dltype == 'category') {
@@ -117,9 +119,9 @@ $(document).ready(function() {
                                         } else if (dltype == 'orders') {
                                             $('#mi_orders_datatable').dataTable().api().ajax.reload();
                                         } else if (dltype == 'supplier') {
-                                            window.location = "suppliers.php";
+                                            $('#supplier_datatable').dataTable().api().ajax.reload();
                                         } else if (dltype == 'stockHistory') {
-                                            window.location = "add-stock.php";
+                                            $('#stock_datatable').dataTable().api().ajax.reload();
                                         } else if (dltype == 'users') {
                                             window.location = "users.php";
                                         } else if (dltype == 'inv_expense') {
@@ -193,56 +195,164 @@ $(document).ready(function() {
     });
 
 
-
-    $('#mi_orders_datatable').DataTable({
-        dom: 'Bfrtip',
-        buttons: [{
+// --------------------server side order datatable--------------------
+    fetch_order_data('no');
+    function fetch_order_data(is_date_search, start_date, end_date){
+        $('#mi_orders_datatable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [{
                 extend: 'colvis',
                 text: 'Column Visibility',
                 className: 'btn mi_custom_dt_btn custom_coulmn_visibility_background',
             },
-            {
-                extend: 'csv',
-                text: 'Export CSV',
-                className: 'btn btn-primary mi_custom_dt_btn custom_csv_background',
-            },
-            {
-                extend: 'print',
-                text: 'Print PDF',
-                className: 'btn mi_custom_dt_btn custom_pdf_background',
-                exportOptions: {
-                    modifier: {
-                        selected: null
-                    }
+                {
+                    extend: 'csv',
+                    text: 'Export CSV',
+                    className: 'btn btn-primary mi_custom_dt_btn custom_csv_background',
                 },
-                customize: function(win) {
-                    $(win.document.body)
-                        .css('font-size', '10pt')
-                        .prepend(
-                            '<img src="https://png.pngtree.com/element_pic/17/02/28/745c75d504f336a83a10e6dcf8db44fa.jpg" style="float:left;margin-right:10px;width: 50px;height: 50px;" />'
-                        );
+                {
+                    extend: 'print',
+                    text: 'Print PDF',
+                    className: 'btn mi_custom_dt_btn custom_pdf_background',
+                    exportOptions: {
+                        modifier: {
+                            selected: null
+                        }
+                    },
+                    customize: function(win) {
+                        $(win.document.body)
+                            .css('font-size', '10pt')
+                            .prepend(
+                                '<img src="https://png.pngtree.com/element_pic/17/02/28/745c75d504f336a83a10e6dcf8db44fa.jpg" style="float:left;margin-right:10px;width: 50px;height: 50px;" />'
+                            );
 
-                    $(win.document.body).find('table')
-                        .addClass('compact')
-                        .css('font-size', 'inherit');
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+                    }
+                }
+            ],
+            language: {
+                paginate: {
+                    next: '&#8594;',
+                    previous: '&#8592;'
+                }
+            },
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "actions.php",
+                data: {
+                    mi_custom_key_for_orderData: 1,
+                    is_date_search: is_date_search,
+                    start_date: start_date,
+                    end_date: end_date
                 }
             }
-        ],
-        language: {
-            paginate: {
-                next: '&#8594;',
-                previous: '&#8592;'
-            }
-        },
-        processing: true,
-        serverSide: true,
-        ajax: {
-            url: "actions.php",
-            data: { mi_custom_key_for_orderData: 1 }
+        });
+    }
+
+    $('body').on('click', '#order_date_search', function () {
+        var start_date = $('#order_start_date').val();
+        var end_date = $('#order_end_date').val();
+        console.log(end_date);
+        if(start_date != '' && end_date !='')
+        {
+            $('#mi_orders_datatable').DataTable().destroy();
+            fetch_order_data('yes', start_date, end_date);
+        }
+        else
+        {
+            alert("Both Date is Required");
         }
     });
 
+    // --------------------------server side product datatable---------------------------
+    fetch_product_data();
+    function fetch_product_data(cat_sort='no', cat_id='', color_sort = 'no', color_id=''){
+        $('#product_datatable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [{
+                extend: 'colvis',
+                text: 'Column Visibility',
+                className: 'btn mi_custom_dt_btn custom_coulmn_visibility_background',
+            },
+                {
+                    extend: 'csv',
+                    text: 'Export CSV',
+                    className: 'btn btn-primary mi_custom_dt_btn custom_csv_background',
+                },
+                {
+                    extend: 'print',
+                    text: 'Print PDF',
+                    className: 'btn mi_custom_dt_btn custom_pdf_background',
+                    exportOptions: {
+                        modifier: {
+                            selected: null
+                        }
+                    },
+                    customize: function(win) {
+                        $(win.document.body)
+                            .css('font-size', '10pt')
+                            .prepend(
+                                '<img src="https://png.pngtree.com/element_pic/17/02/28/745c75d504f336a83a10e6dcf8db44fa.jpg" style="float:left;margin-right:10px;width: 50px;height: 50px;" />'
+                            );
 
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+                    }
+                }
+            ],
+            language: {
+                paginate: {
+                    next: '&#8594;',
+                    previous: '&#8592;'
+                }
+            },
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "actions.php",
+                data: {
+                    mi_custom_key_for_productData: 1,
+                    cat_sort: cat_sort,
+                    cat_id: cat_id,
+                    color_sort: color_sort,
+                    color_id: color_id
+
+                }
+            }
+        });
+    }
+
+    $('body').on('change', '#pro_cat_sort', function () {
+        var cat_id = $('#pro_cat_sort').val();
+        if(cat_id != '')
+        {
+            $('#product_datatable').DataTable().destroy();
+            fetch_product_data(cat_sort = 'yes', cat_id);
+        }
+        else
+        {
+            $('#product_datatable').DataTable().destroy();
+            fetch_product_data();
+        }
+    });
+
+    $('body').on('change', '#pro_color_sort', function () {
+        var color_id = $('#pro_color_sort').val();
+        if(color_id != '')
+        {
+            $('#product_datatable').DataTable().destroy();
+            fetch_product_data('', '', color_sort = 'yes', color_id);
+        }
+        else
+        {
+            $('#product_datatable').DataTable().destroy();
+            fetch_product_data();
+        }
+    });
 
 
 
@@ -1471,7 +1581,7 @@ $(document).ready(function() {
                     });
 
                     setInterval(function() {
-                        window.location.href = 'orders.php';
+                        window.location.reload();
                     }, 700);
                 }
 
@@ -1549,9 +1659,9 @@ $(document).ready(function() {
     });
 
     // -----------------------full stock refund---------------------
-    $('.stockRefundForm').on('submit', function(e) {
+    $('body').on('click', '.stockRefundForm', function(e) {
         e.preventDefault();
-        var stockData = $(this).serialize();
+        var inputValue = $(this).val();
         // console.log(refundData);
         swal({
             title: "Are you sure?",
@@ -1564,7 +1674,7 @@ $(document).ready(function() {
                 $.ajax({
                     url: 'actions.php',
                     type: 'POST',
-                    data: stockData,
+                    data: {refundStock: inputValue},
                     success: function(data) {
 
                         var respon = JSON.parse(data);
@@ -1573,9 +1683,7 @@ $(document).ready(function() {
                             swal(respon.message, {
                                 icon: "success",
                             });
-                            setInterval(function() {
-                                location.reload();
-                            }, 1000);
+                            $('#stock_datatable').dataTable().api().ajax.reload();
                         } else {
                             swal(respon.message, {
                                 icon: "error",
@@ -1644,7 +1752,7 @@ $(document).ready(function() {
                     });
 
                     setInterval(function() {
-                        window.location.href = 'add-stock.php';
+                        window.location.reload();
                     }, 700);
                 }
 
@@ -1654,6 +1762,7 @@ $(document).ready(function() {
 
 
     });
+
 
     // ---------------------add customer from sales-------------------
 
@@ -1935,6 +2044,392 @@ $(document).ready(function() {
         });
     });
 
+    // --------------------staff salary payment-----------------
+    $('body').on('click', '.showSalary', function() {
+
+        var salary_due = $(this).attr('salary_due');
+        var staff_id = $(this).attr('staff_id');
+        var salary_amount = $(this).attr('salary_amount');
+
+        var salary_paid = salary_amount - salary_due;
+
+        $('#salary_due').html(salary_due);
+        $('#staff_salary').html(salary_amount);
+        $('#salary_paid').html(salary_paid);
+
+        $('#keep_salary_amount').val(salary_due);
+        $('#keep_staff_id').val(staff_id);
+        $('#keep_salary_paid').val(salary_paid);
+        $('#salary_due_amount').attr('max', salary_due);
+        $('#salary_due_amount').val(salary_due);
+    });
+
+    // -----------------------staff salary------------------
+    $('body').on('click', '#add_salary_update', function(e) {
+
+        var salary_due = $('#keep_salary_amount').val();
+        var staff_id = $('#keep_staff_id').val();
+        var provided_salary_due = $('#salary_due_amount').val();
+
+        e.preventDefault();
+
+        $.ajax({
+
+            type: "POST",
+            url: 'actions.php',
+            data: {
+                salary_add_due: 1,
+                salary_due: salary_due,
+                staff_id: staff_id,
+                provided_salary_due: provided_salary_due
+            },
+
+            success: function(response) {
+                data = JSON.parse(response);
+                if (data.status == 'error') {
+                    swal(data['message'], {
+                        icon: 'error'
+                    });
+                } else {
+                    swal(data['message'], {
+                        icon: 'success'
+                    });
+
+                    setInterval(function() {
+                        window.location.href = 'users.php';
+                    }, 700);
+                }
+
+            }
+
+        });
+
+
+    });
+
+    $('body').on('click', '.goBack', function () {
+        window.history.back();
+    });
+
+    // --------------------server side stock datatable--------------------
+    fetch_stock_data('no');
+    function fetch_stock_data(is_date_search, start_date, end_date){
+        $('#stock_datatable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [{
+                extend: 'colvis',
+                text: 'Column Visibility',
+                className: 'btn mi_custom_dt_btn custom_coulmn_visibility_background',
+            },
+                {
+                    extend: 'csv',
+                    text: 'Export CSV',
+                    className: 'btn btn-primary mi_custom_dt_btn custom_csv_background',
+                },
+                {
+                    extend: 'print',
+                    text: 'Print PDF',
+                    className: 'btn mi_custom_dt_btn custom_pdf_background',
+                    exportOptions: {
+                        modifier: {
+                            selected: null
+                        }
+                    },
+                    customize: function(win) {
+                        $(win.document.body)
+                            .css('font-size', '10pt')
+                            .prepend(
+                                '<img src="https://png.pngtree.com/element_pic/17/02/28/745c75d504f336a83a10e6dcf8db44fa.jpg" style="float:left;margin-right:10px;width: 50px;height: 50px;" />'
+                            );
+
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+                    }
+                }
+            ],
+            language: {
+                paginate: {
+                    next: '&#8594;',
+                    previous: '&#8592;'
+                }
+            },
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "actions.php",
+                data: {
+                    mi_custom_key_for_stockData: 1,
+                    is_date_search: is_date_search,
+                    start_date: start_date,
+                    end_date: end_date
+                }
+            }
+        });
+    }
+
+    $('body').on('click', '#date_search', function () {
+        var start_date = $('#start_date').val();
+        var end_date = $('#end_date').val();
+        if(start_date != '' && end_date !='')
+        {
+            $('#stock_datatable').DataTable().destroy();
+            fetch_stock_data('yes', start_date, end_date);
+        }
+        else
+        {
+            alert("Both Date is Required");
+        }
+    });
+
+    // --------------------server side supplier transaction datatable--------------------
+    fetch_supplier_transaction_data('no');
+    function fetch_supplier_transaction_data(is_date_search, start_date, end_date){
+        var sup_id = $('#trans_sup_id').val();
+        $('#supplier_transaction_datatable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [{
+                extend: 'colvis',
+                text: 'Column Visibility',
+                className: 'btn mi_custom_dt_btn custom_coulmn_visibility_background',
+            },
+                {
+                    extend: 'csv',
+                    text: 'Export CSV',
+                    className: 'btn btn-primary mi_custom_dt_btn custom_csv_background',
+                },
+                {
+                    extend: 'print',
+                    text: 'Print PDF',
+                    className: 'btn mi_custom_dt_btn custom_pdf_background',
+                    exportOptions: {
+                        modifier: {
+                            selected: null
+                        }
+                    },
+                    customize: function(win) {
+                        $(win.document.body)
+                            .css('font-size', '10pt')
+                            .prepend(
+                                '<img src="https://png.pngtree.com/element_pic/17/02/28/745c75d504f336a83a10e6dcf8db44fa.jpg" style="float:left;margin-right:10px;width: 50px;height: 50px;" />'
+                            );
+
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+                    }
+                }
+            ],
+            language: {
+                paginate: {
+                    next: '&#8594;',
+                    previous: '&#8592;'
+                }
+            },
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "actions.php",
+                data: {
+                    mi_custom_key_for_supplierTransactionData: 1,
+                    sup_id: sup_id,
+                    is_date_search: is_date_search,
+                    start_date: start_date,
+                    end_date: end_date
+                }
+            }
+        });
+    }
+
+    $('body').on('click', '#sup_trans_date_search', function () {
+        var start_date = $('#sup_start_date').val();
+        var end_date = $('#sup_end_date').val();
+        if(start_date != '' && end_date !='')
+        {
+            $('#supplier_transaction_datatable').DataTable().destroy();
+            fetch_supplier_transaction_data('yes', start_date, end_date);
+        }
+        else
+        {
+            alert("Both Date is Required");
+        }
+    });
+
+    // -------------------------supplier datatable---------------------------
+    $('#supplier_datatable').DataTable({
+        dom: 'Bfrtip',
+        buttons: [{
+            extend: 'colvis',
+            text: 'Column Visibility',
+            className: 'btn mi_custom_dt_btn custom_coulmn_visibility_background',
+        },
+            {
+                extend: 'csv',
+                text: 'Export CSV',
+                className: 'btn btn-primary mi_custom_dt_btn custom_csv_background',
+            },
+            {
+                extend: 'print',
+                text: 'Print PDF',
+                className: 'btn mi_custom_dt_btn custom_pdf_background',
+                exportOptions: {
+                    modifier: {
+                        selected: null
+                    }
+                },
+                customize: function(win) {
+                    $(win.document.body)
+                        .css('font-size', '10pt')
+                        .prepend(
+                            '<img src="https://png.pngtree.com/element_pic/17/02/28/745c75d504f336a83a10e6dcf8db44fa.jpg" style="float:left;margin-right:10px;width: 50px;height: 50px;" />'
+                        );
+
+                    $(win.document.body).find('table')
+                        .addClass('compact')
+                        .css('font-size', 'inherit');
+                }
+            }
+        ],
+        language: {
+            paginate: {
+                next: '&#8594;',
+                previous: '&#8592;'
+            }
+        },
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: "actions.php",
+            data: {
+                mi_custom_key_for_supplierData: 1
+            }
+        }
+    });
+
+    // -------------------------customer datatable---------------------------
+    $('#customer_datatable').DataTable({
+        dom: 'Bfrtip',
+        buttons: [{
+            extend: 'colvis',
+            text: 'Column Visibility',
+            className: 'btn mi_custom_dt_btn custom_coulmn_visibility_background',
+        },
+            {
+                extend: 'csv',
+                text: 'Export CSV',
+                className: 'btn btn-primary mi_custom_dt_btn custom_csv_background',
+            },
+            {
+                extend: 'print',
+                text: 'Print PDF',
+                className: 'btn mi_custom_dt_btn custom_pdf_background',
+                exportOptions: {
+                    modifier: {
+                        selected: null
+                    }
+                },
+                customize: function(win) {
+                    $(win.document.body)
+                        .css('font-size', '10pt')
+                        .prepend(
+                            '<img src="https://png.pngtree.com/element_pic/17/02/28/745c75d504f336a83a10e6dcf8db44fa.jpg" style="float:left;margin-right:10px;width: 50px;height: 50px;" />'
+                        );
+
+                    $(win.document.body).find('table')
+                        .addClass('compact')
+                        .css('font-size', 'inherit');
+                }
+            }
+        ],
+        language: {
+            paginate: {
+                next: '&#8594;',
+                previous: '&#8592;'
+            }
+        },
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: "actions.php",
+            data: {
+                mi_custom_key_for_customerData: 1
+            }
+        }
+    });
+
+    // --------------------server side supplier transaction datatable--------------------
+    fetch_customer_transaction_data('no');
+    function fetch_customer_transaction_data(is_date_search, start_date, end_date){
+        var customer_id = $('#trans_customer_id').val();
+        $('#customer_transaction_datatable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [{
+                extend: 'colvis',
+                text: 'Column Visibility',
+                className: 'btn mi_custom_dt_btn custom_coulmn_visibility_background',
+            },
+                {
+                    extend: 'csv',
+                    text: 'Export CSV',
+                    className: 'btn btn-primary mi_custom_dt_btn custom_csv_background',
+                },
+                {
+                    extend: 'print',
+                    text: 'Print PDF',
+                    className: 'btn mi_custom_dt_btn custom_pdf_background',
+                    exportOptions: {
+                        modifier: {
+                            selected: null
+                        }
+                    },
+                    customize: function(win) {
+                        $(win.document.body)
+                            .css('font-size', '10pt')
+                            .prepend(
+                                '<img src="https://png.pngtree.com/element_pic/17/02/28/745c75d504f336a83a10e6dcf8db44fa.jpg" style="float:left;margin-right:10px;width: 50px;height: 50px;" />'
+                            );
+
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+                    }
+                }
+            ],
+            language: {
+                paginate: {
+                    next: '&#8594;',
+                    previous: '&#8592;'
+                }
+            },
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "actions.php",
+                data: {
+                    mi_custom_key_for_customerTransactionData: 1,
+                    customer_id: customer_id,
+                    is_date_search: is_date_search,
+                    start_date: start_date,
+                    end_date: end_date
+                }
+            }
+        });
+    }
+
+    $('body').on('click', '#cust_trans_date_search', function () {
+        var start_date = $('#cust_start_date').val();
+        var end_date = $('#cust_end_date').val();
+        console.log(end_date);
+        if(start_date != '' && end_date !='')
+        {
+            $('#customer_transaction_datatable').DataTable().destroy();
+            fetch_customer_transaction_data('yes', start_date, end_date);
+        }
+        else
+        {
+            alert("Both Date is Required");
+        }
+    });
 
 
 });
