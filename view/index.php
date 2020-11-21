@@ -22,7 +22,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
             <div class="row">
                 <div class="col-md-3 col-sm-4" style="padding: 0 8px">
                     <a href="orders.php" class="text-center">
-                        <div class="card card-stats bg-primary text-white rounded-0" style="margin-bottom: 16px">
+                        <div class="card card-stats bg-primary text-white" style="margin-bottom: 16px">
                             <div class="card-body">
                                 <div>
                                     <div class="numbers text-center" style="padding: 25px 5px; padding-top: 10px;">
@@ -35,7 +35,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                 </div>
                 <div class="col-md-3 col-sm-4" style="padding: 0 8px">
                     <a href="warehouse.php" class="text-center">
-                        <div class="card card-stats bg-primary text-white rounded-0" style="margin-bottom: 16px">
+                        <div class="card card-stats bg-primary text-white" style="margin-bottom: 16px">
                             <div class="card-body">
                                 <div>
                                     <div class="numbers text-center" style="padding: 25px 5px; padding-top: 10px;">
@@ -48,7 +48,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                 </div>
                 <div class="col-md-2 col-sm-4" style="padding: 0 8px">
                     <a href="add-stock.php" class="text-center">
-                        <div class="card card-stats bg-primary text-white rounded-0" style="margin-bottom: 16px">
+                        <div class="card card-stats bg-primary text-white" style="margin-bottom: 16px">
                             <div class="card-body">
                                 <div>
                                     <div class="numbers text-center" style="padding: 25px 5px; padding-top: 10px;">
@@ -61,7 +61,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                 </div>
                 <div class="col-md-2 col-sm-4" style="padding: 0 8px">
                     <a href="suppliers.php" class="text-center">
-                        <div class="card card-stats bg-primary text-white rounded-0" style="margin-bottom: 16px">
+                        <div class="card card-stats bg-primary text-white" style="margin-bottom: 16px">
                             <div class="card-body">
                                 <div>
                                     <div class="numbers text-center" style="padding: 25px 5px; padding-top: 10px;">
@@ -74,7 +74,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                 </div>
                 <div class="col-md-2 col-sm-4" style="padding: 0 8px">
                     <a href="report.php" class="text-center">
-                        <div class="card card-stats bg-primary text-white rounded-0" style="margin-bottom: 16px">
+                        <div class="card card-stats bg-primary text-white" style="margin-bottom: 16px">
                             <div class="card-body">
                                 <div>
                                     <div class="numbers text-center" style="padding: 25px 5px; padding-top: 10px;">
@@ -87,7 +87,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                 </div>
                 <div class="col-md-3 col-sm-4" style="padding: 0 8px;">
                     <a href="shop-settings.php" class="text-center">
-                        <div class="card card-stats text-white rounded-0" style="background-color: #66615b;">
+                        <div class="card card-stats text-white" style="background-color: #66615b;">
                             <div class="card-body">
                                 <div>
                                     <div class="numbers text-center" style="padding: 25px 5px; padding-top: 10px;">
@@ -100,7 +100,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                 </div>
                 <div class="col-md-3 col-sm-4" style="padding: 0 8px">
                     <a href="expense.php" class="text-center">
-                        <div class="card card-stats text-white rounded-0" style="background-color: #66615b;">
+                        <div class="card card-stats text-white" style="background-color: #66615b;">
                             <div class="card-body">
                                 <div>
                                     <div class="numbers text-center" style="padding: 25px 5px; padding-top: 10px;">
@@ -113,7 +113,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                 </div>
                 <div class="col-md-2 col-sm-4" style="padding: 0 8px">
                     <a href="vat.php" class="text-center">
-                        <div class="card card-stats text-white rounded-0" style="background-color: #66615b;">
+                        <div class="card card-stats text-white" style="background-color: #66615b;">
                             <div class="card-body">
                                 <div>
                                     <div class="numbers text-center" style="padding: 25px 5px; padding-top: 10px;">
@@ -126,7 +126,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                 </div>
                 <div class="col-md-2 col-sm-4" style="padding: 0 8px">
                     <a href="users.php" class="text-center">
-                        <div class="card card-stats text-white rounded-0" style="background-color: #66615b;">
+                        <div class="card card-stats text-white" style="background-color: #66615b;">
                             <div class="card-body">
                                 <div>
                                     <div class="numbers text-center" style="padding: 25px 5px; padding-top: 10px;">
@@ -139,7 +139,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                 </div>
                 <div class="col-md-2 col-sm-4" style="padding: 0 8px">
                     <a href="customers.php" class="text-center">
-                        <div class="card card-stats text-white rounded-0" style="background-color: #66615b;">
+                        <div class="card card-stats text-white" style="background-color: #66615b;">
                             <div class="card-body">
                                 <div>
                                     <div class="numbers text-center" style="padding: 25px 5px; padding-top: 10px;">
