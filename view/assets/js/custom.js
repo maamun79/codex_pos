@@ -247,6 +247,10 @@ $(document).ready(function() {
                     is_date_search: is_date_search,
                     start_date: start_date,
                     end_date: end_date
+                },
+                complete:function (data) {
+                    $('#order_total_amount_footer').html(data.responseJSON.footDataTotalAmount);
+                    $('#order_total_due_footer').html(data.responseJSON.footDataTotalDue);
                 }
             }
         });
@@ -263,7 +267,8 @@ $(document).ready(function() {
         }
         else
         {
-            alert("Both Date is Required");
+            $('#mi_orders_datatable').DataTable().destroy();
+            fetch_order_data('no');
         }
     });
 
@@ -321,6 +326,10 @@ $(document).ready(function() {
                     color_sort: color_sort,
                     color_id: color_id
 
+                },
+                complete:function (data) {
+                    $('#product_total_qty_footer').html(data.responseJSON.footDataQty);
+                    $('#product_total_price_footer').html(data.responseJSON.footDataPrice);
                 }
             }
         });
@@ -2163,6 +2172,11 @@ $(document).ready(function() {
                     is_date_search: is_date_search,
                     start_date: start_date,
                     end_date: end_date
+                },
+                complete:function (data) {
+                    $('#stock_total_qty_footer').html(data.responseJSON.footDataQty);
+                    $('#stock_total_amount_footer').html(data.responseJSON.footDataAmount);
+                    $('#stock_total_due_footer').html(data.responseJSON.footDataDue);
                 }
             }
         });
@@ -2236,6 +2250,13 @@ $(document).ready(function() {
                     is_date_search: is_date_search,
                     start_date: start_date,
                     end_date: end_date
+                },
+                complete:function (data) {
+                    // console.log();
+                    $('#supplier_total_qty').html(data.responseJSON.footDataQty);
+                    $('#supplier_total_amount').html(data.responseJSON.footDataExpense);
+                    $('#supplier_total_paid').html(data.responseJSON.footDataPaid);
+                    $('#supplier_total_due').html(data.responseJSON.footDataDue);
                 }
             }
         });
@@ -2251,7 +2272,8 @@ $(document).ready(function() {
         }
         else
         {
-            alert("Both Date is Required");
+            $('#supplier_transaction_datatable').DataTable().destroy();
+            fetch_supplier_transaction_data('no');
         }
     });
 
@@ -2411,6 +2433,12 @@ $(document).ready(function() {
                     is_date_search: is_date_search,
                     start_date: start_date,
                     end_date: end_date
+                },
+                complete:function (data) {
+                    $('#cust_trans_qty_footer').html(data.responseJSON.footDataQty);
+                    $('#cust_trans_amount_footer').html(data.responseJSON.footDataAmount);
+                    $('#cust_trans_paid_footer').html(data.responseJSON.footDataPaid);
+                    $('#cust_trans_due_footer').html(data.responseJSON.footDataDue);
                 }
             }
         });

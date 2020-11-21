@@ -65,12 +65,6 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                     base64_decode($_SESSION['session_type']) == "mi_1" ||
                                     base64_decode($_SESSION['session_type']) == "mi_2"){?>
                                     <th style="max-width: 50px;" class="text-left">
-<!--                                        <div class="checkbox pull-left">-->
-<!--                                            <label style="font-size: 1.5em">-->
-<!--                                                <input type="checkbox" value="" class="selectAll">-->
-<!--                                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>-->
-<!--                                            </label>-->
-<!--                                        </div>-->
                                         #
                                     </th>
                                 <?php }else{?>
@@ -85,6 +79,22 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                 <th class="table_font_small">Actions</th>
                             </tr>
                             </thead>
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th class="text-center">
+                                        <h5 id="order_total_amount_footer"></h5>
+                                    </th>
+                                    <th></th>
+                                    <th class="text-center">
+                                        <h5 id="order_total_due_footer"></h5>
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
                         </table>
 
                         <!-----------------------------------single product refund modal----------------------------------->

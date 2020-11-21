@@ -65,7 +65,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                   $data = mi_db_read_all('mi_users', 'id', 'DESC');
                   $currentTp = mi_db_read_by_id('mi_users', array('id'=>str_replace('mi_','',base64_decode($_SESSION['session_id']))))[0];
 
-
+                  $total_salary_paid = [];
                   foreach ($data as $k => $d){
                       if (str_replace('mi_','',base64_decode($_SESSION['session_id'])) !== $d['id'] && $d['user_type'] != 1){
                       if ($currentTp['user_type'] == 2){
@@ -138,6 +138,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                               </td>
                               <?php
                                     $expense = mi_db_custom_query("SELECT * FROM regular_expenses WHERE staff_id =".$d['id']." AND  MONTH(created_at) = MONTH(CURDATE()) AND YEAR(created_at) = YEAR(CURDATE())")[0];
+                                    $total_salary_paid[] = $expense['amount'];
                               ?>
                               <td>
                                   <?php
@@ -160,6 +161,14 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                           </tr>
                   <?php }}}?>
                   </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="7" class="text-right">
+                                <h5>Salary Paid - <?= number_format(array_sum($total_salary_paid),2)?> <?= $currency['meta_value']?></h5>
+                            </th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
                 </table>
               </div>
             </div>

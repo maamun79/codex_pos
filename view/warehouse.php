@@ -78,6 +78,23 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                         <th class="table_font_small text-left">Actions</th>
                     </tr>
                   </thead>
+                  <tfoot>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th class="text-left">
+                                <h5 id="product_total_qty_footer"></h5>
+                            </th>
+                            <th></th>
+                            <th></th>
+                            <th class="text-left">
+<!--                                <h5 id="product_total_price_footer"></h5>-->
+                            </th>
+                            <th></th>
+                        </tr>
+                  </tfoot>
 
                 </table>
               </div>

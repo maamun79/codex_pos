@@ -46,7 +46,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
 
                                   <div class="row mi-page-break pb-5 mb-5">
                                       <div class="col-md-5 col-sm-6">
-                                          <img style="width: 100%;border: 1px solid #e3e3e3; padding: 10px;min-height: 240px" src="<?=MI_CDN_URL;?>uploads/<?=$miProD['pro_img'];?>">
+                                          <img style="width: 100%;border: 1px solid #e3e3e3; padding: 10px;min-height: 240px; height: 250px" src="<?=MI_CDN_URL.$miProD['pro_img'];?>">
                                       </div>
                                       <div class="col-md-7 col-sm-6">
                                           <p><strong>Name:</strong> <?=$miProD['pro_title'];?></p>
@@ -153,7 +153,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                       </div>
                                       <div class="card-body">
 
-                                          <table class="table table-bordered table-striped">
+                                          <table class="table table-full-width mi_datatable">
                                               <thead>
                                               <tr>
                                                   <th class="table_head_font_small">#</th>
@@ -208,7 +208,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                                   <th><?=array_sum($getTotalQty);?> L</th>
                                                   <th><?=$currency['meta_value']?> <?=array_sum($getTotalpro);?></th>
                                                   <th><?=$currency['meta_value']?> <?=array_sum($getTotalPrc);?></th>
-                                                  <th colspan="3"></th>
+                                                  <th colspan="2"></th>
                                               </tr>
                                               </tfoot>
                                           </table>
@@ -228,7 +228,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                       </div>
                                       <div class="card-body">
 
-                                          <table class="table table-bordered table-striped">
+                                          <table class="table table-full-width mi_datatable">
                                               <thead>
                                               <tr>
                                                   <th class="table_head_font_small">#</th>
@@ -286,7 +286,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                                   <th><?=array_sum($supTotalQty);?> L</th>
                                                   <th><?=$currency['meta_value']?> <?=array_sum($supTotalPrc);?></th>
                                                   <th><?=$currency['meta_value']?> <?=array_sum($supTotalpro);?></th>
-                                                  <th colspan="3"></th>
+                                                  <th colspan="2"></th>
                                               </tr>
                                               </tfoot>
                                           </table>

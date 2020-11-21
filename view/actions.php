@@ -176,7 +176,7 @@ if (isset($_POST['get_pro_grid']) && !empty($_POST['get_pro_grid'])){
             <div class="mi_sale_product_item col-sm-6 col-6" style="padding-right: 5px">
                 <div class="thimbnail_sale_product float-left">
                     <?php if (!empty($d['pro_img'])) { ?>
-                        <img src="<?=MI_CDN_URL;?>uploads/<?= $d['pro_img']; ?>" class="float-left mr-2">
+                        <img src="<?=MI_CDN_URL.$d['pro_img']; ?>" class="float-left mr-2">
                     <?php } else { ?>
                         <img src="<?=MI_CDN_URL;?>uploads/empty-img.png" class="float-left mr-2">
                     <?php } ?>
@@ -1344,6 +1344,8 @@ if (isset($_POST['mi_user_adding_form']) && !empty($_POST['mi_user_adding_form']
     $nid_photo = $_FILES['staff_nid'];
     $user_photo = $_FILES['staff_photo'];
 
+    $check = mi_db_read_all('mi_users');
+
     $last_id = mi_db_read_all('mi_users', 'id', 'DESC', '1')[0];
 
     if (empty($udi)){
@@ -1358,6 +1360,8 @@ if (isset($_POST['mi_user_adding_form']) && !empty($_POST['mi_user_adding_form']
         $msg = array('status' => 'error', 'message' => 'User status is required');
     }elseif (empty($utp)){
         $msg = array('status' => 'error', 'message' => 'User type is required');
+    }elseif (count($check) >= 3){
+        $msg = array('status' => 'error', 'message' => 'You can not add more than 3 staff');
     }else{
         $checkUser = mi_db_read_by_id('mi_users', array('user_id'=>$udi));
         if (count($checkUser) > 0){
@@ -2463,10 +2467,17 @@ if (isset($_GET['mi_custom_key_for_orderData']) && !empty($_GET['mi_custom_key_f
     $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency','type'=>'currency'))[0];
     $query_execute = mi_db_custom_query($data_query);
     $data = [];
+    $total_amount = [];
+    $total_due = [];
     foreach ($query_execute as $key => $d) {
         $vvl = explode(', ', $d['order_products_details']);
         $get_pro_img = array();
         $due = $d['total_amount'] - $d['paid_amount'];
+
+        if ($d['refund_date'] == '0000-00-00 00:00:00'){
+            $total_amount[] = $d['total_amount'];
+            $total_due[] = $due;
+        }
 
         $order_items = 0;
         $order_qty = [];
@@ -2509,13 +2520,18 @@ if (isset($_GET['mi_custom_key_for_orderData']) && !empty($_GET['mi_custom_key_f
         ];
     }
 
+    $table_footer_total_amount_data = number_format(array_sum($total_amount), 2).' '.$currency['meta_value'];
+    $table_footer_total_due_data = number_format(array_sum($total_due), 2).' '.$currency['meta_value'];
+
 
     echo json_encode(
             array(
                 'draw'=> mi_secure_input($_GET['draw']),
                 'recordsTotal'=> count($data),
                 'recordsFiltered' => count(mi_db_read_all('mi_orders')),
-                'data'=>$data
+                'data'=>$data,
+                'footDataTotalAmount'=> $table_footer_total_amount_data,
+                'footDataTotalDue'=> $table_footer_total_due_data
             )
         );
 }
@@ -2731,7 +2747,11 @@ if (isset($_GET['mi_custom_key_for_productData']) && !empty($_GET['mi_custom_key
     $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency','type'=>'currency'))[0];
     $query_execute = mi_db_custom_query($data_query);
     $data = [];
+    $total_qty = [];
+    $total_price = [];
     foreach ($query_execute as $key => $d) {
+        $total_qty[] = $d['pro_stock'];
+        $total_price[] = $d['pro_price'];
 
         $data[] = [
             '<div class="checkbox">
@@ -2741,17 +2761,24 @@ if (isset($_GET['mi_custom_key_for_productData']) && !empty($_GET['mi_custom_key
                 </label>
             </div>',
 
-            '<div>
+            '<div class="text-left">
                 '.(!empty($d['pro_img'])?
-                        '<img src="'.MI_CDN_URL.'/uploads/'.$d['pro_img'].'" alt="" class="img-fluid img-thumbnail" style="max-width: 50px; height: 70px">':
+                        '<img src="'.MI_CDN_URL.$d['pro_img'].'" alt="" class="img-fluid img-thumbnail" style="max-width: 50px; height: 70px">':
                         '<img src="'.MI_CDN_URL.'assets/img/empty-img.png" alt="" class="img-fluid img-thumbnail" style="max-width: 50px; height: 70px">').
             '</div>',
-            (!empty($d['pro_model_number']))? $d['pro_model_number']:'',
+            '<div class="">
+                '.(!empty($d['pro_model_number']))? $d['pro_model_number']:''.'
+            </div>',
             '<strong>
                     '.(!empty($d['pro_title']))?$d['pro_title']:'N/A'.'.
             </strong>',
-            (!empty($d['pro_stock']) && $d['pro_stock'] != 0)? (($d['pro_stock'] > 10)?'<label class="badge badge-primary text-white">'.$d['pro_stock'].' L</label>':'<label class="badge badge-danger text-white">'.$d['pro_stock'].' L</label>'):'<label class="badge badge-danger text-white">Empty</label>',
-            (!empty($d['catName']))?$d['catName']:'N/A',
+            '<div class="text-right">
+                '.(!empty($d['pro_stock']) && $d['pro_stock'] != 0)? (($d['pro_stock'] > 10)?'<label class="badge badge-primary text-white">'.$d['pro_stock'].' L</label>':'<label class="badge badge-danger text-white">'.$d['pro_stock'].' L</label>'):'<label class="badge badge-danger text-white">Empty</label>'.'
+            </div>',
+            '<div class="text-center">
+                '.(!empty($d['catName']))?$d['catName']:'N/A'.'
+            </div>',
+
             (!empty($d['brTitle']))?$d['brTitle']:'N/A',
             $d['pro_price']. $currency['meta_value'],
             '<div>
@@ -2762,13 +2789,18 @@ if (isset($_GET['mi_custom_key_for_productData']) && !empty($_GET['mi_custom_key
         ];
     }
 
+    $total_qty_footer_data = number_format(array_sum($total_qty)).' L';
+    $total_price_footer_data = number_format(array_sum($total_price)).' '.$currency['meta_value'];
+
 
     echo json_encode(
         array(
             'draw'=> mi_secure_input($_GET['draw']),
             'recordsTotal'=> count($data),
             'recordsFiltered' => count(mi_db_read_all('mi_products')),
-            'data'=>$data
+            'data'=>$data,
+            'footDataQty' => $total_qty_footer_data,
+            'footDataPrice' => $total_price_footer_data
         )
     );
 }
@@ -2839,12 +2871,17 @@ if (isset($_GET['mi_custom_key_for_stockData']) && !empty($_GET['mi_custom_key_f
     $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency','type'=>'currency'))[0];
     $query_execute = mi_db_custom_query($data_query);
     $data = [];
+    $total_qty = [];
     $total_expense = [];
     $total_due = [];
     $table_footer_data = '';
     foreach ($query_execute as $key => $d) {
-        $total_expense[] = $d['expanse'];
-        $total_due[] = $d['expanse'] - $d['ex_paid'];
+        if ($d['refund_date'] == "0000-00-00 00:00:00"){
+            $total_qty[] = $d['stock_qty'];
+            $total_expense[] = $d['expanse'];
+            $total_due[] = $d['expanse'] - $d['ex_paid'];
+        }
+
         $data[] = [
             '<div class="checkbox text-left">
                 <label style="font-size: 1.5em">
@@ -2855,7 +2892,7 @@ if (isset($_GET['mi_custom_key_for_stockData']) && !empty($_GET['mi_custom_key_f
             $d['proTitle'],
             $d['sname'],
             '<div class="text-center">
-                '.$d['stock_qty'].'
+                '.$d['stock_qty'].' L
             </div>',
             '<div class="text-center">
                 '.date('d M Y', strtotime($d['upload_date'])).'<br>'.date('h:i:s A', strtotime($d['upload_date'])).'
@@ -2890,8 +2927,9 @@ if (isset($_GET['mi_custom_key_for_stockData']) && !empty($_GET['mi_custom_key_f
         ];
     }
 
-    $table_footer_data =
-        '<th>Total Expense - '.array_sum($total_expense).'</th>';
+    $table_stock_footer_data_qty = number_format(array_sum($total_qty)).' L';
+    $table_stock_footer_data_expense = number_format(array_sum($total_expense),2).' '.$currency['meta_value'];
+    $table_stock_footer_data_due = number_format(array_sum($total_due),2).' '.$currency['meta_value'];
 
 
     echo json_encode(
@@ -2900,7 +2938,9 @@ if (isset($_GET['mi_custom_key_for_stockData']) && !empty($_GET['mi_custom_key_f
             'recordsTotal'=> count($data),
             'recordsFiltered' => count(mi_db_read_all('mi_stocks')),
             'data'=>$data,
-            'footData' => $table_footer_data
+            'footDataQty' => $table_stock_footer_data_qty,
+            'footDataAmount' => $table_stock_footer_data_expense,
+            'footDataDue' => $table_stock_footer_data_due
         )
     );
 }
@@ -2981,16 +3021,20 @@ if (isset($_GET['mi_custom_key_for_supplierTransactionData']) && !empty($_GET['m
     $query_execute = mi_db_custom_query($data_query);
     $data = [];
     $total_expense = [];
+    $total_paid = [];
     $total_due = [];
+    $total_qty = [];
     $table_footer_data = '';
     foreach ($query_execute as $key => $d) {
+        $total_qty[] = $d['stock_qty'];
         $total_expense[] = $d['expanse'];
         $total_due[] = $d['expanse'] - $d['ex_paid'];
+        $total_paid[] = $d['ex_paid'];
         $data[] = [
             $key+1,
             '<a href="product_report.php?mi_pro_id='.$d['pid'].'">'.$d['proTitle'].'</a>',
             '<div class="text-center">
-                '.$d['stock_qty'].'
+                '.$d['stock_qty'].' L
             </div>',
             '<div class="text-center">
                 '.date('d M Y', strtotime($d['upload_date'])).'<br>'.date('h:i:s A', strtotime($d['upload_date'])).'
@@ -3011,8 +3055,10 @@ if (isset($_GET['mi_custom_key_for_supplierTransactionData']) && !empty($_GET['m
         ];
     }
 
-    $table_footer_data =
-        '<th>Total Expense - '.array_sum($total_expense).'</th>';
+    $table_footer_qty_data = number_format(array_sum($total_qty)).' L';
+    $table_footer_expense_data = number_format(array_sum($total_expense), 2).' '.$currency['meta_value'];
+    $table_footer_paid_data = number_format(array_sum($total_paid), 2).' '.$currency['meta_value'];
+    $table_footer_due_data = number_format(array_sum($total_due), 2).' '.$currency['meta_value'];
 
 
     echo json_encode(
@@ -3021,7 +3067,10 @@ if (isset($_GET['mi_custom_key_for_supplierTransactionData']) && !empty($_GET['m
             'recordsTotal'=> count($data),
             'recordsFiltered' => count(mi_db_read_all('mi_stocks')),
             'data'=>$data,
-            'footData' => $table_footer_data
+            'footDataQty' => $table_footer_qty_data,
+            'footDataExpense' => $table_footer_expense_data,
+            'footDataPaid' => $table_footer_paid_data,
+            'footDataDue' => $table_footer_due_data
         )
     );
 }
@@ -3075,7 +3124,7 @@ if (isset($_GET['mi_custom_key_for_supplierData']) && !empty($_GET['mi_custom_ke
              </div>',
             '<div>
                 '.(!empty($d['sup_img'])?
-                '<img src="'.MI_CDN_URL.'/uploads/'.$d['sup_img'].'" alt="" class="img-fluid img-thumbnail" style="max-width: 70px; height: 70px">':
+                '<img src="'.MI_CDN_URL.$d['sup_img'].'" alt="" class="img-fluid img-thumbnail" style="max-width: 70px; height: 70px">':
                 '<img src="'.MI_CDN_URL.'assets/img/empty-img.png" alt="" class="img-fluid img-thumbnail" style="max-width: 70px; height: 70px">').
             '</div>',
             '<div class="text-center">
@@ -3247,10 +3296,15 @@ if (isset($_GET['mi_custom_key_for_customerTransactionData']) && !empty($_GET['m
     $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency','type'=>'currency'))[0];
     $query_execute = mi_db_custom_query($data_query);
     $data = [];
+    $total_qty = [];
+    $total_amount = [];
+    $total_paid = [];
+    $total_due = [];
     foreach ($query_execute as $key => $d) {
         $vvl = explode(', ', $d['order_products_details']);
         $get_pro_img = array();
         $due = $d['total_amount'] - $d['paid_amount'];
+
 
         $order_items = 0;
         $order_qty = [];
@@ -3258,6 +3312,13 @@ if (isset($_GET['mi_custom_key_for_customerTransactionData']) && !empty($_GET['m
             $get_pro_id = json_decode($v)->{'pro_qty'};
             $order_items += 1;
             $order_qty[] = $get_pro_id;
+        }
+
+        if ($d['refund_date'] == '0000-00-00 00:00:00'){
+            $total_qty[] = array_sum($order_qty);
+            $total_amount[] = $d['total_amount'];
+            $total_paid[] = $d['paid_amount'];
+            $total_due[] = $due;
         }
 
         $data[] = [
@@ -3288,6 +3349,10 @@ if (isset($_GET['mi_custom_key_for_customerTransactionData']) && !empty($_GET['m
 
         ];
     }
+    $stock_footer_data_qty = number_format(array_sum($total_qty)).' L';
+    $stock_footer_data_amount = number_format(array_sum($total_amount),2).' '.$currency['meta_value'];
+    $stock_footer_data_paid = number_format(array_sum($total_paid),2).' '.$currency['meta_value'];
+    $stock_footer_data_due = number_format(array_sum($total_due),2).' '.$currency['meta_value'];
 
 
     echo json_encode(
@@ -3295,7 +3360,11 @@ if (isset($_GET['mi_custom_key_for_customerTransactionData']) && !empty($_GET['m
             'draw'=> mi_secure_input($_GET['draw']),
             'recordsTotal'=> count($data),
             'recordsFiltered' => count(mi_db_read_by_id('mi_orders', array('customer_id'=> $customer_id))),
-            'data'=>$data
+            'data'=>$data,
+            'footDataQty' => $stock_footer_data_qty,
+            'footDataAmount' => $stock_footer_data_amount,
+            'footDataPaid' => $stock_footer_data_paid,
+            'footDataDue' => $stock_footer_data_due
         )
     );
 }

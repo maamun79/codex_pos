@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2020 at 05:52 PM
+-- Generation Time: Nov 21, 2020 at 02:34 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.2.32
 
@@ -193,27 +193,8 @@ CREATE TABLE `mi_orders` (
 --
 
 INSERT INTO `mi_orders` (`order_id`, `order_products_details`, `trx_id`, `total_amount`, `paid_amount`, `order_created`, `refund_date`, `single_refund_date`, `order_extra_note`, `user_id`, `customer_id`, `customer_name`, `customer_phone`, `customer_address`) VALUES
-(150, '{\"pro_id\":\"240\",\"pro_qty\":4,\"pro_price\":\"200\",\"discount\":\"5\",\"vat_id\":\"1\",\"vat\":\"5\"}, {\"pro_id\":\"238\",\"pro_qty\":3,\"pro_price\":\"115\",\"discount\":\"2\",\"vat_id\":\"3\",\"vat\":\"10\"}', '79419168343', 1293.88, 1293.88, '2020-10-09 15:27:03', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 90, NULL, NULL, NULL),
-(151, '{\"pro_id\":\"240\",\"pro_qty\":1,\"pro_price\":\"200\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', '3ddb048b15', 400, 400, '2020-11-10 15:47:02', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 89, NULL, NULL, NULL),
-(152, '{\"pro_id\":\"240\",\"pro_qty\":\"3\",\"pro_price\":\"200\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', 'f32d69a3518', 600, 0, '2020-11-10 15:55:19', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 0, NULL, NULL, NULL),
-(153, '{\"pro_id\":\"240\",\"pro_qty\":2,\"pro_price\":\"200\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', '7259dbe6576', 400, 400, '2020-11-10 15:56:43', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 0, NULL, NULL, NULL),
-(154, '{\"pro_id\":\"240\",\"pro_qty\":\"2\",\"pro_price\":\"200\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', 'a48eb1ca68', 400, 300, '2020-11-10 16:27:37', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 0, NULL, NULL, NULL),
-(155, '{\"pro_id\":\"236\",\"pro_qty\":\"3\",\"pro_price\":\"100\",\"discount\":\"5\",\"vat_id\":\"1\",\"vat\":\"5\"}, {\"pro_id\":\"240\",\"pro_qty\":\"2\",\"pro_price\":\"200\",\"discount\":\"2\",\"vat_id\":\"3\",\"vat\":\"10\"}', '009a574a736', 730.45, 0, '2020-11-10 16:44:25', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 0, NULL, NULL, NULL),
-(156, '{\"pro_id\":\"239\",\"pro_qty\":\"1\",\"pro_price\":\"120\",\"discount\":\"5\",\"vat_id\":\"1\",\"vat\":\"5\"}, {\"pro_id\":\"237\",\"pro_qty\":\"1\",\"pro_price\":\"110\",\"discount\":\"2\",\"vat_id\":\"3\",\"vat\":\"10\"}', 'f17786b1358', 238.28, 238.28, '2020-11-10 17:36:03', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 0, NULL, NULL, NULL),
-(157, '{\"pro_id\":\"240\",\"pro_qty\":\"1\",\"pro_price\":\"200\",\"discount\":\"5\",\"vat_id\":\"1\",\"vat\":\"5\"}, {\"pro_id\":\"238\",\"pro_qty\":\"1\",\"pro_price\":\"115\",\"discount\":\"2\",\"vat_id\":\"3\",\"vat\":\"10\"}', 'b7aec494384', 323.47, 320, '2020-11-10 17:37:16', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 0, NULL, NULL, NULL),
-(158, '{\"pro_id\":\"239\",\"pro_qty\":\"1\",\"pro_price\":\"120\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"240\",\"pro_qty\":\"1\",\"pro_price\":\"200\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', '7bd69efa943', 320, 320, '2020-11-10 18:15:20', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 0, NULL, NULL, NULL),
-(159, '{\"pro_id\":\"240\",\"pro_qty\":0,\"pro_price\":\"200\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"238\",\"pro_qty\":\"1\",\"pro_price\":\"115\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', 'cfceb794238', 115, 115, '2020-11-10 18:15:37', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 0, NULL, NULL, NULL),
-(160, '{\"pro_id\":\"240\",\"pro_qty\":0,\"pro_price\":\"200\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"238\",\"pro_qty\":\"1\",\"pro_price\":\"115\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', '0d137126295', 115, 115, '2020-11-10 18:23:16', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'test', 1, 0, NULL, NULL, NULL),
-(161, '{\"pro_id\":\"239\",\"pro_qty\":\"1\",\"pro_price\":\"120\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"237\",\"pro_qty\":\"1\",\"pro_price\":\"110\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', '59d3829492', 230, 230, '2020-11-10 18:41:14', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 0, NULL, NULL, NULL),
-(162, '{\"pro_id\":\"239\",\"pro_qty\":\"1\",\"pro_price\":\"120\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"237\",\"pro_qty\":\"1\",\"pro_price\":\"110\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', 'cd7f80d2969', 230, 230, '2020-11-10 18:41:28', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'test1', 1, 0, NULL, NULL, NULL),
-(163, '{\"pro_id\":\"240\",\"pro_qty\":\"1\",\"pro_price\":\"200\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"238\",\"pro_qty\":\"1\",\"pro_price\":\"115\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', 'c1345fb7705', 315, 315, '2020-11-10 18:44:27', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'test', 1, 0, NULL, NULL, NULL),
-(164, '{\"pro_id\":\"239\",\"pro_qty\":1,\"pro_price\":\"120\",\"discount\":\"2\",\"vat_id\":\"1\",\"vat\":\"5\"}, {\"pro_id\":\"237\",\"pro_qty\":1,\"pro_price\":\"110\",\"discount\":\"5\",\"vat_id\":\"3\",\"vat\":\"10\"}', 'f6fd5473182', 238.43, 238.43, '2020-11-10 19:07:57', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 91, NULL, NULL, NULL),
-(165, '{\"pro_id\":\"237\",\"pro_qty\":\"2\",\"pro_price\":\"110\",\"discount\":\"0\",\"vat_id\":\"1\",\"vat\":\"5\"}, {\"pro_id\":\"239\",\"pro_qty\":\"2\",\"pro_price\":\"120\",\"discount\":\"0\",\"vat_id\":\"3\",\"vat\":\"10\"}, {\"pro_id\":\"236\",\"pro_qty\":\"2\",\"pro_price\":\"100\",\"discount\":\"0\",\"vat_id\":\"1\",\"vat\":\"5\"}, {\"pro_id\":\"234\",\"pro_qty\":\"2\",\"pro_price\":\"135\",\"discount\":\"0\",\"vat_id\":\"3\",\"vat\":\"10\"}, {\"pro_id\":\"235\",\"pro_qty\":\"2\",\"pro_price\":\"140\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"232\",\"pro_qty\":\"1\",\"pro_price\":\"120\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"238\",\"pro_qty\":\"1\",\"pro_price\":\"115\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"240\",\"pro_qty\":\"1\",\"pro_price\":\"200\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"233\",\"pro_qty\":\"1\",\"pro_price\":\"150\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', '9a2d6414257', 1867, 1867, '2020-11-11 00:09:31', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 0, NULL, NULL, NULL),
-(166, '{\"pro_id\":\"239\",\"pro_qty\":1,\"pro_price\":\"120\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"237\",\"pro_qty\":\"1\",\"pro_price\":\"110\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"240\",\"pro_qty\":\"1\",\"pro_price\":\"200\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"238\",\"pro_qty\":\"1\",\"pro_price\":\"115\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', 'e9fa90af940', 545, 545, '2020-11-11 20:42:07', '2020-11-19 20:38:38', '0000-00-00 00:00:00', '', 1, 0, NULL, NULL, NULL),
-(167, '{\"pro_id\":\"239\",\"pro_qty\":\"1\",\"pro_price\":\"120\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"237\",\"pro_qty\":\"2\",\"pro_price\":\"110\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', 'ed1962b7106', 340, 140, '2020-11-13 00:46:52', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 91, NULL, NULL, NULL),
-(168, '{\"pro_id\":\"239\",\"pro_qty\":0,\"pro_price\":\"120\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"240\",\"pro_qty\":\"1\",\"pro_price\":\"200\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"238\",\"pro_qty\":\"1\",\"pro_price\":\"115\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', '36f6bdf2859', 315, 315, '2020-11-13 12:47:58', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 0, NULL, NULL, NULL),
-(169, '{\"pro_id\":\"239\",\"pro_qty\":1,\"pro_price\":\"120\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"237\",\"pro_qty\":1,\"pro_price\":\"110\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', '95273e07748', 230, 30, '2020-11-13 12:54:16', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 0, NULL, NULL, NULL),
-(170, '{\"pro_id\":\"240\",\"pro_qty\":\"1\",\"pro_price\":\"200\",\"discount\":\"0\",\"vat_id\":\"1\",\"vat\":\"5\"}, {\"pro_id\":\"238\",\"pro_qty\":\"1\",\"pro_price\":\"115\",\"discount\":\"0\",\"vat_id\":\"3\",\"vat\":\"10\"}, {\"pro_id\":\"239\",\"pro_qty\":\"1\",\"pro_price\":\"120\",\"discount\":\"0\",\"vat_id\":\"3\",\"vat\":\"10\"}, {\"pro_id\":\"237\",\"pro_qty\":\"1\",\"pro_price\":\"110\",\"discount\":\"0\",\"vat_id\":\"1\",\"vat\":\"5\"}', 'a2fe631d331', 584, 584, '2020-11-13 16:45:03', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 0, NULL, NULL, NULL);
+(171, '{\"pro_id\":\"254\",\"pro_qty\":\"2\",\"pro_price\":\"155\",\"discount\":\"2\",\"vat_id\":\"1\",\"vat\":\"5\"}, {\"pro_id\":\"252\",\"pro_qty\":\"2\",\"pro_price\":\"125\",\"discount\":\"3\",\"vat_id\":\"3\",\"vat\":\"10\"}, {\"pro_id\":\"253\",\"pro_qty\":\"1\",\"pro_price\":\"160\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"251\",\"pro_qty\":\"1\",\"pro_price\":\"130\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', 'e6c493ef744', 875.74, 800, '2020-11-21 19:01:30', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 88, NULL, NULL, NULL),
+(172, '{\"pro_id\":\"253\",\"pro_qty\":\"1\",\"pro_price\":\"160\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}, {\"pro_id\":\"248\",\"pro_qty\":\"1\",\"pro_price\":\"130\",\"discount\":\"0\",\"vat_id\":\"0\",\"vat\":null}', 'eecc9cf8203', 290, 290, '2020-11-21 19:21:14', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1, 0, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -246,14 +227,15 @@ CREATE TABLE `mi_products` (
 --
 
 INSERT INTO `mi_products` (`pro_id`, `pro_title`, `pro_price`, `pro_img`, `pro_stock`, `pro_stock_type`, `pro_brand`, `pro_cat`, `pro_status`, `pro_added`, `pro_supplier`, `pro_in_total_stock`, `last_stock_load_qty`, `last_stock_updated`, `pro_serial`, `buy_price`, `pro_model_number`) VALUES
-(232, 'Air Compressor Oils', 120, '5e74d90269546c4fdcd59a8990eaf90fmak-compressor-oil-500x500.png', 499, 1, 47, 16, 1, '2020-10-08 14:21:23', 0, 510, 10, '2020-11-13 22:46:59', '', 100, 'SB-05'),
-(233, 'Hydraulic Oil', 150, '5a7911694327ba624169137828e75dd5155285.png', 209, 1, 48, 16, 1, '2020-11-10 14:22:36', 0, 210, 10, '2020-11-20 02:14:37', '', 120, 'SK-101'),
-(234, 'Turbine Oil', 135, 'fa11ba6b8f9010f6dbf0ce62936dc77bP66_1Q_TURBINE_OIL_32-1.png', 148, 1, 48, 16, 1, '2020-11-10 14:23:28', 0, 150, 150, '2020-11-10 15:19:54', '', 110, 'ST-002'),
-(235, 'Rock Drill Lubricant', 140, 'e503148cf1bd3af800e322ccb91e3c5f20L-ROCK-DRILL-100-460.png', 168, 1, 47, 17, 1, '2020-11-10 14:24:18', 0, 200, 200, '2020-11-10 15:21:08', '', 120, 'SD-005'),
-(236, 'Mobil 1', 100, 'b7f9900f46af160e153df8f4df639f09Mobil 1 V Twin Oil 20W 50 fs square md.jpg', 244, 1, 47, 17, 1, '2020-11-10 14:58:50', 0, 250, 250, '2020-11-10 15:21:30', '', 80, '20W-50'),
-(237, 'Valvoline Motor Oil', 110, '4a7a251aa741983b183f3f2b4d34dca31155.05.png', 188, 1, 48, 17, 1, '2020-11-10 15:00:43', 0, 200, 200, '2020-11-10 15:22:01', '', 90, 'VM-007'),
-(239, 'Amsoil Synthetic Motor Oil', 120, '1642f43985ea6975776ff68f3fe4a8f707ace4ec70536130b0023fd96e63573d.jpg', 139, 1, 48, 17, 1, '2020-11-10 15:03:19', 0, 150, 150, '2020-11-10 15:23:04', '', 105, 'AS-002'),
-(240, 'Daphne Marine Oil', 200, '74bb2815a1fa1560c26083efcebe6addIdemitsu-lubricant.png', 178, 1, 47, 18, 1, '2020-11-10 15:06:02', 0, 200, 200, '2020-11-10 15:23:31', '', 180, '15W-40');
+(246, 'Valvoline', 150, 'uploads/product/d85b567cf3570db994a63d2e3cd874304a7a251aa741983b183f3f2b4d34dca31155.05.png', 100, 1, 47, 17, 1, '2020-11-21 18:37:57', 0, 100, 100, '2020-11-21 18:52:07', '', 120, 'VL-001'),
+(247, 'G-Energy', 120, 'uploads/product/bb99d376d68c5303be8309fcd0f129915a7911694327ba624169137828e75dd5155285.png', 50, 1, 48, 16, 1, '2020-11-21 18:38:53', 0, 50, 50, '2020-11-21 18:53:40', '', 100, 'GE-003'),
+(248, 'Compressor Oil', 130, 'uploads/product/d8a14198ce7747e45a7228d7c9b52a4b5e74d90269546c4fdcd59a8990eaf90fmak-compressor-oil-500x500.png', 69, 1, 47, 16, 1, '2020-11-21 18:44:02', 0, 70, 70, '2020-11-21 18:54:14', '', 110, 'CO-002'),
+(249, 'Dahne Oil', 150, 'uploads/product/634ad65c66acbe2110626563cbd5c8fb74bb2815a1fa1560c26083efcebe6addIdemitsu-lubricant.png', 80, 1, 47, 17, 1, '2020-11-21 18:44:49', 0, 80, 80, '2020-11-21 18:54:38', '', 120, 'DO-007'),
+(250, 'AMS Oil', 120, 'uploads/product/49963d1474432b043eb8a60561ea532a1642f43985ea6975776ff68f3fe4a8f707ace4ec70536130b0023fd96e63573d.jpg', 100, 1, 47, 17, 1, '2020-11-21 18:45:45', 0, 100, 100, '2020-11-21 18:55:23', '', 100, 'SAE -60'),
+(251, 'Mobil 1', 130, 'uploads/product/723408082cac8df0ff6316628bb5f02eb7f9900f46af160e153df8f4df639f09Mobil 1 V Twin Oil 20W 50 fs square md.jpg', 89, 1, 47, 17, 1, '2020-11-21 18:47:46', 0, 90, 90, '2020-11-21 18:55:54', '', 115, '20W-50'),
+(252, 'Rock Dril Oil', 125, 'uploads/product/8b434bc6d70685a56aff7ea7d02c438ce503148cf1bd3af800e322ccb91e3c5f20L-ROCK-DRILL-100-460.png', 98, 1, 47, 18, 1, '2020-11-21 18:48:30', 0, 100, 100, '2020-11-21 18:56:18', '', 100, 'RD-05'),
+(253, 'PennZoil', 160, 'uploads/product/e2041b9aba14ab4d0e93662b5784f85bf232d18c23b3b2e161877dd59304a0c1pennzoil-gt-performance-racing-25w-50.png', 78, 1, 48, 18, 1, '2020-11-21 18:49:30', 0, 80, 80, '2020-11-21 18:56:49', '', 130, 'PO-008'),
+(254, 'Turbine Oil', 155, 'uploads/product/15b9134d6c0490eb155f17d59ae00891fa11ba6b8f9010f6dbf0ce62936dc77bP66_1Q_TURBINE_OIL_32-1.png', 98, 1, 48, 18, 1, '2020-11-21 18:50:21', 0, 100, 100, '2020-11-21 18:57:10', '', 140, 'TO-008');
 
 -- --------------------------------------------------------
 
@@ -293,16 +275,6 @@ CREATE TABLE `mi_product_cart` (
   `cart_added` datetime NOT NULL DEFAULT current_timestamp(),
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `mi_product_cart`
---
-
-INSERT INTO `mi_product_cart` (`cart_id`, `pro_id`, `pro_qty`, `vat_id`, `discount`, `cart_added`, `user_id`) VALUES
-(413, 239, 1, 0, 0, '2020-11-18 00:42:00', 1),
-(414, 240, 1, 0, 0, '2020-11-18 00:42:02', 1),
-(415, 237, 1, 0, 0, '2020-11-18 15:25:46', 1),
-(416, 238, 1, 0, 0, '2020-11-18 15:25:48', 1);
 
 -- --------------------------------------------------------
 
@@ -405,16 +377,15 @@ CREATE TABLE `mi_stocks` (
 --
 
 INSERT INTO `mi_stocks` (`stock_id`, `supplier_id`, `product_id`, `stock_qty`, `invoice_id`, `invoice_picture`, `expanse`, `unit_price`, `ex_paid`, `ex_note`, `upload_date`, `refund_date`, `pro_serials`) VALUES
-(69, 5, 232, 500, '', '', 40000, 80, 0, '', '2020-11-05 15:18:17', '0000-00-00 00:00:00', ''),
-(70, 5, 233, 200, '', '', 24000, 120, 1000, '', '2020-11-10 15:19:22', '0000-00-00 00:00:00', ''),
-(71, 5, 234, 150, '', '', 16500, 110, 500, '', '2020-11-10 15:19:54', '0000-00-00 00:00:00', ''),
-(72, 5, 235, 190, '', '', 20400, 120, 20400, '', '2020-11-10 15:21:08', '0000-00-00 00:00:00', ''),
-(73, 5, 236, 250, '', '', 19920, 80, 19920, '', '2020-11-10 15:21:30', '0000-00-00 00:00:00', ''),
-(74, 5, 237, 200, '', '', 17820, 90, 17820, '', '2020-11-10 15:22:01', '0000-00-00 00:00:00', ''),
-(76, 5, 239, 150, '', '', 15645, 105, 15645, '', '2020-11-10 15:23:04', '0000-00-00 00:00:00', ''),
-(77, 5, 240, 198, '', '', 35640, 180, 35640, '', '2020-11-10 15:23:31', '0000-00-00 00:00:00', ''),
-(78, 5, 232, 9, '', '', 900, 100, 900, '', '2020-11-13 22:46:58', '2020-11-19 08:56:01', ''),
-(79, 5, 233, 10, '', '', 1200, 120, 1000, '', '2020-11-20 02:14:37', '0000-00-00 00:00:00', '');
+(81, 5, 246, 100, '', '', 12000, 120, 12000, '', '2020-11-21 18:52:07', '0000-00-00 00:00:00', ''),
+(82, 5, 247, 50, '', '', 5000, 100, 5000, '', '2020-11-21 18:53:40', '0000-00-00 00:00:00', ''),
+(83, 5, 248, 70, '', '', 7700, 110, 7700, '', '2020-11-21 18:54:13', '0000-00-00 00:00:00', ''),
+(84, 5, 249, 80, '', '', 9600, 120, 9600, '', '2020-11-21 18:54:38', '0000-00-00 00:00:00', ''),
+(85, 5, 250, 100, '', '', 10000, 100, 10000, '', '2020-11-21 18:55:23', '0000-00-00 00:00:00', ''),
+(86, 5, 251, 90, '', '', 10350, 115, 10350, '', '2020-11-21 18:55:54', '0000-00-00 00:00:00', ''),
+(87, 5, 252, 100, '', '', 10000, 100, 10000, '', '2020-11-21 18:56:17', '0000-00-00 00:00:00', ''),
+(88, 5, 253, 80, '', '', 10400, 130, 10400, '', '2020-11-21 18:56:49', '0000-00-00 00:00:00', ''),
+(89, 5, 254, 100, '', '', 14000, 140, 14000, '', '2020-11-21 18:57:10', '0000-00-00 00:00:00', '');
 
 -- --------------------------------------------------------
 
@@ -449,10 +420,10 @@ CREATE TABLE `mi_users` (
 
 INSERT INTO `mi_users` (`id`, `user_id`, `pass`, `user_name`, `user_designation`, `status`, `registered_from`, `user_type`, `created_by`, `email`, `phone`, `father_name`, `mother_name`, `address`, `nid_no`, `nid_photo`, `user_photo`, `salary`) VALUES
 (1, 'misujon', '202cb962ac59075b964b07152d234b70', 'Monirul Islam Sujon', 'Admin', 1, '2019-07-18 12:31:43', 1, 0, 'misujon58262@gmail.com', '01676707067', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(2, 'gitasad', 'f791c101f3bdc0fc7e6c3b9c9e9c7938', 'S.M. Asad', 'Shop Manager', 1, '2019-07-18 12:31:43', 2, 1, 'smasad1200@gmail.com', '01842094184', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(3, 'gitseller', '202cb962ac59075b964b07152d234b70', 'Sales Man', 'Shop Manager', 1, '2019-07-18 12:31:43', 2, 1, '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 'gitasad', 'f791c101f3bdc0fc7e6c3b9c9e9c7938', 'S.M. Asad', 'Accounts', 1, '2019-07-18 12:31:43', 2, 1, 'smasad1200@gmail.com', '01842094184', '', '', '', '', '', '', 30000),
+(3, 'gitseller', '202cb962ac59075b964b07152d234b70', 'Sales Man', 'Accounts', 1, '2019-07-18 12:31:43', 2, 1, '', '', '', '', '', '', '', '', 10000),
 (4, 'akbar', '1c3767545f5231cbebd97aa1fb6ea236', 'M. A. Akber', 'Admin', 1, '2019-07-18 12:31:43', 1, 0, 'git01714094184@gmail.com', '01714094184', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(6, 'gitm. a.5', 'dfdd61cf408037e44bcaa0f7afde1801', 'M. A. AKBAR1', 'Shop Manager', 1, '2019-08-07 18:55:14', 2, 4, 'akbar@geniusit.net', '1714094184', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(6, 'gitm. a.5', 'dfdd61cf408037e44bcaa0f7afde1801', 'M. A. AKBAR1', 'Accounts', 1, '2019-08-07 18:55:14', 2, 4, 'akbar@geniusit.net', '1714094184', '', '', '', '', '', '', 20000),
 (10, 'mamun79', '202cb962ac59075b964b07152d234b70', 'Shafira Rowland', 'Sales Man', 1, '2020-08-12 22:08:14', 3, 1, 'vekofi@mailinator.com', '+1 (553) 877-44', '', '', '', '', '', '', 15000),
 (11, 'maamun78', '202cb962ac59075b964b07152d234b70', 'Emery Mullen', 'Sales Man', 1, '2020-08-12 22:09:40', 3, 1, 'gecykiv@mailinator.com', '+1 (403) 759-43', '', '', '', '123456', 'uploads/staff-images/634d585e241b9ca2b07eb19b843c19d7Untitled design.png', 'uploads/staff-images/70126d2f62520bb93fe356771d8e1818user.png', 11000);
 
@@ -496,13 +467,6 @@ CREATE TABLE `sales_meta` (
   `note` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `sales_meta`
---
-
-INSERT INTO `sales_meta` (`id`, `paid_amount`, `user_id`, `note`, `created_at`) VALUES
-(30, NULL, 1, '', '2020-11-18 09:26:22');
 
 -- --------------------------------------------------------
 
@@ -663,13 +627,13 @@ ALTER TABLE `mi_membership`
 -- AUTO_INCREMENT for table `mi_orders`
 --
 ALTER TABLE `mi_orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=171;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
 
 --
 -- AUTO_INCREMENT for table `mi_products`
 --
 ALTER TABLE `mi_products`
-  MODIFY `pro_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=241;
+  MODIFY `pro_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=255;
 
 --
 -- AUTO_INCREMENT for table `mi_product_brand`
@@ -681,7 +645,7 @@ ALTER TABLE `mi_product_brand`
 -- AUTO_INCREMENT for table `mi_product_cart`
 --
 ALTER TABLE `mi_product_cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=417;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=423;
 
 --
 -- AUTO_INCREMENT for table `mi_product_category`
@@ -705,7 +669,7 @@ ALTER TABLE `mi_purchase_vat`
 -- AUTO_INCREMENT for table `mi_stocks`
 --
 ALTER TABLE `mi_stocks`
-  MODIFY `stock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `stock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT for table `mi_users`

@@ -142,7 +142,7 @@ $note = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_note'))[0];
                                 ?>
                                 <tr>
                                     <td><?=$key+1;?></td>
-                                    <td><img src="Uploads/<?=$get_pro['pro_img'];?>" class="img-thumbnail img-fluid" style="width: 60px; height: 70px"></td>
+                                    <td><img src="<?=MI_CDN_URL.$get_pro['pro_img'];?>" class="img-thumbnail img-fluid" style="width: 60px; height: 70px"></td>
                                     <td class="text-left">
                                         <?=$get_pro['pro_title'];?>
                                     </td>

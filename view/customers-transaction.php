@@ -65,6 +65,25 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                 <th>Total Due</th>
                             </tr>
                             </thead>
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th class="text-center">
+                                        <h5 id="cust_trans_qty_footer"></h5>
+                                    </th>
+                                    <th></th>
+                                    <th class="text-center">
+                                        <h5 id="cust_trans_amount_footer"></h5>
+                                    </th>
+                                    <th class="text-center">
+                                        <h5 id="cust_trans_paid_footer"></h5>
+                                    </th>
+                                    <th class="text-center">
+                                        <h5 id="cust_trans_due_footer"></h5>
+                                    </th>
+                                </tr>
+                            </tfoot>
 
                         </table>
                 </div>
