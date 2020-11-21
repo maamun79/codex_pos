@@ -24,72 +24,78 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                   <div class="showmsg"></div>
               </div>
               <div class="card-body table-responsive">
-                <table class="table table-full-width mi_datatable">
+                <table class="table table-full-width" id="product_datatable">
                   <thead class="text-primary text-center">
                     <tr>
-                        <th style="max-width: 50px; padding-top: 0;">
+                        <th colspan="2" style="max-width: 50px; padding-top: 0;">
                             <button class="btn btn-sm btn-danger btn-rounded pull-left delAll" datatype="product"><i class="nc-icon nc-simple-remove"></i>&nbsp;Delete</button>
                         </th>
-                        <th colspan="8"></th>
+                        <th colspan="7">
+                            <div class="row justify-content-end" style="padding-bottom: 10px">
+                                <div class="col-md-3">
+                                    <?php
+                                        $cats = mi_db_read_all('mi_product_category');
+                                    ?>
+                                    <select class="form-control" name="pro_cat_sort" id="pro_cat_sort">
+                                        <option value="">Category</option>
+                                        <?php foreach ($cats as $cat){?>
+                                            <option value="<?=$cat['cat_id']?>"><?=$cat['cat_title']?></option>
+                                        <?php }?>
+                                    </select>
+                                </div>
+                                <div class="col-md-3" style="padding-right: 0">
+                                    <?php
+                                        $colors = mi_db_read_all('mi_product_brand');
+                                    ?>
+                                    <select class="form-control" name="pro_color_sort" id="pro_color_sort">
+                                        <option value="">Color</option>
+                                        <?php foreach ($colors as $color){?>
+                                            <option value="<?=$color['br_id']?>"><?=$color['br_title']?></option>
+                                        <?php }?>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </th>
                     </tr>
                     <tr>
-                        <th style="max-width: 50px;">
-                            <div class="checkbox pull-left">
-                                <label style="font-size: 1.5em">
-                                    <input type="checkbox" value="" class="selectAll">
-                                    <span class="cr"><i class="cr-icon fa fa-check"></i></span>
-                                </label>
-                            </div>
-                        </th>
-                        <th class="table_font_small">Image</th>
-                        <th class="table_font_small">Grade</th>
-                        <th class="table_font_small">Product Name</th>
-                        <th class="table_font_small">Stock</th>
-                        <th class="table_font_small">Category</th>
-                        <th class="table_font_small">Color</th>
-                        <th class="table_font_small">Price</th>
-                        <th class="table_font_small">Actions</th>
+                        <?php if (
+                            base64_decode($_SESSION['session_type']) == "mi_1" ||
+                            base64_decode($_SESSION['session_type']) == "mi_2"){?>
+                            <th style="max-width: 50px;" class="text-left">
+                                #
+                            </th>
+                        <?php }else{?>
+                            <th class="table_font_small">SL.</th>
+                        <?php }?>
+                        <th class="table_font_small text-left">Image</th>
+                        <th class="table_font_small text-left">Grade</th>
+                        <th class="table_font_small text-left">Product Name</th>
+                        <th class="table_font_small text-left">Stock</th>
+                        <th class="table_font_small text-left">Category</th>
+                        <th class="table_font_small text-left">Color</th>
+                        <th class="table_font_small text-left">Price</th>
+                        <th class="table_font_small text-left">Actions</th>
                     </tr>
                   </thead>
-                  <tbody class="text-center">
-                  <?php
+                  <tfoot>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th class="text-left">
+                                <h5 id="product_total_qty_footer"></h5>
+                            </th>
+                            <th></th>
+                            <th></th>
+                            <th class="text-left">
+<!--                                <h5 id="product_total_price_footer"></h5>-->
+                            </th>
+                            <th></th>
+                        </tr>
+                  </tfoot>
 
-                  $data = mi_db_read_all('mi_products', 'pro_id', 'DESC');
-
-                  foreach ($data as $d){
-                  ?>
-                  <tr>
-                      <td style="padding-left: 18px !important;max-width: 50px;">
-                          <div class="checkbox">
-                              <label style="font-size: 1.5em">
-                                  <input type="checkbox" value="<?=$d['pro_id'];?>" class="selectorcheck">
-                                  <span class="cr"><i class="cr-icon fa fa-check"></i></span>
-                              </label>
-                          </div>
-                      </td>
-                      <td><?=(!empty($d['pro_img']))?
-                              '<img class="img-fluid img-thumbnail" src="'.MI_CDN_URL.'uploads/'.$d['pro_img'].'" style="max-width: 50px;">'
-                              :
-                              '<img class="img-fluid img-thumbnail" src="'.MI_CDN_URL.'assets/img/empty-img.png" style="max-width: 50px;">'
-                          ;?>
-                      </td>
-                      <td>
-                          <?=(!empty($d['pro_model_number']))? $d['pro_model_number']:'';?>
-                      </td>
-                      <td>
-                          <strong><?=(!empty($d['pro_title']))?$d['pro_title']:'N/A';?></strong>
-                      </td>
-                      <td><?=(!empty($d['pro_stock']) && $d['pro_stock'] != 0)? (($d['pro_stock'] > 10)?'<label class="badge badge-primary text-white">'.$d['pro_stock'].' L</label>':'<label class="badge badge-danger text-white">'.$d['pro_stock'].' L</label>'):'<label class="badge badge-danger text-white">Empty</label>';?></td>
-                      <td><?=(!empty($d['pro_cat']))?mi_db_read_by_id('mi_product_category', array('cat_id'=>$d['pro_cat']))[0]['cat_title']:'N/A';?></td>
-                      <td><?=(!empty($d['pro_brand']))?mi_db_read_by_id('mi_product_brand', array('br_id'=>$d['pro_brand']))[0]['br_title']:'N/A';?></td>
-                      <td><?=$d['pro_price'];?> <?=$currency['meta_value']?></td>
-                      <td>
-                          <a title="Edit" href="single_product.php?mi_pro_id=<?=$d['pro_id'];?>" class="btn btn-sm btn-dark btn-rounded mt-1"><i class="fa fa-edit"></i></a>
-                          <a title="Analytics" href="product_report.php?mi_pro_id=<?=$d['pro_id'];?>" class="btn btn-sm btn-dark btn-rounded mt-1"><i class="nc-icon nc-chart-bar-32"></i></a>
-                      </td>
-                  </tr>
-                  <?php }?>
-                  </tbody>
                 </table>
               </div>
             </div>

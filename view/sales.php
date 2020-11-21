@@ -141,7 +141,12 @@ $due_amount = array_sum($total)-$paid_amount;
     <div id="animatedModal" role="dialog" style="z-index: 999999; padding-left: 0px !important; display:none;">
         <button type="button" class="close mi_close close-animatedModal">&times;</button>
         <div class="modal-content border-0" style="top: 5%;background: none">
-            <div id="invoice-POS" style="width:794px; height:1122px;">
+            <div id="invoice-POS" style="width:794px; height:1122px;
+                                        background-image: url('<?=MI_CDN_URL?>uploads/settings-img/invoice_logo.png');
+                                        background-repeat: no-repeat;
+                                        background-position: center;
+                                        z-index:99;
+                                        background-color: white;">
                 <div class="paid_or_due_seal">
                     <h1></h1>
                 </div>
@@ -181,13 +186,13 @@ $due_amount = array_sum($total)-$paid_amount;
                     </div><!--End Table-->
 
                     <div class="row">
-                        <div id="legalcopy" class="col-sm-10 col-md-10">
+                        <div id="legalcopy" class="col-sm-9 col-md-9">
                             <p id="sales_due_note">N.B. : <span></span></p>
                             <p class="legal"><small><?=$note['meta_value']?></small></p>
                         </div>
-                        <div class="col-sm-2 col-md-2 text-right">
-                            <p>Signature</p>
-                            <p>-------------</p>
+                        <div class="col-sm-3 col-md-3 text-right">
+                            <p>Receiver Signature</p>
+                            <p>-------------------------</p>
                         </div>
 
                     </div>

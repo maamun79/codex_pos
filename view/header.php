@@ -38,6 +38,7 @@
     <link href="plugins/calculator/creative.min.css" rel="stylesheet" media='all'/>
     <link href="plugins/fancybox/jquery.fancybox.min.css" rel="stylesheet" media='all'/>
     <link href="plugins/bootstrap-select/select2.min.css" rel="stylesheet" media='all'/>
+    <link href="plugins/dropify/dist/css/dropify.min.css" rel="stylesheet" media='all'/>
     <link rel="stylesheet" href="assets/animate.min.css">
 
     <script src="assets/js/core/jquery.min.js"></script>

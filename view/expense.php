@@ -117,7 +117,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                             <tbody class="text-center">
                             <?php
 
-                            $expenses = mi_db_read_all('regular_expenses');
+                            $expenses = mi_db_read_by_id('regular_expenses', array('type'=> 'regular'));
                             foreach ($expenses as $data){
                                 $added_by = mi_db_read_by_id('mi_users', array('id'=> $data['user_id']))[0];
                             ?>

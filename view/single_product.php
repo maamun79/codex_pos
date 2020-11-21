@@ -15,7 +15,7 @@ if (isset($_POST['save_product_mi']) || isset($_POST['update_product_mi'])){
     $procat = mi_secure_input($_POST['product_category_mi']);
     $probr = mi_secure_input($_POST['product_brnad_mi']);
 
-    $image = $_FILES['product_image_mi']['name'];
+    $image = $_FILES['product_image_mi'];
 
     if (!isset($_POST['update_product_mi'])){
 
@@ -33,52 +33,24 @@ if (isset($_POST['save_product_mi']) || isset($_POST['update_product_mi'])){
             echo mi_notifier("Product price can not be less than 1", "error");
         }else{
 
-            if (!empty($image)){
-                $allowed_image_extension = array("png", "jpg", "jpeg", "PNG", "JPG", "JPEG", "GIF", "gif");
-                $file_extension = pathinfo($image, PATHINFO_EXTENSION);
+            if (!empty($image['name'])){
+                $up_img = mi_uploader(
+                    $image['name'],
+                    $image['tmp_name'],
+                    'uploads/product/',
+                    array('png', 'PNG', 'jpg', 'jpeg', 'JPG', 'gif', 'JPEG')
+                );
 
-                if (!in_array($file_extension, $allowed_image_extension)){
-                    echo mi_notifier("The File is not an image", "error");
-                }else{
-                    $path = "uploads/";
-                    $imgrename = md5(date("dmYHis")).$image;
+                $data = array(
+                    'pro_title' => $name,
+                    'pro_price' => $price,
+                    'pro_img' => $up_img,
+                    'pro_brand' => $probr,
+                    'pro_cat' => $procat,
+                    'pro_status' => $status,
+                    'pro_model_number' => $model
+                );
 
-                    if (move_uploaded_file($_FILES['product_image_mi']['tmp_name'], $path.$imgrename)){
-                        $data = array(
-                            'pro_title' => $name,
-                            'pro_price' => $price,
-                            'pro_img' => $imgrename,
-                            'pro_brand' => $probr,
-                            'pro_cat' => $procat,
-                            'pro_status' => $status,
-                            'pro_model_number' => $model
-                        );
-                        $insert = mi_db_insert('mi_products', $data);
-
-                        if ($insert === true){
-                            $data['pro_title'] = "";
-                            $data['pro_price'] = "";
-                            $data['pro_cat'] = "";
-                            $data['pro_brand'] = "";
-                            $data['pro_model_number'] = "";
-                            $data['pro_status'] = "";
-                            $data['pro_img'] = "";
-
-                            $name = "";
-                            $price = "";
-                            $model = "";
-                            $status = "";
-                            $procat = "";
-                            $probr = "";
-
-                            echo mi_notifier("Product Saved Successfully", "success");
-                        }else{
-                            echo mi_notifier("Error to Save Product", "error");
-                        }
-                    }else{
-                        echo mi_notifier("Image not Uploaded", "error");
-                    }
-                }
             }else{
                 $data = array(
                     'pro_title' => $name,
@@ -88,27 +60,29 @@ if (isset($_POST['save_product_mi']) || isset($_POST['update_product_mi'])){
                     'pro_status' => $status,
                     'pro_model_number' => $model
                 );
-                $insert = mi_db_insert('mi_products', $data);
+            }
+            $insert = mi_db_insert('mi_products', $data);
 
-                if ($insert === true){
-                    $data['pro_title'] = "";
-                    $data['pro_price'] = "";
-                    $data['pro_cat'] = "";
-                    $data['pro_brand'] = "";
-                    $data['pro_model_number'] = "";
-                    $data['pro_status'] = "";
+            if ($insert === true){
+                $data['pro_title'] = "";
+                $data['pro_price'] = "";
+                $data['pro_cat'] = "";
+                $data['pro_brand'] = "";
+                $data['pro_model_number'] = "";
+                $data['pro_status'] = "";
+                $data['pro_img'] = "";
 
-                    $name = "";
-                    $price = "";
-                    $model = "";
-                    $status = "";
-                    $procat = "";
-                    $probr = "";
+                $name = "";
+                $price = "";
+                $model = "";
+                $status = "";
+                $procat = "";
+                $probr = "";
+                $image = "";
 
-                    echo mi_notifier("Product Saved Successfully", "success");
-                }else{
-                    echo mi_notifier("Error to Save Product", "error");
-                }
+                echo mi_notifier("Product Saved Successfully", "success");
+            }else{
+                echo mi_notifier("Error to Save Product", "error");
             }
 
         }
@@ -126,53 +100,31 @@ if (isset($_POST['save_product_mi']) || isset($_POST['update_product_mi'])){
             echo mi_notifier("All the fields are Required", "error");
         }else{
 
-            if (!empty($image)){
+            if (!empty($image['name'])){
 
-                $allowed_image_extension = array("png", "jpg", "jpeg", "PNG", "JPG", "JPEG", "GIF", "gif");
-                $file_extension = pathinfo($image, PATHINFO_EXTENSION);
+                $get_existing_pro = mi_db_read_by_id('mi_products', array('pro_id'=> $pro_id))[0];
 
-                if (!in_array($file_extension, $allowed_image_extension)){
-                    echo mi_notifier("The File is not an image", "error");
-                }else{
-                    $path = "uploads/";
-                    $imgrename = md5(date("dmYHis")).$image;
+                $up_img = mi_uploader(
+                    $image['name'],
+                    $image['tmp_name'],
+                    'uploads/product/',
+                    array('png', 'PNG', 'jpg', 'jpeg', 'JPG', 'gif', 'JPEG')
+                );
 
-                    if (move_uploaded_file($_FILES['product_image_mi']['tmp_name'], $path.$imgrename)){
-                        $data = array(
-                            'pro_title' => $name,
-                            'pro_price' => $price,
-                            'pro_img' => $imgrename,
-                            'pro_brand' => $probr,
-                            'pro_cat' => $procat,
-                            'pro_status' => $status,
-                            'pro_model_number' => $model
-                        );
-                        $insert = mi_db_update('mi_products', $data, array('pro_id'=>$pro_id));
-
-                        if ($insert === true){
-                            $data['pro_title'] = "";
-                            $data['pro_price'] = "";
-                            $data['pro_cat'] = "";
-                            $data['pro_brand'] = "";
-                            $data['pro_model_number'] = "";
-                            $data['pro_status'] = "";
-                            $data['pro_img'] = "";
-
-                            $name = "";
-                            $price = "";
-                            $model = "";
-                            $status = "";
-                            $procat = "";
-                            $probr = "";
-
-                            echo mi_notifier("Product Updated Successfully", "success");
-                        }else{
-                            echo mi_notifier("Error to Update Product", "error");
-                        }
-                    }else{
-                        echo mi_notifier("Image not Uploaded", "error");
-                    }
+                if ($up_img == true){
+                    unlink($get_existing_pro['pro_img']);
                 }
+
+                $data = array(
+                    'pro_title' => $name,
+                    'pro_price' => $price,
+                    'pro_img' => $up_img,
+                    'pro_brand' => $probr,
+                    'pro_cat' => $procat,
+                    'pro_status' => $status,
+                    'pro_model_number' => $model
+                );
+
             }else{
 
                 $data = array(
@@ -183,29 +135,14 @@ if (isset($_POST['save_product_mi']) || isset($_POST['update_product_mi'])){
                     'pro_status' => $status,
                     'pro_model_number' => $model
                 );
-                $insert = mi_db_update('mi_products', $data, array('pro_id'=>$pro_id));
 
-                if ($insert === true){
-                    $data['pro_title'] = "";
-                    $data['pro_price'] = "";
-                    $data['pro_cat'] = "";
-                    $data['pro_brand'] = "";
-                    $data['pro_model_number'] = "";
-                    $data['pro_status'] = "";
-                    $data['pro_img'] = "";
+            }
 
-                    $name = "";
-                    $price = "";
-                    $model = "";
-                    $status = "";
-                    $procat = "";
-                    $probr = "";
-
-                    echo mi_notifier("Product Updated Successfully", "success");
-                }else{
-                    echo mi_notifier("Error to Update Product", "error");
-                }
-
+            $update = mi_db_update('mi_products', $data, array('pro_id' => $pro_id));
+            if ($update == true){
+                echo mi_notifier("Product updated successfully", "success");
+            }else{
+                echo mi_notifier("Error to update product", "error");
             }
 
         }
@@ -271,7 +208,7 @@ if (isset($_GET['mi_pro_id'])){
                       <div class="col-md-12 col-sm-12 col-xs-12">
                           <div class="form-group">
                               <label>Upload Product Image</label>
-                              <input type="file" class="mi_uploader" id="mi_uploader" name="product_image_mi">
+                              <input type="file" class="dropify" name="product_image_mi" data-provide="dropify" data-default-file="<?=(!empty($data['pro_img']))?MI_CDN_URL.$data['pro_img']:'';?>">
                           </div>
                       </div>
                   </div>
@@ -304,7 +241,7 @@ if (isset($_GET['mi_pro_id'])){
                                         <?php
                                         $brGet = mi_db_read_all('mi_product_brand');
                                         foreach ($brGet as $brg){?>
-                                            <option value="<?=$brg['br_id'];?>" <?=(!empty($data['pro_cat']) && $data['pro_cat'] == $ctg['cat_id'])?'selected':((!empty($procat) && $procat == $ctg['cat_id'])?'checked':'');?>><?=$brg['br_title'];?></option>
+                                            <option value="<?=$brg['br_id'];?>" <?=(!empty($data['pro_brand']) && $data['pro_brand'] == $brg['br_id'])?'selected':((!empty($probr) && $probr == $brg['br_id'])?'checked':'');?>><?=$brg['br_title'];?></option>
                                         <?php }?>
                                     </select>
                                 </div>
@@ -328,28 +265,4 @@ if (isset($_GET['mi_pro_id'])){
 
       </div>
 
-        <script>
-            $(document).ready(function () {
-                $("#mi_uploader").fileinput({
-                    theme: 'fas',
-                    allowedFileExtensions: ['jpg', 'png', 'gif', 'jpeg', 'JPG', 'JPEG', 'PNG', 'GIF'],
-                    overwriteInitial: false,
-                    maxFilesNum: 1,
-                    slugCallback: function (filename) {
-                        return filename.replace('(', '_').replace(']', '_');
-                    },
-                    <?php if (!empty($data['pro_img'])){?>
-                        initialPreviewAsData: true,
-                        initialPreview: [
-                            "<?=MI_CDN_URL;?>uploads/<?=$data['pro_img'];?>"
-                        ],
-                        initialPreviewConfig: [
-                            {caption: "<?=$data['pro_img'];?>", size: 329892, width: "100%", url: "{$url}", key: 1}
-                        ]
-                    <?php }?>
-                });
-
-                $('.selectpicker').selectpicker();
-            });
-        </script>
 <?=mi_footer();?>

@@ -31,23 +31,40 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                 base64_decode($_SESSION['session_type']) == "mi_1" ||
                                 base64_decode($_SESSION['session_type']) == "mi_2"){?>
                                 <tr>
-                                    <th style="max-width: 50px;">
+                                    <th colspan="2" style="max-width: 50px;">
                                         <button class="btn btn-sm btn-danger btn-rounded pull-left delAll" datatype="orders"><i class="nc-icon nc-simple-remove"></i>&nbsp;Delete</button>
                                     </th>
-                                    <th colspan="8"></th>
+                                    <th colspan="6" class="text-right" style="padding-right: 0">
+                                        <div class="row justify-content-end" style="padding-right: 10px">
+                                            <div class="col-md-4 col-sm-6 text-right">
+                                                <div class="input-group">
+                                                    <input type="text" name="order_start_date" id="order_start_date" class="form-control datepicker" data-date-format="yyyy-mm-dd" placeholder="Choose from date" autocomplete="off">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="nc-icon nc-calendar-60"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-6 text-right">
+                                                <div class="input-group">
+                                                    <input type="text" name="order_end_date" id="order_end_date" class="form-control datepicker" data-date-format="yyyy-mm-dd" placeholder="Choose to date" autocomplete="off">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="nc-icon nc-calendar-60"></i></span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <button class="btn btn-dark" id="order_date_search"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                            </div>
+                                        </div>
+                                    </th>
                                 </tr>
                             <?php }?>
                             <tr>
                                 <?php if (
                                     base64_decode($_SESSION['session_type']) == "mi_1" ||
                                     base64_decode($_SESSION['session_type']) == "mi_2"){?>
-                                    <th style="max-width: 50px;">
-<!--                                        <div class="checkbox pull-left">-->
-<!--                                            <label style="font-size: 1.5em">-->
-<!--                                                <input type="checkbox" value="" class="selectAll">-->
-<!--                                                <span class="cr"><i class="cr-icon fa fa-check"></i></span>-->
-<!--                                            </label>-->
-<!--                                        </div>-->
+                                    <th style="max-width: 50px;" class="text-left">
                                         #
                                     </th>
                                 <?php }else{?>
@@ -62,6 +79,22 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                                 <th class="table_font_small">Actions</th>
                             </tr>
                             </thead>
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th class="text-center">
+                                        <h5 id="order_total_amount_footer"></h5>
+                                    </th>
+                                    <th></th>
+                                    <th class="text-center">
+                                        <h5 id="order_total_due_footer"></h5>
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
                         </table>
 
                         <!-----------------------------------single product refund modal----------------------------------->

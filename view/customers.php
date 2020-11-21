@@ -94,7 +94,7 @@ if (isset($_GET['customer_edit'])){
                   <div class="showmsg"></div>
               </div>
               <div class="card-body table-responsive">
-                <table class="table table-full-width mi_datatable">
+                <table class="table table-full-width" id="customer_datatable">
                   <thead class="text-primary text-left">
                     <?php if (base64_decode($_SESSION['session_type']) == "mi_1"){?>
                     <tr>
@@ -107,82 +107,18 @@ if (isset($_GET['customer_edit'])){
                     <tr>
                         <?php if (base64_decode($_SESSION['session_type']) == "mi_1"){?>
                         <th style="max-width: 50px;">
-                            <!-- <div class="checkbox pull-left">
-                                <label style="font-size: 1.5em">
-                                    <input type="checkbox" value="" class="selectAll">
-                                    <span class="cr"><i class="cr-icon fa fa-check"></i></span>
-                                </label>
-                            </div> -->
                             #
                         </th>
                         <?php }?>
 
                         <th class="table_font_small text-left">Name</th>
                         <th class="table_font_small text-center">Phone</th>
-                        <th class="table_font_small">Address</th>
-                        <th class="table_font_small">Type</th>
-                        <th class="table_font_small">Status</th>
-                        <th class="table_font_small">Action</th>
+                        <th class="table_font_small text-center">Address</th>
+                        <th class="table_font_small text-center">Status</th>
+                        <th class="table_font_small text-center">Action</th>
                     </tr>
                   </thead>
-                  <tbody class="text-center">
 
-                  <tr>
-                      <td></td>
-                      <td class="text-left"><strong>Unknown</strong></td>
-                      <td>N/A</td>
-                      <td>N/A</td>
-                      <td>N/A</td>
-                      <td>N/A</td>
-                      <td>
-                          <a title="Edit" href="customers-transaction.php?c=0" class="btn btn-sm btn-default btn-rounded"><i class="nc-icon nc-chart-bar-32"></i></a>
-                      </td>
-                  </tr>
-                  <?php
-
-                  $data = mi_db_read_all('customers', 'id', 'DESC');
-                  $currentTp = mi_db_read_by_id('mi_users', array('id'=>str_replace('mi_','',base64_decode($_SESSION['session_id']))))[0];
-
-
-                       foreach ($data as $k => $d){?>
-                         <?php if (base64_decode($_SESSION['session_type']) == "mi_1"){?>
-                          <tr>
-                              <td style="padding-left: 18px !important;max-width: 50px;">
-                                  <div class="checkbox">
-                                      <label style="font-size: 1.5em">
-                                          <input type="checkbox" value="<?=$d['id'];?>" class="selectorcheck">
-                                          <span class="cr"><i class="cr-icon fa fa-check"></i></span>
-                                      </label>
-                                  </div>
-                              </td>
-                          <?php } ?>
-                              <td class="text-left">
-                                  <h6 class="m-0"><?=$d['customer_name'];?></h6>
-                                 
-                              </td>
-                              
-                              <td>
-                                  <?=$d['phone'];?>
-                              </td>
-                               <td>
-                                  <?=$d['address'];?>
-                              </td>
-
-                               <td>
-                                 <p><?=($d['type'] == 1)?'Retailer':'Industrial';?></p>
-                              </td>
-                              
-                              <td>
-                                  <p class="badge badge-dark"><?=($d['customer_status'] == 0)?'Active':'Inactive';?></p>
-                              </td>
-                              <td>
-                                  <a title="Edit" href="customers.php?customer_edit=<?=$d['id'];?>" class="btn btn-sm btn-default btn-rounded"><i class="fa fa-edit"></i></a>
-                                  <a title="Edit" href="customers-transaction.php?c=<?=$d['id'];?>" class="btn btn-sm btn-default btn-rounded"><i class="nc-icon nc-chart-bar-32"></i></a>
-                              </td>
-
-                          </tr>
-                  <?php }?>
-                  </tbody>
                 </table>
               </div>
             </div>

@@ -89,6 +89,8 @@ $footer_link = mi_db_read_by_id('settings_meta', array('meta_name'=>'footer_link
 
 <script src="plugins/chart/canvasjs.min.js"></script>
 
+<script src="plugins/dropify/dist/js/dropify.min.js"></script>
+
 <!--  Notifications Plugin    -->
 <script src="assets/js/plugins/bootstrap-notify.js"></script>
 <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
