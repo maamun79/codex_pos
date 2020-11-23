@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 21, 2020 at 02:34 PM
+-- Generation Time: Nov 23, 2020 at 08:09 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.2.32
 
@@ -298,7 +298,8 @@ CREATE TABLE `mi_product_category` (
 INSERT INTO `mi_product_category` (`cat_id`, `cat_title`, `cat_slug`, `cat_icn`, `cat_icon_type`, `cat_added`) VALUES
 (16, 'Industrial', 'industrial', 'fas fa-archway', 2, '2020-11-07 16:02:10'),
 (17, 'Automotive', 'automotive', 'fas fa-ambulance', 2, '2020-11-07 16:02:44'),
-(18, 'Marine', 'marine', 'fab fa-docker', 2, '2020-11-07 16:04:01');
+(18, 'Marine', 'marine', 'fab fa-docker', 2, '2020-11-07 16:04:01'),
+(19, 'test', 'test', '', 0, '2020-11-23 12:35:00');
 
 -- --------------------------------------------------------
 
@@ -309,11 +310,11 @@ INSERT INTO `mi_product_category` (`cat_id`, `cat_title`, `cat_slug`, `cat_icn`,
 CREATE TABLE `mi_product_suppliers` (
   `sup_id` int(11) NOT NULL,
   `sup_name` varchar(100) NOT NULL,
-  `sup_company` varchar(150) NOT NULL,
-  `sup_email` text NOT NULL,
-  `sup_phone` varchar(15) NOT NULL,
-  `sup_address` text NOT NULL,
-  `sup_img` text NOT NULL,
+  `sup_company` varchar(150) DEFAULT NULL,
+  `sup_email` text DEFAULT NULL,
+  `sup_phone` varchar(15) DEFAULT NULL,
+  `sup_address` text DEFAULT NULL,
+  `sup_img` text DEFAULT NULL,
   `sup_added` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -322,7 +323,8 @@ CREATE TABLE `mi_product_suppliers` (
 --
 
 INSERT INTO `mi_product_suppliers` (`sup_id`, `sup_name`, `sup_company`, `sup_email`, `sup_phone`, `sup_address`, `sup_img`, `sup_added`) VALUES
-(5, 'Calvin Schwartz', 'Bradley and House Inc', 'holafejegi@mailinator.com', '+1 (759) 149-77', 'Voluptate expedita p', 'c17c2b4c438f3c678b8d2a0fa37c5e18s-1.jpg', '2020-08-12 17:32:30');
+(6, 'Ruhul Amin', 'Rio International', 'amin@gmail.com', '01676048867', '51/A/1', 'uploads/supplier/e1d5eaf9f8c5f572a7d2a636067c1d82user.png', '2020-11-23 13:01:49'),
+(7, 'Rizwan', 'Padma Oil', 'rizwan@gmail.com', '01234567891', '51/A/1', NULL, '2020-11-23 13:06:19');
 
 -- --------------------------------------------------------
 
@@ -371,21 +373,6 @@ CREATE TABLE `mi_stocks` (
   `refund_date` datetime NOT NULL,
   `pro_serials` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `mi_stocks`
---
-
-INSERT INTO `mi_stocks` (`stock_id`, `supplier_id`, `product_id`, `stock_qty`, `invoice_id`, `invoice_picture`, `expanse`, `unit_price`, `ex_paid`, `ex_note`, `upload_date`, `refund_date`, `pro_serials`) VALUES
-(81, 5, 246, 100, '', '', 12000, 120, 12000, '', '2020-11-21 18:52:07', '0000-00-00 00:00:00', ''),
-(82, 5, 247, 50, '', '', 5000, 100, 5000, '', '2020-11-21 18:53:40', '0000-00-00 00:00:00', ''),
-(83, 5, 248, 70, '', '', 7700, 110, 7700, '', '2020-11-21 18:54:13', '0000-00-00 00:00:00', ''),
-(84, 5, 249, 80, '', '', 9600, 120, 9600, '', '2020-11-21 18:54:38', '0000-00-00 00:00:00', ''),
-(85, 5, 250, 100, '', '', 10000, 100, 10000, '', '2020-11-21 18:55:23', '0000-00-00 00:00:00', ''),
-(86, 5, 251, 90, '', '', 10350, 115, 10350, '', '2020-11-21 18:55:54', '0000-00-00 00:00:00', ''),
-(87, 5, 252, 100, '', '', 10000, 100, 10000, '', '2020-11-21 18:56:17', '0000-00-00 00:00:00', ''),
-(88, 5, 253, 80, '', '', 10400, 130, 10400, '', '2020-11-21 18:56:49', '0000-00-00 00:00:00', ''),
-(89, 5, 254, 100, '', '', 14000, 140, 14000, '', '2020-11-21 18:57:10', '0000-00-00 00:00:00', '');
 
 -- --------------------------------------------------------
 
@@ -651,13 +638,13 @@ ALTER TABLE `mi_product_cart`
 -- AUTO_INCREMENT for table `mi_product_category`
 --
 ALTER TABLE `mi_product_category`
-  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `mi_product_suppliers`
 --
 ALTER TABLE `mi_product_suppliers`
-  MODIFY `sup_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `sup_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `mi_purchase_vat`

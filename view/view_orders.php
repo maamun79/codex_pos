@@ -325,13 +325,13 @@ $note = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_note'))[0];
 
                                 <tr>
                                     <th class="text-left" colspan="2">Total Products: <?=count($ttl_array)?><br>Total Qty: <?=array_sum($qty_total)?> L</th>
-                                    <th class="text-right" colspan="5" >
-                                        <span style="font-size:15px">Total Amount:</span><br>
+                                    <th class="text-right" colspan="5" style="font-size:15px">
+                                        Total Amount: <br>
                                         Paid:
                                     </th>
                                     <th class="text-right">
                                         <span style='font-size:15px' class='totalpayable'><?=($data['total_amount'])?> <?=$currency['meta_value']?></span><br>
-                                        <span><?=($data['paid_amount'])?> <?=$currency['meta_value'];?></span>
+                                        <span style='font-size:15px'><?=($data['paid_amount'])?> <?=$currency['meta_value'];?></span>
                                     </th>
                                 </tr>
 

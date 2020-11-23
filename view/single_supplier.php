@@ -14,82 +14,89 @@ if (isset($_POST['save_supplier_mi']) || isset($_POST['update_supplier_mi'])){
     $phone = $_POST['supplier_phone_mi'];
     $address = $_POST['supplier_address_mi'];
 
-    $image = $_FILES['supplier_image_mi']['name'];
+    $image = $_FILES['supplier_image_mi'];
 
     if (!isset($_POST['update_supplier_mi'])){
 
-        if (empty($name) || empty($comp) || empty($email) || empty($phone) || empty($address) || empty($image)){
-            echo mi_notifier("All the fields are Required", "error");
+        if (empty($name)){
+            echo mi_notifier("Supplier name is required", "error");
         }else{
-            $allowed_image_extension = array("png", "jpg", "jpeg", "PNG", "JPG", "JPEG", "GIF", "gif");
-            $file_extension = pathinfo($image, PATHINFO_EXTENSION);
 
-            if (!in_array($file_extension, $allowed_image_extension)){
-                echo mi_notifier("The File is not an image", "error");
+            if (!empty($image['name'])){
+                $up_img = mi_uploader(
+                    $image['name'],
+                    $image['tmp_name'],
+                    'uploads/supplier/',
+                    array('png', 'PNG', 'jpg', 'jpeg', 'JPG', 'gif', 'JPEG')
+                );
+                $data = array(
+                    'sup_name' => $name,
+                    'sup_company' => $comp,
+                    'sup_email' => $email,
+                    'sup_phone' => $phone,
+                    'sup_address' => $address,
+                    'sup_img' => $up_img
+                );
             }else{
-                $path = "uploads/";
-                $imgrename = md5(date("dmYHis")).$image;
+                $data = array(
+                    'sup_name' => $name,
+                    'sup_company' => $comp,
+                    'sup_email' => $email,
+                    'sup_phone' => $phone,
+                    'sup_address' => $address
+                );
+            }
 
-                if (move_uploaded_file($_FILES['supplier_image_mi']['tmp_name'], $path.$imgrename)){
-                    $data = array(
-                        'sup_name' => $name,
-                        'sup_company' => $comp,
-                        'sup_email' => $email,
-                        'sup_phone' => $phone,
-                        'sup_address' => $address,
-                        'sup_img' => $imgrename
-                    );
-                    $insert = mi_db_insert('mi_product_suppliers', $data);
+            $insert = mi_db_insert('mi_product_suppliers', $data);
 
-                    if ($insert === true){
-                        echo mi_notifier("Supplier Saved Successfully", "success");
-                    }else{
-                        echo mi_notifier("Error to Save Supplier", "error");
-                    }
-                }else{
-                    echo mi_notifier("Image not Uploaded", "error");
-                }
+            if ($insert === true){
+                $data['sup_name'] = "";
+                $data['sup_company'] = "";
+                $data['sup_email'] = "";
+                $data['sup_phone'] = "";
+                $data['sup_address'] = "";
+                $data['sup_img'] = "";
+
+                $name = "";
+                $comp = "";
+                $email = "";
+                $phone = "";
+                $address = "";
+                $image = "";
+                echo mi_notifier("Supplier Saved Successfully", "success");
+            }else{
+                echo mi_notifier("Error to Save Supplier", "error");
             }
         }
 
     }else{
         $sup_id = $_POST['supp_id'];
 
-        if (empty($name) || empty($comp) || empty($email) || empty($phone) || empty($address)){
-            echo mi_notifier("All the fields are Required", "error");
+        if (empty($name)){
+            echo mi_notifier("Supplier name is required", "error");
         }else{
 
-            if (!empty($image)){
+            if (!empty($image['name'])){
+                $get_existing = mi_db_read_by_id('mi_product_suppliers', array('sup_id'=> $sup_id))[0];
 
-                $allowed_image_extension = array("png", "jpg", "jpeg", "PNG", "JPG", "JPEG", "GIF", "gif");
-                $file_extension = pathinfo($image, PATHINFO_EXTENSION);
+                $up_img = mi_uploader(
+                    $image['name'],
+                    $image['tmp_name'],
+                    'uploads/supplier/',
+                    array('png', 'PNG', 'jpg', 'jpeg', 'JPG', 'gif', 'JPEG')
+                );
 
-                if (!in_array($file_extension, $allowed_image_extension)){
-                    echo mi_notifier("The File is not an image", "error");
-                }else{
-                    $path = "uploads/";
-                    $imgrename = md5(date("dmYHis")).$image;
-
-                    if (move_uploaded_file($_FILES['supplier_image_mi']['tmp_name'], $path.$imgrename)){
-                        $data = array(
-                            'sup_name' => $name,
-                            'sup_company' => $comp,
-                            'sup_email' => $email,
-                            'sup_phone' => $phone,
-                            'sup_address' => $address,
-                            'sup_img' => $imgrename
-                        );
-                        $insert = mi_db_update('mi_product_suppliers', $data, array('sup_id'=>$sup_id));
-
-                        if ($insert === true){
-                            echo mi_notifier("Supplier Updated Successfully", "success");
-                        }else{
-                            echo mi_notifier("Error to Update Supplier", "error");
-                        }
-                    }else{
-                        echo mi_notifier("Image not Uploaded", "error");
-                    }
+                if ($up_img == true){
+                    unlink($get_existing['sup_img']);
                 }
+                $data = array(
+                    'sup_name' => $name,
+                    'sup_company' => $comp,
+                    'sup_email' => $email,
+                    'sup_phone' => $phone,
+                    'sup_address' => $address,
+                    'sup_img' => $up_img
+                );
             }else{
 
                 $data = array(
@@ -99,14 +106,14 @@ if (isset($_POST['save_supplier_mi']) || isset($_POST['update_supplier_mi'])){
                     'sup_phone' => $phone,
                     'sup_address' => $address
                 );
-                $insert = mi_db_update('mi_product_suppliers', $data, array('sup_id'=>$sup_id));
 
-                if ($insert === true){
-                    echo mi_notifier("Supplier Updated Successfully", "success");
-                }else{
-                    echo mi_notifier("Error to Update Supplier", "error");
-                }
+            }
+            $insert = mi_db_update('mi_product_suppliers', $data, array('sup_id'=>$sup_id));
 
+            if ($insert === true){
+                echo mi_notifier("Supplier Updated Successfully", "success");
+            }else{
+                echo mi_notifier("Error to Update Supplier", "error");
             }
 
         }
@@ -175,7 +182,7 @@ if (isset($_GET['mi_sup_id'])){
                       <div class="col-md-12 col-sm-12 col-xs-12">
                           <div class="form-group">
                               <label>Upload Supplier Image</label>
-                              <input type="file" class="mi_uploader" id="mi_uploader" name="supplier_image_mi">
+                              <input type="file" class="dropify" name="supplier_image_mi" data-provide="dropify" data-default-file="<?=(!empty($data['sup_img']))?MI_CDN_URL.$data['sup_img']:'';?>">
                           </div>
                       </div>
                   </div>
@@ -195,28 +202,4 @@ if (isset($_GET['mi_sup_id'])){
 
       </div>
 
-        <script>
-            $(document).ready(function () {
-                $("#mi_uploader").fileinput({
-                    theme: 'fas',
-                    allowedFileExtensions: ['jpg', 'png', 'gif', 'jpeg', 'JPG', 'JPEG', 'PNG', 'GIF'],
-                    overwriteInitial: false,
-                    maxFilesNum: 1,
-                    slugCallback: function (filename) {
-                        return filename.replace('(', '_').replace(']', '_');
-                    },
-                    <?php if (isset($data['sup_img'])){?>
-                        initialPreviewAsData: true,
-                        initialPreview: [
-                            "<?=MI_CDN_URL;?>uploads/<?=$data['sup_img'];?>"
-                        ],
-                        initialPreviewConfig: [
-                            {caption: "<?=$data['sup_img'];?>", size: 329892, width: "100%", url: "{$url}", key: 1}
-                        ]
-                    <?php }?>
-                });
-
-                $('.selectpicker').selectpicker();
-            });
-        </script>
 <?=mi_footer();?>

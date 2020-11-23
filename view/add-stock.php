@@ -78,9 +78,10 @@ if (base64_decode($_SESSION['session_type']) !== "mi_1" &&
                                     <th colspan="2" class="text-right">
                                         <h5 id="stock_total_amount_footer"></h5>
                                     </th>
-                                    <th colspan="2" class="text-left">
+                                    <th class="text-center">
                                         <h5 id="stock_total_due_footer"></h5>
                                     </th>
+                                    <th></th>
                                 </tr>
                             </tfoot>
                         </table>

@@ -112,7 +112,7 @@ $currency = mi_db_read_by_id('settings_meta', array('meta_name'=>'shop_currency'
                     </a>
                 </div>
                 <div class="col-md-2 col-sm-4" style="padding: 0 8px">
-                    <a href="vat.php" class="text-center">
+                    <a href="vat_history.php" class="text-center">
                         <div class="card card-stats text-white rounded-0" style="background-color: #9575cd;">
                             <div class="card-body">
                                 <div>
